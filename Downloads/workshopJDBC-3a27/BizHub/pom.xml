@@ -1,21 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE project [
-        <!ELEMENT project (modelVersion|groupId|artifactId|version|properties|dependencies)*>
-        <!ATTLIST project
-                xmlns CDATA #REQUIRED
-                xmlns:xsi CDATA #REQUIRED
-                xsi:schemaLocation CDATA #REQUIRED>
-        <!ELEMENT modelVersion (#PCDATA)>
-        <!ELEMENT groupId (#PCDATA)>
-        <!ELEMENT artifactId (#PCDATA)>
-        <!ELEMENT version (#PCDATA)>
-        <!ELEMENT properties (maven.compiler.source|maven.compiler.target|project.build.sourceEncoding)*>
-        <!ELEMENT maven.compiler.source (#PCDATA)>
-        <!ELEMENT maven.compiler.target (#PCDATA)>
-        <!ELEMENT project.build.sourceEncoding (#PCDATA)>
-        <!ELEMENT dependencies (dependency)*>
-        <!ELEMENT dependency (groupId|artifactId|version)*>
-        ]>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -33,12 +16,14 @@
     </properties>
 
     <dependencies>
+        <!-- Fixed MySQL connector dependency -->
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
             <version>8.0.33</version>
         </dependency>
 
+        <!-- JavaFX dependencies without classifier for now -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
@@ -59,12 +44,43 @@
 
     <build>
         <plugins>
+            <!-- os-maven-plugin must be first -->
+            <plugin>
+                <groupId>kr.motd.maven</groupId>
+                <artifactId>os-maven-plugin</artifactId>
+                <version>1.7.1</version>
+                <executions>
+                    <execution>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>detect</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Updated javafx-maven-plugin with newer version -->
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
                     <mainClass>com.bizhub.Main</mainClass>
+                    <!-- Add OS detection properties -->
+                    <options>
+                        <option>-Dos.detected.classifier=${os.detected.classifier}</option>
+                    </options>
+                </configuration>
+            </plugin>
+
+            <!-- Maven compiler plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <source>17</source>
+                    <target>17</target>
                 </configuration>
             </plugin>
         </plugins>
