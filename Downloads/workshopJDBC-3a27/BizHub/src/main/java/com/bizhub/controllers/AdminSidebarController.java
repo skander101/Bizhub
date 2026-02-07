@@ -9,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.application.Platform;
 
 import java.io.InputStream;
 
@@ -37,6 +38,23 @@ public class AdminSidebarController {
 
         avatarInitials.setText(initialsOf(me.getFullName()));
         loadAvatar(me.getAvatarUrl());
+
+        // Fallback: best-effort active button highlighting based on window state.
+        try {
+            Platform.runLater(() -> {
+                var scene = nameText.getScene();
+                if (scene == null) return;
+                var h1 = scene.getRoot().lookup(".h1");
+                if (h1 instanceof javafx.scene.text.Text t) {
+                    String title = t.getText() == null ? "" : t.getText().toLowerCase();
+                    if (title.contains("dashboard")) NavigationService.setActiveNav(nameText.getParent(), NavigationService.ActiveNav.DASHBOARD);
+                    else if (title.contains("users")) NavigationService.setActiveNav(nameText.getParent(), NavigationService.ActiveNav.USERS);
+                    else if (title.contains("formations")) NavigationService.setActiveNav(nameText.getParent(), NavigationService.ActiveNav.FORMATIONS);
+                    else if (title.contains("reviews")) NavigationService.setActiveNav(nameText.getParent(), NavigationService.ActiveNav.REVIEWS);
+                    else if (title.contains("profile")) NavigationService.setActiveNav(nameText.getParent(), NavigationService.ActiveNav.PROFILE);
+                }
+            });
+        } catch (Exception ignored) {}
     }
 
     private void loadAvatar(String avatarUrl) {
@@ -111,4 +129,3 @@ public class AdminSidebarController {
         new NavigationService(stage).goToLogin();
     }
 }
-

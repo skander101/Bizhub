@@ -12,12 +12,14 @@ com/bizhub/services/NavigationService.class
 com/bizhub/controllers/ReviewManagementController$2.class
 com/bizhub/controllers/FormationDetailsController.class
 com/bizhub/services/AppSession.class
+com/bizhub/services/NavigationService$ActiveNav.class
 com/bizhub/dao/ReviewDAO$FormationAvg.class
 com/bizhub/controllers/LoginController.class
 com/bizhub/controllers/SignupController.class
 com/bizhub/services/ReportService$DashboardStats.class
 entities/Avis.class
 com/bizhub/services/AuthService.class
+com/bizhub/services/NavigationService$1.class
 services/ServiceAvis.class
 com/bizhub/services/ReportService.class
 com/bizhub/services/FormationContext.class

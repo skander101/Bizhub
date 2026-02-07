@@ -44,8 +44,13 @@ public class FormationManagementController {
             try {
                 Parent n = FXMLLoader.load(getClass().getResource("/com/bizhub/fxml/admin-sidebar.fxml"));
                 if (root != null) root.setLeft(n);
+                NavigationService.setActiveNav(n, NavigationService.ActiveNav.FORMATIONS);
             } catch (Exception ignored) {
                 // If it fails, app still works; buttons are guarded by role checks.
+            }
+        } else {
+            if (root != null && root.getLeft() != null) {
+                NavigationService.setActiveNav(root.getLeft(), NavigationService.ActiveNav.FORMATIONS);
             }
         }
 

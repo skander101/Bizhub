@@ -227,24 +227,36 @@
 
 /* TableView modern look */
 .table-view {
-    -fx-background-color: white;
+    -fx-background-color: rgba(23, 42, 69, 0.94);
     -fx-background-radius: 14;
     -fx-border-radius: 14;
-    -fx-border-color: rgba(148,163,184,0.65);
+    -fx-border-color: rgba(232, 169, 58, 0.25);
 }
 
 .table-view .column-header-background {
-    -fx-background-color: #f1f5f9;
+    -fx-background-color: rgba(30, 58, 95, 0.65);
     -fx-background-radius: 14 14 0 0;
 }
 
-.table-view .column-header, .table-view .filler {
-    -fx-size: 42;
+.table-view .column-header .label {
+    -fx-text-fill: #E8A93A;
+    -fx-font-weight: 900;
+}
+
+.table-row-cell {
     -fx-background-color: transparent;
 }
 
+.table-row-cell:filled {
+    -fx-background-color: rgba(10, 25, 47, 0.20);
+}
+
 .table-row-cell:filled:selected {
-    -fx-background-color: rgba(37, 99, 235, 0.18);
+    -fx-background-color: rgba(232, 169, 58, 0.18);
+}
+
+.table-row-cell .text {
+    -fx-fill: #FFFFFF;
 }
 
 .separator {
@@ -698,4 +710,62 @@
     -fx-text-fill: #E8A93A;
     -fx-font-size: 16px;
     -fx-font-weight: 600;
+}
+
+/* =========================================================
+ * FLASHBANG PREVENTION
+ * Ensure app shell + common containers never fall back to white.
+ * ========================================================= */
+
+.root, .stack-pane, .border-pane, .anchor-pane, .pane, .vbox, .hbox, .grid-pane {
+    -fx-background-color: #0A192F;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+/* Dark TableView theme (the default white table was causing bright flashes) */
+.table-view {
+    -fx-background-color: rgba(23, 42, 69, 0.94);
+    -fx-background-radius: 14;
+    -fx-border-radius: 14;
+    -fx-border-color: rgba(232, 169, 58, 0.25);
+}
+
+.table-view .column-header-background {
+    -fx-background-color: rgba(30, 58, 95, 0.65);
+    -fx-background-radius: 14 14 0 0;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #E8A93A;
+    -fx-font-weight: 900;
+}
+
+.table-row-cell {
+    -fx-background-color: transparent;
+}
+
+.table-row-cell:filled {
+    -fx-background-color: rgba(10, 25, 47, 0.20);
+}
+
+.table-row-cell:filled:selected {
+    -fx-background-color: rgba(232, 169, 58, 0.18);
+}
+
+.table-row-cell .text {
+    -fx-fill: #FFFFFF;
+}
+
+/* =========================================================
+ * Loader overlay must always be navy (even if scene root changes).
+ * ========================================================= */
+.loading-overlay {
+    -fx-background-color: #001F3F;
 }

@@ -10,7 +10,13 @@
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.bizhub.controllers.UserManagementController"
+            fx:id="root"
             stylesheets="@../css/theme.css">
+
+    <left>
+        <!-- Controller will swap this include to admin-sidebar.fxml when needed -->
+        <fx:include fx:id="sidebarInclude" source="user-sidebar.fxml" />
+    </left>
 
     <top>
         <HBox spacing="12" alignment="CENTER_LEFT" styleClass="topbar" BorderPane.alignment="CENTER">
@@ -59,9 +65,9 @@
                 <Pane HBox.hgrow="ALWAYS" />
 
                 <HBox spacing="8" alignment="CENTER_RIGHT">
-                    <Button text="&lt;" onAction="#prevPage" styleClass="btn" />
+                    <Button text="<" onAction="#prevPage" styleClass="btn" />
                     <Label fx:id="pageLabel" text="Page 1" styleClass="hint" />
-                    <Button text="&gt;" onAction="#nextPage" styleClass="btn" />
+                    <Button text=">" onAction="#nextPage" styleClass="btn" />
                 </HBox>
             </HBox>
 

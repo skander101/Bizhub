@@ -46,7 +46,12 @@ public class ReviewManagementController {
             try {
                 Parent n = FXMLLoader.load(getClass().getResource("/com/bizhub/fxml/admin-sidebar.fxml"));
                 if (root != null) root.setLeft(n);
+                NavigationService.setActiveNav(n, NavigationService.ActiveNav.REVIEWS);
             } catch (Exception ignored) {
+            }
+        } else {
+            if (root != null && root.getLeft() != null) {
+                NavigationService.setActiveNav(root.getLeft(), NavigationService.ActiveNav.REVIEWS);
             }
         }
 

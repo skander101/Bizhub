@@ -4,6 +4,7 @@ import com.bizhub.models.User;
 import com.bizhub.services.AppSession;
 import com.bizhub.services.NavigationService;
 import com.bizhub.services.Services;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -43,6 +44,21 @@ public class UserSidebarController {
 
         // Try to load avatar (stored as classpath-relative or absolute URL).
         loadAvatar(me.getAvatarUrl());
+
+        // Fallback active button highlighting.
+        try {
+            Platform.runLater(() -> {
+                var scene = nameText.getScene();
+                if (scene == null) return;
+                var h1 = scene.getRoot().lookup(".h1");
+                if (h1 instanceof javafx.scene.text.Text t) {
+                    String title = t.getText() == null ? "" : t.getText().toLowerCase();
+                    if (title.contains("formations")) NavigationService.setActiveNav(nameText.getParent(), NavigationService.ActiveNav.FORMATIONS);
+                    else if (title.contains("reviews")) NavigationService.setActiveNav(nameText.getParent(), NavigationService.ActiveNav.REVIEWS);
+                    else if (title.contains("profile")) NavigationService.setActiveNav(nameText.getParent(), NavigationService.ActiveNav.PROFILE);
+                }
+            });
+        } catch (Exception ignored) {}
     }
 
     private void loadAvatar(String avatarUrl) {
@@ -109,4 +125,3 @@ public class UserSidebarController {
         new NavigationService(stage).goToLogin();
     }
 }
-

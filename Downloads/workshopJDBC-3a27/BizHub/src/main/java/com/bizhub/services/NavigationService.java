@@ -1,9 +1,15 @@
 package com.bizhub.services;
 
-import javafx.animation.*;
+import javafx.animation.FadeTransition;
+import javafx.animation.Interpolator;
+import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -12,9 +18,44 @@ import java.net.URL;
 
 public class NavigationService {
 
-    private static final Duration TRANSITION_DURATION = Duration.millis(520);
+    public enum ActiveNav {
+        DASHBOARD,
+        USERS,
+        FORMATIONS,
+        REVIEWS,
+        PROFILE
+    }
+
+    public static void setActiveNav(Node sidebarRoot, ActiveNav activeNav) {
+        if (sidebarRoot == null || activeNav == null) return;
+
+        for (Node n : sidebarRoot.lookupAll(".nav-button")) {
+            n.getStyleClass().remove("active");
+
+            if (!(n instanceof Button b)) continue;
+            String t = b.getText() == null ? "" : b.getText().toLowerCase();
+
+            boolean match = switch (activeNav) {
+                case DASHBOARD -> t.contains("dashboard");
+                case USERS -> t.equals("users") || t.contains("users");
+                case FORMATIONS -> t.contains("formations");
+                case REVIEWS -> t.contains("reviews");
+                case PROFILE -> t.contains("profile");
+            };
+
+            if (match) {
+                n.getStyleClass().add("active");
+            }
+        }
+    }
+
+    private static final Duration OVERLAY_FADE_IN = Duration.millis(260);
+    private static final Duration OVERLAY_FADE_OUT = Duration.millis(360);
+    private static final Duration MIN_OVERLAY_VISIBLE = Duration.millis(420);
 
     private final Stage stage;
+
+    private boolean navigating = false;
 
     public NavigationService(Stage stage) {
         this.stage = stage;
@@ -53,84 +94,109 @@ public class NavigationService {
     }
 
     private void loadIntoStage(String fxmlPath, double w, double h) {
-        URL res = NavigationService.class.getResource(fxmlPath);
-        if (res == null) throw new IllegalStateException("Missing FXML: " + fxmlPath);
+        if (navigating) return;
+        navigating = true;
 
-        Parent nextRoot;
-        try {
-            nextRoot = FXMLLoader.load(res);
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to load " + fxmlPath + ": " + e.getMessage(), e);
+        URL res = NavigationService.class.getResource(fxmlPath);
+        if (res == null) {
+            navigating = false;
+            throw new IllegalStateException("Missing FXML: " + fxmlPath);
         }
 
-        // Prepare next root for entry animation
-        nextRoot.setOpacity(0.0);
-        nextRoot.setTranslateY(16);
-        nextRoot.setScaleX(0.985);
-        nextRoot.setScaleY(0.985);
-
-        final Scene sceneRef = stage.getScene();
-        if (sceneRef == null) {
-            Scene newScene = new Scene(nextRoot, w, h);
+        Scene scene = stage.getScene();
+        if (scene == null) {
+            // Fallback: initial scene. (App.start normally creates the shell.)
+            Parent first = loadFxml(res);
+            Scene newScene = new Scene(first, w, h);
             stage.setScene(newScene);
             stage.show();
-            playEnter(nextRoot);
+            navigating = false;
             return;
         }
 
-        Parent currentRoot = sceneRef.getRoot();
-        if (currentRoot == null) {
-            sceneRef.setRoot(nextRoot);
-            playEnter(nextRoot);
+        Parent shellRoot = (Parent) scene.getRoot();
+        Node overlay = findOverlay(shellRoot);
+
+        // If overlay is missing (e.g., App shell not used), just swap immediately.
+        if (overlay == null) {
+            Platform.runLater(() -> {
+                try {
+                    Parent nextRoot = loadFxml(res);
+                    if (shellRoot instanceof StackPane sp) {
+                        sp.getChildren().setAll(nextRoot);
+                    } else {
+                        scene.setRoot(nextRoot);
+                    }
+                } finally {
+                    navigating = false;
+                }
+            });
             return;
         }
 
-        // Exit current, then swap root, then enter next
-        Animation exit = playExit(currentRoot);
-        exit.setOnFinished(ev -> {
-            sceneRef.setRoot(nextRoot);
-            playEnter(nextRoot);
+        // Prepare and show overlay
+        overlay.setManaged(true);
+        overlay.setVisible(true);
+        overlay.setOpacity(0.0);
+        overlay.toFront();
+
+        FadeTransition fadeIn = new FadeTransition(OVERLAY_FADE_IN, overlay);
+        fadeIn.setFromValue(0.0);
+        fadeIn.setToValue(1.0);
+        fadeIn.setInterpolator(Interpolator.EASE_BOTH);
+
+        fadeIn.setOnFinished(ev -> {
+            // Ensure overlay is actually painted before swapping content.
+            Platform.runLater(() -> Platform.runLater(() -> {
+                try {
+                    Parent nextRoot = loadFxml(res);
+
+                    if (shellRoot instanceof StackPane sp) {
+                        // Keep overlay on top
+                        sp.getChildren().remove(overlay);
+                        sp.getChildren().setAll(nextRoot, overlay);
+                    } else {
+                        scene.setRoot(nextRoot);
+                    }
+
+                    overlay.toFront();
+
+                    PauseTransition hold = new PauseTransition(MIN_OVERLAY_VISIBLE);
+                    FadeTransition fadeOut = new FadeTransition(OVERLAY_FADE_OUT, overlay);
+                    fadeOut.setFromValue(1.0);
+                    fadeOut.setToValue(0.0);
+                    fadeOut.setInterpolator(Interpolator.EASE_BOTH);
+                    fadeOut.setOnFinished(done -> {
+                        overlay.setVisible(false);
+                        overlay.setManaged(false);
+                        navigating = false;
+                    });
+
+                    hold.setOnFinished(evt -> fadeOut.play());
+                    hold.play();
+                } catch (RuntimeException ex) {
+                    // Always release navigation lock even if load fails
+                    overlay.setVisible(false);
+                    overlay.setManaged(false);
+                    navigating = false;
+                    throw ex;
+                }
+            }));
         });
-        exit.play();
+
+        fadeIn.play();
     }
 
-    private static Animation playExit(Parent node) {
-        FadeTransition ft = new FadeTransition(TRANSITION_DURATION, node);
-        ft.setFromValue(1.0);
-        ft.setToValue(0.0);
-
-        TranslateTransition tt = new TranslateTransition(TRANSITION_DURATION, node);
-        tt.setFromY(0);
-        tt.setToY(-12);
-
-        ScaleTransition st = new ScaleTransition(TRANSITION_DURATION, node);
-        st.setFromX(1.0);
-        st.setFromY(1.0);
-        st.setToX(0.99);
-        st.setToY(0.99);
-
-        ParallelTransition pt = new ParallelTransition(ft, tt, st);
-        pt.setInterpolator(Interpolator.EASE_BOTH);
-        return pt;
+    private static Parent loadFxml(URL res) {
+        try {
+            return FXMLLoader.load(res);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to load " + res + ": " + e.getMessage(), e);
+        }
     }
 
-    private static void playEnter(Parent node) {
-        FadeTransition ft = new FadeTransition(TRANSITION_DURATION, node);
-        ft.setFromValue(0.0);
-        ft.setToValue(1.0);
-
-        TranslateTransition tt = new TranslateTransition(TRANSITION_DURATION, node);
-        tt.setFromY(16);
-        tt.setToY(0);
-
-        ScaleTransition st = new ScaleTransition(TRANSITION_DURATION, node);
-        st.setFromX(0.985);
-        st.setFromY(0.985);
-        st.setToX(1.0);
-        st.setToY(1.0);
-
-        ParallelTransition pt = new ParallelTransition(ft, tt, st);
-        pt.setInterpolator(Interpolator.SPLINE(0.2, 0.8, 0.2, 1.0));
-        pt.play();
+    private static Node findOverlay(Parent root) {
+        if (root == null) return null;
+        return root.lookup("#navOverlay");
     }
 }

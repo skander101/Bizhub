@@ -47,6 +47,16 @@ public class AdminDashboardController {
 
     @FXML
     public void initialize() {
+        // Highlight Dashboard in the included admin sidebar
+        try {
+            if (adminNameLabel != null && adminNameLabel.getScene() != null) {
+                var rootNode = adminNameLabel.getScene().getRoot();
+                var sidebar = rootNode.lookup(".admin-sidebar");
+                NavigationService.setActiveNav(sidebar, NavigationService.ActiveNav.DASHBOARD);
+            }
+        } catch (Exception ignored) {
+        }
+
         User me = AppSession.getCurrentUser();
         if (me != null) {
             adminNameLabel.setText(me.getFullName());
