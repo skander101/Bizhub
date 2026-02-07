@@ -9,7 +9,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.bizhub.controllers.UserManagementController"
+            fx:controller="com.bizhub.user.controller.UserManagementController"
             fx:id="root"
             stylesheets="@../css/theme.css">
 
@@ -65,9 +65,9 @@
                 <Pane HBox.hgrow="ALWAYS" />
 
                 <HBox spacing="8" alignment="CENTER_RIGHT">
-                    <Button text="<" onAction="#prevPage" styleClass="btn" />
+                    <Button text="&lt;" onAction="#prevPage" styleClass="btn" />
                     <Label fx:id="pageLabel" text="Page 1" styleClass="hint" />
-                    <Button text=">" onAction="#nextPage" styleClass="btn" />
+                    <Button text="&gt;" onAction="#nextPage" styleClass="btn" />
                 </HBox>
             </HBox>
 

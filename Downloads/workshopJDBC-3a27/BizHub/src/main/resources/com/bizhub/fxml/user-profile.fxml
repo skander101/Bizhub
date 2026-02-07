@@ -8,7 +8,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.bizhub.controllers.UserProfileController"
+            fx:controller="com.bizhub.user.controller.UserProfileController"
             fx:id="root"
             styleClass="bg-gradient"
             stylesheets="@../css/user-management.css">

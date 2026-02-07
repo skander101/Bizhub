@@ -7,7 +7,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.bizhub.controllers.ReviewManagementController"
+            fx:controller="com.bizhub.review.controller.ReviewManagementController"
             fx:id="root"
             stylesheets="@../css/theme.css">
 
