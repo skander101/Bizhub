@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.bizhub.Investistment.Controllers.AddInvestmentController"
+            stylesheets="@../css/theme.css">
+
+    <!-- SIDEBAR -->
+    <left>
+        <fx:include source="admin-sidebar.fxml" />
+    </left>
+
+    <!-- TOP BAR -->
+    <top>
+        <HBox spacing="12" alignment="CENTER_LEFT" styleClass="topbar">
+            <padding>
+                <Insets top="14" right="16" bottom="14" left="16" />
+            </padding>
+
+            <ImageView fitHeight="40" fitWidth="40" preserveRatio="true">
+                <image>
+                    <Image url="@../images/site-images/logo.png" />
+                </image>
+            </ImageView>
+
+            <VBox spacing="2">
+                <Text text="Investissements" styleClass="h1" />
+                <Text text="Créer un nouvel investissement" styleClass="subtitle" />
+            </VBox>
+
+            <Pane HBox.hgrow="ALWAYS" />
+
+            <Button text="Retour" onAction="#handleCancel" styleClass="btn" />
+        </HBox>
+    </top>
+
+    <!-- MAIN CONTENT -->
+    <center>
+        <VBox spacing="16">
+            <padding>
+                <Insets top="14" right="16" bottom="16" left="16" />
+            </padding>
+
+            <!-- CARD -->
+            <VBox spacing="20" styleClass="card">
+                <padding>
+                    <Insets top="30" right="40" bottom="30" left="40"/>
+                </padding>
+
+                <!-- PROJET -->
+                <VBox spacing="8">
+                    <Label text="Projet *" styleClass="label-title"/>
+                    <ComboBox fx:id="projectComboBox" promptText="Sélectionnez un projet"
+                              prefWidth="720" styleClass="text-field-modern"/>
+                    <Label fx:id="projectErrorLabel" textFill="red" visible="false"
+                           styleClass="error-label"/>
+                </VBox>
+
+                <!-- INVESTISSEUR -->
+                <VBox spacing="8">
+                    <Label text="Investisseur *" styleClass="label-title"/>
+                    <ComboBox fx:id="investorComboBox" promptText="Sélectionnez un investisseur"
+                              prefWidth="720" styleClass="text-field-modern"/>
+                    <Label fx:id="investorErrorLabel" textFill="red" visible="false"
+                           styleClass="error-label"/>
+                </VBox>
+
+                <!-- MONTANT -->
+                <VBox spacing="8">
+                    <Label text="Montant Total de l'Investissement *" styleClass="label-title"/>
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <TextField fx:id="amountField" promptText="Ex: 50000"
+                                   prefWidth="650" styleClass="text-field-modern"/>
+                        <Label text="TND" styleClass="hint"/>
+                    </HBox>
+                    <Label fx:id="amountErrorLabel" textFill="red" visible="false"
+                           styleClass="error-label"/>
+                </VBox>
+
+                <!-- URL CONTRAT -->
+                <VBox spacing="8">
+                    <Label text="URL du Contrat (Optionnel)" styleClass="label-title"/>
+                    <TextField fx:id="contractUrlField"
+                               promptText="Ex: https://drive.google.com/contract.pdf"
+                               prefWidth="720" styleClass="text-field-modern"/>
+                </VBox>
+
+            </VBox>
+
+            <!-- BUTTONS -->
+            <HBox spacing="12" alignment="CENTER_LEFT">
+                <Button text="Annuler" onAction="#handleCancel" styleClass="btn"/>
+                <Button text="Créer et Ajouter le Paiement" fx:id="submitButton"
+                        onAction="#handleSubmit" styleClass="btn-primary"/>
+            </HBox>
+
+            <Label fx:id="messageLabel" visible="false" styleClass="hint"/>
+
+        </VBox>
+    </center>
+
+</BorderPane>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.bizhub.user.controller.UserProfileController"
+            fx:id="root"
+            styleClass="bg-gradient"
+            stylesheets="@../css/user-management.css">
+
+    <left>
+        <!-- Controller will swap this include to admin-sidebar.fxml for admins -->
+        <fx:include fx:id="sidebarInclude" source="user-sidebar.fxml" />
+    </left>
+
+    <top>
+        <HBox spacing="12" alignment="CENTER_LEFT" styleClass="topbar">
+            <padding>
+                <Insets top="14" right="16" bottom="14" left="16" />
+            </padding>
+            <VBox spacing="2">
+                <Text text="My Profile" styleClass="h1" />
+                <Text text="Manage your account" styleClass="subtitle" />
+            </VBox>
+            <Pane HBox.hgrow="ALWAYS" />
+        </HBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="profile-scroll" BorderPane.alignment="CENTER">
+            <content>
+                <VBox spacing="14">
+                    <padding>
+                        <Insets top="14" right="16" bottom="16" left="16" />
+                    </padding>
+
+                    <HBox spacing="14" alignment="TOP_LEFT">
+                        <!-- Left: profile summary -->
+                        <VBox spacing="12" styleClass="card" prefWidth="320">
+                            <HBox spacing="12" alignment="CENTER_LEFT">
+                                <StackPane styleClass="avatar-wrap">
+                                    <ImageView fx:id="avatarView" fitWidth="84" fitHeight="84" preserveRatio="true" smooth="true" />
+                                </StackPane>
+
+                                <VBox spacing="3">
+                                    <Text text="Account" styleClass="h2" />
+                                    <Text text="Signed in" styleClass="hint" />
+                                </VBox>
+                            </HBox>
+
+                            <Separator />
+
+                            <GridPane hgap="10" vgap="8">
+                                <columnConstraints>
+                                    <ColumnConstraints percentWidth="35" />
+                                    <ColumnConstraints percentWidth="65" />
+                                </columnConstraints>
+
+                                <Label text="Email" styleClass="field-label" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                                <TextField fx:id="emailField" editable="false" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+                                <Label text="Phone" styleClass="field-label" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                                <TextField fx:id="phoneField" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+                            </GridPane>
+
+                            <HBox spacing="10">
+                                <Button text="Change picture" onAction="#changePicture" styleClass="btn" />
+                                <Pane HBox.hgrow="ALWAYS" />
+                                <Button text="Save" onAction="#save" styleClass="btn-primary" />
+                            </HBox>
+                        </VBox>
+
+                        <!-- Right: full editable information -->
+                        <VBox styleClass="card" spacing="10" HBox.hgrow="ALWAYS">
+                            <Text text="Profile information" styleClass="h2" />
+
+                            <GridPane hgap="12" vgap="10">
+                                <columnConstraints>
+                                    <ColumnConstraints percentWidth="22" />
+                                    <ColumnConstraints percentWidth="78" />
+                                </columnConstraints>
+
+                                <Label text="Full name" styleClass="field-label" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                                <TextField fx:id="fullNameField" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+                                <Label text="Company" styleClass="field-label" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                                <TextField fx:id="companyField" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+                                <Label text="Sector" styleClass="field-label" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                                <TextField fx:id="sectorField" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+                            </GridPane>
+
+                            <Label text="Tip: email cannot be changed." styleClass="hint" />
+                        </VBox>
+                    </HBox>
+
+                    <VBox styleClass="card" spacing="10">
+                        <Text text="Security" styleClass="h2" />
+                        <Text text="Change your password" styleClass="subtitle" />
+
+                        <GridPane hgap="12" vgap="10">
+                            <columnConstraints>
+                                <ColumnConstraints percentWidth="22" />
+                                <ColumnConstraints percentWidth="78" />
+                            </columnConstraints>
+
+                            <Label text="New password" styleClass="field-label" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                            <PasswordField fx:id="newPasswordField" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+                            <Label text="Confirm" styleClass="field-label" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                            <PasswordField fx:id="confirmPasswordField" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+                        </GridPane>
+
+                        <HBox spacing="10" alignment="CENTER_LEFT">
+                            <Button text="Update password" onAction="#changePassword" styleClass="btn" />
+                            <Label fx:id="passwordMsgLabel" text="" styleClass="hint" />
+                        </HBox>
+                    </VBox>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+
+</BorderPane>
+
