@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ad91b0c2-ff33-468c-8b26-6a8c0ea1acbb" name="Changes" comment="" />
+    <list default="true" id="ad91b0c2-ff33-468c-8b26-6a8c0ea1acbb" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -15,6 +17,12 @@
       <entry key="_/home/maindude/Desktop/Perso/Codes/Bizhub" value="39YoW0q2DN5OKitKrof6tD7eu32" />
     </persistenceIdMap>
   </component>
+  <component name="CopilotUserSelectedModel">
+    <selectedModels>
+      <entry key="chat-panel" value="GPT-5.2" />
+      <entry key="agent-panel" value="GPT-5.2" />
+    </selectedModels>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
@@ -24,6 +32,18 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="UPDATE_TYPE" value="REBASE" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "skander101"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/skander101/Bizhub.git",
+    "accountId": "989748c9-73f2-454f-a829-dec6ae23d61e"
+  }
+}]]></component>
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
@@ -42,6 +62,8 @@
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Maven.gestion_investissement [compile].executor": "Run",
     "Maven.gestion_investissement [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
+    "Maven.workshopJDBC-3a27 [compile].executor": "Run",
+    "Maven.workshopJDBC-3a27 [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
     "RunOnceActivity.MCP Project settings loaded": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
