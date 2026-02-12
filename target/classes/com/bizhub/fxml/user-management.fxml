@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.bizhub.user.controller.UserManagementController"
+            fx:id="root"
+            stylesheets="@../css/theme.css">
+
+    <left>
+        <!-- Controller will swap this include to admin-sidebar.fxml when needed -->
+        <fx:include fx:id="sidebarInclude" source="user-sidebar.fxml" />
+    </left>
+
+    <top>
+        <HBox spacing="12" alignment="CENTER_LEFT" styleClass="topbar" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets top="14" right="16" bottom="14" left="16" />
+            </padding>
+
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@../images/site-images/logo.png" />
+                </image>
+            </ImageView>
+
+            <VBox spacing="2">
+                <Text text="Users" styleClass="h1" />
+                <Text text="CRUD + filtres + export" styleClass="subtitle" />
+            </VBox>
+
+            <Pane HBox.hgrow="ALWAYS" />
+
+            <Button text="Back" onAction="#goBack" styleClass="btn" />
+        </HBox>
+    </top>
+
+    <center>
+        <VBox spacing="12">
+            <padding>
+                <Insets top="14" right="16" bottom="16" left="16" />
+            </padding>
+
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <TextField fx:id="searchField" promptText="Search by name, email, company..." styleClass="text-field-modern" HBox.hgrow="ALWAYS" />
+
+                <ComboBox fx:id="typeFilter" prefWidth="170" />
+
+                <CheckBox fx:id="activeOnlyCheck" text="Active only" />
+
+                <Button text="Refresh" onAction="#onRefresh" styleClass="btn" />
+                <Button text="Export CSV" onAction="#exportCsv" styleClass="btn-primary" />
+            </HBox>
+
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Button text="Add" onAction="#addUser" styleClass="btn-primary" />
+                <Button text="Edit" onAction="#editSelected" styleClass="btn" />
+                <Button text="Toggle Active" onAction="#toggleActiveSelected" styleClass="btn" />
+                <Pane HBox.hgrow="ALWAYS" />
+
+                <HBox spacing="8" alignment="CENTER_RIGHT">
+                    <Button text="&lt;" onAction="#prevPage" styleClass="btn" />
+                    <Label fx:id="pageLabel" text="Page 1" styleClass="hint" />
+                    <Button text="&gt;" onAction="#nextPage" styleClass="btn" />
+                </HBox>
+            </HBox>
+
+            <ListView fx:id="usersList" VBox.vgrow="ALWAYS" styleClass="cards-list" />
+
+            <Label fx:id="footerLabel" text="" styleClass="hint" />
+        </VBox>
+    </center>
+
+</BorderPane>
+

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.bizhub.user.controller.SignupController"
+           stylesheets="@../css/theme.css">
+
+    <Pane styleClass="bg-gradient" />
+
+    <ScrollPane fitToWidth="true" maxWidth="820" pannable="true">
+        <content>
+            <VBox alignment="TOP_CENTER" spacing="16" maxWidth="760" styleClass="card">
+                <padding>
+                    <Insets top="28" right="30" bottom="28" left="30" />
+                </padding>
+
+                <!-- Logo and Brand Header -->
+                <HBox alignment="CENTER" spacing="14">
+                    <ImageView fitWidth="48" fitHeight="48" preserveRatio="true" styleClass="logo-image">
+                        <image>
+                            <Image url="@../images/site-images/logo.png" />
+                        </image>
+                    </ImageView>
+                    <VBox spacing="2">
+                        <Text text="BizHub" styleClass="brand-title" />
+                        <Text text="Create your account" styleClass="brand-subtitle" />
+                    </VBox>
+                    <Pane HBox.hgrow="ALWAYS" />
+                    <Button text="← Back to login" onAction="#goToLogin" styleClass="btn" />
+                </HBox>
+
+                <Separator opacity="0.25" />
+
+                <GridPane hgap="14" vgap="12">
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="26" />
+                        <ColumnConstraints percentWidth="74" />
+                    </columnConstraints>
+
+                    <Label text="Email" GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="field-label" />
+                    <TextField fx:id="emailField" promptText="you@example.com" GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="text-field-modern" />
+
+                    <Label text="Password" GridPane.rowIndex="1" GridPane.columnIndex="0" styleClass="field-label" />
+                    <PasswordField fx:id="passwordField" promptText="min 6 chars" GridPane.rowIndex="1" GridPane.columnIndex="1" styleClass="text-field-modern" />
+
+                    <Label text="Full name" GridPane.rowIndex="2" GridPane.columnIndex="0" styleClass="field-label" />
+                    <TextField fx:id="fullNameField" promptText="Your name" GridPane.rowIndex="2" GridPane.columnIndex="1" styleClass="text-field-modern" />
+
+                    <Label text="Role" GridPane.rowIndex="3" GridPane.columnIndex="0" styleClass="field-label" />
+                    <ComboBox fx:id="roleBox" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+
+                    <Label text="Phone" GridPane.rowIndex="4" GridPane.columnIndex="0" styleClass="field-label" />
+                    <TextField fx:id="phoneField" promptText="optional" GridPane.rowIndex="4" GridPane.columnIndex="1" styleClass="text-field-modern" />
+
+                    <Label text="Address" GridPane.rowIndex="5" GridPane.columnIndex="0" styleClass="field-label" />
+                    <TextField fx:id="addressField" promptText="optional" GridPane.rowIndex="5" GridPane.columnIndex="1" styleClass="text-field-modern" />
+
+                    <Label text="Bio" GridPane.rowIndex="6" GridPane.columnIndex="0" styleClass="field-label" />
+                    <TextArea fx:id="bioArea" promptText="optional" prefRowCount="3" wrapText="true" GridPane.rowIndex="6" GridPane.columnIndex="1" styleClass="text-field-modern" />
+                </GridPane>
+
+                <!-- STARTUP -->
+                <VBox fx:id="startupSection" spacing="10" visible="false" managed="false" styleClass="role-section">
+                    <HBox alignment="CENTER_LEFT">
+                        <Label text="Startup" styleClass="section-chip" />
+                        <Pane HBox.hgrow="ALWAYS" />
+                        <Text text="Company profile" styleClass="subtitle" />
+                    </HBox>
+
+                    <GridPane hgap="14" vgap="12">
+                        <columnConstraints>
+                            <ColumnConstraints percentWidth="26" />
+                            <ColumnConstraints percentWidth="74" />
+                        </columnConstraints>
+
+                        <Label text="Company" GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="field-label" />
+                        <TextField fx:id="startupCompanyField" promptText="Company name" GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="text-field-modern" />
+
+                        <Label text="Sector" GridPane.rowIndex="1" GridPane.columnIndex="0" styleClass="field-label" />
+                        <TextField fx:id="startupSectorField" promptText="Sector" GridPane.rowIndex="1" GridPane.columnIndex="1" styleClass="text-field-modern" />
+
+                        <Label text="Website" GridPane.rowIndex="2" GridPane.columnIndex="0" styleClass="field-label" />
+                        <TextField fx:id="startupWebsiteField" promptText="https://..." GridPane.rowIndex="2" GridPane.columnIndex="1" styleClass="text-field-modern" />
+
+                        <Label text="Founding date" GridPane.rowIndex="3" GridPane.columnIndex="0" styleClass="field-label" />
+                        <DatePicker fx:id="startupFoundingDatePicker" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+
+                        <Label text="Description" GridPane.rowIndex="4" GridPane.columnIndex="0" styleClass="field-label" />
+                        <TextArea fx:id="startupCompanyDescriptionArea" promptText="What do you do?" prefRowCount="3" wrapText="true" GridPane.rowIndex="4" GridPane.columnIndex="1" styleClass="text-field-modern" />
+                    </GridPane>
+                </VBox>
+
+                <!-- FOURNISSEUR -->
+                <VBox fx:id="supplierSection" spacing="10" visible="false" managed="false" styleClass="role-section">
+                    <HBox alignment="CENTER_LEFT">
+                        <Label text="Fournisseur" styleClass="section-chip" />
+                        <Pane HBox.hgrow="ALWAYS" />
+                        <Text text="Service details" styleClass="subtitle" />
+                    </HBox>
+
+                    <GridPane hgap="14" vgap="12">
+                        <columnConstraints>
+                            <ColumnConstraints percentWidth="26" />
+                            <ColumnConstraints percentWidth="74" />
+                        </columnConstraints>
+
+                        <Label text="Business type" GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="field-label" />
+                        <TextField fx:id="supplierBusinessTypeField" promptText="e.g. Logistics" GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="text-field-modern" />
+
+                        <Label text="Delivery zones" GridPane.rowIndex="1" GridPane.columnIndex="0" styleClass="field-label" />
+                        <TextField fx:id="supplierDeliveryZonesField" promptText="e.g. Tunis, Sousse" GridPane.rowIndex="1" GridPane.columnIndex="1" styleClass="text-field-modern" />
+
+                        <Label text="Payment methods" GridPane.rowIndex="2" GridPane.columnIndex="0" styleClass="field-label" />
+                        <TextField fx:id="supplierPaymentMethodsField" promptText="e.g. Cash, Card" GridPane.rowIndex="2" GridPane.columnIndex="1" styleClass="text-field-modern" />
+
+                        <Label text="Return policy" GridPane.rowIndex="3" GridPane.columnIndex="0" styleClass="field-label" />
+                        <TextArea fx:id="supplierReturnPolicyArea" promptText="optional" prefRowCount="3" wrapText="true" GridPane.rowIndex="3" GridPane.columnIndex="1" styleClass="text-field-modern" />
+                    </GridPane>
+                </VBox>
+
+                <!-- INVESTISSEUR -->
+                <VBox fx:id="investorSection" spacing="10" visible="false" managed="false" styleClass="role-section">
+                    <HBox alignment="CENTER_LEFT">
+                        <Label text="Investisseur" styleClass="section-chip" />
+                        <Pane HBox.hgrow="ALWAYS" />
+                        <Text text="Preferences" styleClass="subtitle" />
+                    </HBox>
+
+                    <GridPane hgap="14" vgap="12">
+                        <columnConstraints>
+                            <ColumnConstraints percentWidth="26" />
+                            <ColumnConstraints percentWidth="74" />
+                        </columnConstraints>
+
+                        <Label text="Investment sector" GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="field-label" />
+                        <TextField fx:id="investorSectorField" promptText="e.g. Fintech" GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="text-field-modern" />
+
+                        <Label text="Max budget" GridPane.rowIndex="1" GridPane.columnIndex="0" styleClass="field-label" />
+                        <TextField fx:id="investorMaxBudgetField" promptText="e.g. 50000" GridPane.rowIndex="1" GridPane.columnIndex="1" styleClass="text-field-modern" />
+
+                        <Label text="Years exp." GridPane.rowIndex="2" GridPane.columnIndex="0" styleClass="field-label" />
+                        <TextField fx:id="investorYearsExperienceField" promptText="optional" GridPane.rowIndex="2" GridPane.columnIndex="1" styleClass="text-field-modern" />
+
+                        <Label text="Represented company" GridPane.rowIndex="3" GridPane.columnIndex="0" styleClass="field-label" />
+                        <TextField fx:id="investorRepresentedCompanyField" promptText="optional" GridPane.rowIndex="3" GridPane.columnIndex="1" styleClass="text-field-modern" />
+                    </GridPane>
+                </VBox>
+
+                <!-- FORMATEUR -->
+                <VBox fx:id="trainerSection" spacing="10" visible="false" managed="false" styleClass="role-section">
+                    <HBox alignment="CENTER_LEFT">
+                        <Label text="Formateur" styleClass="section-chip" />
+                        <Pane HBox.hgrow="ALWAYS" />
+                        <Text text="Professional info" styleClass="subtitle" />
+                    </HBox>
+
+                    <GridPane hgap="14" vgap="12">
+                        <columnConstraints>
+                            <ColumnConstraints percentWidth="26" />
+                            <ColumnConstraints percentWidth="74" />
+                        </columnConstraints>
+
+                        <Label text="Specialty" GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="field-label" />
+                        <TextField fx:id="trainerSpecialtyField" promptText="e.g. Java" GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="text-field-modern" />
+
+                        <Label text="Hourly rate" GridPane.rowIndex="1" GridPane.columnIndex="0" styleClass="field-label" />
+                        <TextField fx:id="trainerHourlyRateField" promptText="e.g. 60" GridPane.rowIndex="1" GridPane.columnIndex="1" styleClass="text-field-modern" />
+
+                        <Label text="Availability" GridPane.rowIndex="2" GridPane.columnIndex="0" styleClass="field-label" />
+                        <TextField fx:id="trainerAvailabilityField" promptText="optional" GridPane.rowIndex="2" GridPane.columnIndex="1" styleClass="text-field-modern" />
+
+                        <Label text="CV URL" GridPane.rowIndex="3" GridPane.columnIndex="0" styleClass="field-label" />
+                        <TextField fx:id="trainerCvUrlField" promptText="optional" GridPane.rowIndex="3" GridPane.columnIndex="1" styleClass="text-field-modern" />
+                    </GridPane>
+                </VBox>
+
+                <Button fx:id="signupButton" text="Sign up" onAction="#signup" maxWidth="1.7976931348623157E308" styleClass="btn-primary" />
+                <Label fx:id="errorLabel" wrapText="true" styleClass="error-text" />
+
+                <Label text="Tip: switch roles and the form adapts automatically." styleClass="hint" />
+            </VBox>
+        </content>
+    </ScrollPane>
+</StackPane>
+

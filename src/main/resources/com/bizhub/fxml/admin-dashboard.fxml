@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane stylesheets="@../css/theme.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bizhub.user.controller.AdminDashboardController">
+
+    <left>
+        <fx:include source="admin-sidebar.fxml" />
+    </left>
+
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="12" styleClass="topbar">
+            <padding>
+                <Insets bottom="14" left="16" right="16" top="14" />
+            </padding>
+            <Text styleClass="h1" text="Admin Dashboard" />
+            <Pane HBox.hgrow="ALWAYS" />
+            <Label fx:id="adminNameLabel" styleClass="subtitle" text="Admin" />
+        </HBox>
+    </top>
+
+    <center>
+        <VBox spacing="14">
+            <padding>
+                <Insets bottom="16" left="16" right="16" top="14" />
+            </padding>
+
+            <HBox spacing="12">
+                <VBox spacing="6" styleClass="stat-card" HBox.hgrow="ALWAYS">
+                    <Text styleClass="stat-title" text="Total Users" />
+                    <Text fx:id="totalUsersText" styleClass="stat-value" text="0" />
+                </VBox>
+                <VBox spacing="6" styleClass="stat-card" HBox.hgrow="ALWAYS">
+                    <Text styleClass="stat-title" text="Active Users" />
+                    <Text fx:id="activeUsersText" styleClass="stat-value" text="0" />
+                </VBox>
+                <VBox spacing="6" styleClass="stat-card" HBox.hgrow="ALWAYS">
+                    <Text styleClass="stat-title" text="Inactive Users" />
+                    <Text fx:id="inactiveUsersText" styleClass="stat-value" text="0" />
+                </VBox>
+                <VBox spacing="6" styleClass="stat-card" HBox.hgrow="ALWAYS">
+                    <Text styleClass="stat-title" text="Avg Rating" />
+                    <Text fx:id="avgRatingText" styleClass="stat-value" text="0" />
+                </VBox>
+            </HBox>
+
+            <HBox spacing="12" VBox.vgrow="ALWAYS">
+                <VBox spacing="10" styleClass="card" HBox.hgrow="ALWAYS">
+                    <Text styleClass="h2" text="Users by Type" />
+                    <PieChart fx:id="usersPie" VBox.vgrow="ALWAYS" />
+                </VBox>
+
+                <VBox spacing="10" styleClass="card" HBox.hgrow="ALWAYS">
+                    <Text styleClass="h2" text="Latest Users" />
+                    <TableView fx:id="latestUsersTable" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="colLatestName" prefWidth="190" text="Name" />
+                            <TableColumn fx:id="colLatestEmail" prefWidth="260" text="Email" />
+                            <TableColumn fx:id="colLatestType" prefWidth="120" text="Type" />
+                            <TableColumn fx:id="colLatestCreated" prefWidth="160" text="Created" />
+                        </columns>
+                    </TableView>
+                </VBox>
+            </HBox>
+
+            <VBox spacing="10" styleClass="card">
+                <Text styleClass="h2" text="Participations par formation" />
+                <TableView fx:id="participationsTable" prefHeight="220">
+                    <columns>
+                        <TableColumn fx:id="colPartFormation" prefWidth="220" text="Formation" />
+                        <TableColumn fx:id="colPartUser" prefWidth="180" text="Participant" />
+                        <TableColumn fx:id="colPartDate" prefWidth="140" text="Date affectation" />
+                        <TableColumn fx:id="colPartRemarques" prefWidth="300" text="Remarques" />
+                    </columns>
+                </TableView>
+                <Button text="Voir toutes les participations" onAction="#goParticipations" styleClass="btn" />
+            </VBox>
+        </VBox>
+    </center>
+
+</BorderPane>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.bizhub.formation.controller.FormationFormController"
+      spacing="12" stylesheets="@../css/theme.css" styleClass="card">
+
+    <padding>
+        <Insets top="16" right="16" bottom="16" left="16" />
+    </padding>
+
+    <Text fx:id="titleText" text="Formation" styleClass="h1" />
+
+    <GridPane hgap="12" vgap="10">
+        <columnConstraints>
+            <ColumnConstraints percentWidth="28" />
+            <ColumnConstraints percentWidth="72" />
+        </columnConstraints>
+
+        <Label text="Title" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+        <TextField fx:id="titleField" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+        <Label text="Trainer" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+        <ComboBox fx:id="trainerBox" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+        <Label text="Start date" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+        <DatePicker fx:id="startDatePicker" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+
+        <Label text="End date" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+        <DatePicker fx:id="endDatePicker" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+
+        <Label text="Cost" GridPane.rowIndex="4" GridPane.columnIndex="0" />
+        <TextField fx:id="costField" promptText="0.00" GridPane.rowIndex="4" GridPane.columnIndex="1" />
+
+        <Label text="Description" GridPane.rowIndex="5" GridPane.columnIndex="0" />
+        <TextArea fx:id="descriptionArea" prefRowCount="3" wrapText="true" GridPane.rowIndex="5" GridPane.columnIndex="1" />
+
+    </GridPane>
+
+    <Label fx:id="errorLabel" text="" styleClass="error-text" wrapText="true" />
+
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="Cancel" onAction="#cancel" styleClass="btn" />
+        <Button fx:id="saveButton" text="Save" onAction="#save" styleClass="btn-primary" />
+    </HBox>
+
+</VBox>
+
