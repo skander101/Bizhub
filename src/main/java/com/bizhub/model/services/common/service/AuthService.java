@@ -1,7 +1,7 @@
 package com.bizhub.model.services.common.service;
 
 import com.bizhub.model.users_avis.user.User;
-import com.bizhub.model.services.user.UserService;
+import com.bizhub.model.services.user_avis.user.UserService;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.SQLException;

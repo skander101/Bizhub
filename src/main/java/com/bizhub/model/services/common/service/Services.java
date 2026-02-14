@@ -1,9 +1,9 @@
 package com.bizhub.model.services.common.service;
 
-import com.bizhub.model.services.formation.FormationService;
-import com.bizhub.model.services.review.ReviewService;
-import com.bizhub.model.services.user.UserService;
 import com.bizhub.model.services.common.dao.MyDatabase;
+import com.bizhub.model.services.user_avis.formation.FormationService;
+import com.bizhub.model.services.user_avis.review.ReviewService;
+import com.bizhub.model.services.user_avis.user.UserService;
 
 import java.sql.Connection;
 
@@ -73,4 +73,3 @@ public final class Services {
         return reportService;
     }
 }
-

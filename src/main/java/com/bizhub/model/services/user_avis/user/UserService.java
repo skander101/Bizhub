@@ -1,4 +1,4 @@
-package com.bizhub.model.services.user;
+package com.bizhub.model.services.user_avis.user;
 
 import com.bizhub.model.services.common.dao.MyDatabase;
 import com.bizhub.model.users_avis.user.User;

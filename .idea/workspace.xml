@@ -6,6 +6,22 @@
   <component name="ChangeListManager">
     <list default="true" id="ad91b0c2-ff33-468c-8b26-6a8c0ea1acbb" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/users_avis/formation/FormationDetailsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/users_avis/formation/FormationDetailsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/users_avis/formation/FormationManagementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/users_avis/formation/FormationManagementController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bizhub/model/services/common/service/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/model/services/common/service/AuthService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bizhub/model/services/common/service/ReportService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/model/services/common/service/ReportService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bizhub/model/services/common/service/Services.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/model/services/common/service/Services.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bizhub/model/services/formation/FormationContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/model/services/user_avis/formation/FormationContext.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bizhub/model/services/formation/FormationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/model/services/user_avis/formation/FormationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bizhub/model/services/review/ReviewService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/model/services/user_avis/review/ReviewService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bizhub/model/services/user/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/model/services/user_avis/user/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/model/services/common/service/AuthService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/model/services/common/service/AuthService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/model/services/common/service/ReportService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/model/services/common/service/ReportService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/model/services/formation/FormationService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/model/services/review/ReviewService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/model/services/user/UserService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -1,4 +1,4 @@
-package com.bizhub.model.services.formation;
+package com.bizhub.model.services.user_avis.formation;
 
 /** Simple context to pass selected formation around without adding a DI framework. */
 public final class FormationContext {

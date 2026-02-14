@@ -4,7 +4,7 @@ import com.bizhub.model.users_avis.formation.Formation;
 import com.bizhub.model.services.common.service.AppSession;
 import com.bizhub.model.services.common.service.NavigationService;
 import com.bizhub.model.services.common.service.Services;
-import com.bizhub.model.services.formation.FormationContext;
+import com.bizhub.model.services.user_avis.formation.FormationContext;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

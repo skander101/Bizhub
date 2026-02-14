@@ -1,7 +1,7 @@
 package com.bizhub.model.services.common.service;
 
-import com.bizhub.model.services.review.ReviewService;
-import com.bizhub.model.services.user.UserService;
+import com.bizhub.model.services.user_avis.review.ReviewService;
+import com.bizhub.model.services.user_avis.user.UserService;
 
 import java.sql.SQLException;
 import java.util.HashMap;

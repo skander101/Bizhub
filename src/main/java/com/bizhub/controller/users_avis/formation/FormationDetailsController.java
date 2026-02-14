@@ -1,7 +1,7 @@
 package com.bizhub.controller.users_avis.formation;
 
 import com.bizhub.model.users_avis.formation.Formation;
-import com.bizhub.model.services.formation.FormationContext;
+import com.bizhub.model.services.user_avis.formation.FormationContext;
 import com.bizhub.controller.users_avis.review.ReviewFormController;
 import com.bizhub.model.users_avis.review.Review;
 import com.bizhub.model.services.common.service.AppSession;
