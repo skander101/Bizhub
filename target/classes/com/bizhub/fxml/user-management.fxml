@@ -9,7 +9,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.bizhub.controller.user.UserManagementController"
+            fx:controller="com.bizhub.controller.users_avis.user.UserManagementController"
             fx:id="root"
             stylesheets="@../css/theme.css">
 

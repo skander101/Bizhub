@@ -1,6 +1,6 @@
 package com.bizhub.model.services.common.service;
 
-import com.bizhub.model.user.User;
+import com.bizhub.model.users_avis.user.User;
 
 /** Simple global session holder for this mini-project. */
 public final class AppSession {

@@ -1,7 +1,7 @@
 package com.bizhub.model.services.formation;
 
 import com.bizhub.model.services.common.dao.MyDatabase;
-import com.bizhub.model.formation.Formation;
+import com.bizhub.model.users_avis.formation.Formation;
 
 import java.math.BigDecimal;
 import java.sql.*;

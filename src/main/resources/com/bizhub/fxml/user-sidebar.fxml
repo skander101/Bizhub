@@ -9,7 +9,7 @@
 
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.bizhub.controller.user.UserSidebarController"
+      fx:controller="com.bizhub.controller.users_avis.user.UserSidebarController"
       spacing="12"
       styleClass="sidebar user-sidebar">
 

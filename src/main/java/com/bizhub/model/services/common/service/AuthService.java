@@ -1,6 +1,6 @@
 package com.bizhub.model.services.common.service;
 
-import com.bizhub.model.user.User;
+import com.bizhub.model.users_avis.user.User;
 import com.bizhub.model.services.user.UserService;
 import org.mindrot.jbcrypt.BCrypt;
 

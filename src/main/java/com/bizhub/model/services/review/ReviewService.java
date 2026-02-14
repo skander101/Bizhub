@@ -1,7 +1,7 @@
 package com.bizhub.model.services.review;
 
 import com.bizhub.model.services.common.dao.MyDatabase;
-import com.bizhub.model.review.Review;
+import com.bizhub.model.users_avis.review.Review;
 
 import java.sql.*;
 import java.util.ArrayList;

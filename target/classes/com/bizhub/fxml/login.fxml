@@ -9,7 +9,7 @@
 
 <StackPane xmlns="http://javafx.com/javafx"
            xmlns:fx="http://javafx.com/fxml"
-           fx:controller="com.bizhub.controller.user.LoginController"
+           fx:controller="com.bizhub.controller.users_avis.user.LoginController"
            stylesheets="@../css/theme.css">
 
     <!-- Background gradient -->

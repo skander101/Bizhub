@@ -1,7 +1,7 @@
 package com.bizhub.model.services.user;
 
 import com.bizhub.model.services.common.dao.MyDatabase;
-import com.bizhub.model.user.User;
+import com.bizhub.model.users_avis.user.User;
 
 import java.io.File;
 import java.io.IOException;
