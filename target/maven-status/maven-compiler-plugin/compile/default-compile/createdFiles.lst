@@ -4,6 +4,7 @@ com/bizhub/model/services/common/service/ValidationService.class
 com/bizhub/controller/users_avis/user/UserSidebarController.class
 com/bizhub/model/users_avis/review/Review.class
 com/bizhub/model/services/user_avis/review/ReviewService$FormationAvg.class
+com/bizhub/model/services/common/service/AlertHelper.class
 com/bizhub/controller/users_avis/user/UserManagementController.class
 com/bizhub/controller/users_avis/review/ReviewManagementController$1.class
 com/bizhub/model/services/common/service/AppSession.class

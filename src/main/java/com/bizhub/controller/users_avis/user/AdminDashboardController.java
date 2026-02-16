@@ -168,11 +168,7 @@ public class AdminDashboardController {
     }
 
     private void showError(String msg) {
-        Alert a = new Alert(Alert.AlertType.ERROR);
-        a.setTitle("Error");
-        a.setHeaderText("Operation failed");
-        a.setContentText(msg);
-        a.showAndWait();
+        AlertHelper.showError(msg);
     }
 
     private static String nullToEmpty(String s) {

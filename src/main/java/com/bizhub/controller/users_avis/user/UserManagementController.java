@@ -118,6 +118,7 @@ public class UserManagementController {
         confirm.setTitle("Confirm");
         confirm.setHeaderText("Toggle active status?");
         confirm.setContentText("User: " + u.getEmail());
+        AlertHelper.styleAlert(confirm);
         if (confirm.showAndWait().orElse(ButtonType.CANCEL) != ButtonType.OK) return;
 
         try {
@@ -395,18 +396,10 @@ public class UserManagementController {
     }
 
     private void showError(String msg) {
-        Alert a = new Alert(Alert.AlertType.ERROR);
-        a.setTitle("Error");
-        a.setHeaderText("Operation failed");
-        a.setContentText(msg);
-        a.showAndWait();
+        AlertHelper.showError(msg);
     }
 
     private void info(String msg) {
-        Alert a = new Alert(Alert.AlertType.INFORMATION);
-        a.setTitle("Info");
-        a.setHeaderText(null);
-        a.setContentText(msg);
-        a.showAndWait();
+        AlertHelper.showInfo(msg);
     }
 }

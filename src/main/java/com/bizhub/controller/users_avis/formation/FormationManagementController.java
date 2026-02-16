@@ -1,6 +1,7 @@
 package com.bizhub.controller.users_avis.formation;
 
 import com.bizhub.model.users_avis.formation.Formation;
+import com.bizhub.model.services.common.service.AlertHelper;
 import com.bizhub.model.services.common.service.AppSession;
 import com.bizhub.model.services.common.service.NavigationService;
 import com.bizhub.model.services.common.service.Services;
@@ -143,6 +144,7 @@ public class FormationManagementController {
         confirm.setTitle("Confirm delete");
         confirm.setHeaderText("Delete formation?");
         confirm.setContentText("This will also delete related reviews (FK cascade).\n" + f.getTitle());
+        AlertHelper.styleAlert(confirm);
         if (confirm.showAndWait().orElse(ButtonType.CANCEL) != ButtonType.OK) return;
 
         try {
@@ -226,18 +228,10 @@ public class FormationManagementController {
     }
 
     private void showError(String msg) {
-        Alert a = new Alert(Alert.AlertType.ERROR);
-        a.setTitle("Error");
-        a.setHeaderText("Operation failed");
-        a.setContentText(msg);
-        a.showAndWait();
+        AlertHelper.showError(msg);
     }
 
     private void info(String msg) {
-        Alert a = new Alert(Alert.AlertType.INFORMATION);
-        a.setTitle("Info");
-        a.setHeaderText(null);
-        a.setContentText(msg);
-        a.showAndWait();
+        AlertHelper.showInfo(msg);
     }
 }

@@ -60,7 +60,7 @@
 
             <VBox styleClass="card" spacing="10" VBox.vgrow="ALWAYS">
                 <Text text="Reviews" styleClass="h2" />
-                <TableView fx:id="reviewsTable" VBox.vgrow="ALWAYS">
+                <TableView fx:id="reviewsTable" VBox.vgrow="ALWAYS" styleClass="reviews-table">
                     <columns>
                         <TableColumn fx:id="colReviewer" text="Reviewer" prefWidth="240" />
                         <TableColumn fx:id="colRating" text="Rating" prefWidth="90" />

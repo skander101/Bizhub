@@ -301,19 +301,57 @@
 .table-row-cell {
     -fx-background-color: transparent;
     -fx-padding: 8 0;
+    -fx-cursor: hand;
 }
 
 .table-row-cell:filled {
     -fx-background-color: rgba(10, 25, 47, 0.25);
 }
 
+.table-row-cell:filled:hover {
+    -fx-background-color: rgba(255, 184, 77, 0.18);
+    -fx-border-color: rgba(255, 184, 77, 0.35);
+    -fx-border-width: 1 0;
+}
+
 .table-row-cell:filled:selected {
-    -fx-background-color: rgba(255, 184, 77, 0.22);
+    -fx-background-color: rgba(255, 184, 77, 0.28);
+    -fx-border-color: #FFB84D;
+    -fx-border-width: 1 0;
+    -fx-effect: dropshadow(gaussian, rgba(255, 184, 77, 0.20), 10, 0.1, 0, 0);
+}
+
+.table-row-cell:filled:selected:hover {
+    -fx-background-color: rgba(255, 184, 77, 0.35);
+    -fx-border-color: #FFD54F;
+}
+
+.table-row-cell:filled:selected .text {
+    -fx-fill: #FFD54F;
+    -fx-font-weight: 700;
 }
 
 .table-row-cell .text {
     -fx-fill: #FFFFFF;
     -fx-font-size: 14px;
+}
+
+/* Reviews table specific styles */
+.reviews-table .table-row-cell:filled:selected {
+    -fx-background-color: rgba(255, 184, 77, 0.32);
+    -fx-border-color: #FFB84D;
+    -fx-border-width: 2 0;
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+}
+
+.reviews-table .table-row-cell:filled:selected .table-cell {
+    -fx-text-fill: #FFD54F;
+}
+
+.reviews-table .table-row-cell:filled:selected .text {
+    -fx-fill: #FFD54F;
+    -fx-font-weight: 800;
 }
 
 .separator {
@@ -359,7 +397,8 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.22), 20, 0.16, 0, 10);
 }
 
-.review-card:hover {
+.review-card:hover,
+.review-card-selected {
     -fx-border-color: #FFB84D;
     -fx-effect: dropshadow(gaussian, rgba(255, 184, 77, 0.25), 24, 0.20, 0, 12);
 }
@@ -818,23 +857,8 @@
     -fx-font-size: 15px;
 }
 
-.table-row-cell {
-    -fx-background-color: transparent;
-    -fx-padding: 10 0;
-}
-
-.table-row-cell:filled {
-    -fx-background-color: rgba(10, 25, 47, 0.25);
-}
-
-.table-row-cell:filled:selected {
-    -fx-background-color: rgba(255, 184, 77, 0.22);
-}
-
-.table-row-cell .text {
-    -fx-fill: #FFFFFF;
-    -fx-font-size: 14px;
-}
+/* Overriding table-row-cell styles below with enhanced selection support */
+/* Main table-row-cell styles are defined earlier in file */
 
 /* =========================================================
  * Loader overlay must always be navy (even if scene root changes).

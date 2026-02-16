@@ -11,7 +11,7 @@
             fx:controller="com.bizhub.controller.users_avis.user.UserProfileController"
             fx:id="root"
             styleClass="bg-gradient"
-            stylesheets="@../css/user-management.css">
+            stylesheets="@../css/theme.css, @../css/user-management.css">
 
     <left>
         <!-- Controller will swap this include to admin-sidebar.fxml for admins -->
@@ -35,217 +35,241 @@
     <center>
         <ScrollPane fitToWidth="true" styleClass="profile-scroll" BorderPane.alignment="CENTER">
             <content>
-                <VBox spacing="14">
+                <VBox spacing="20">
                     <padding>
-                        <Insets top="14" right="16" bottom="16" left="16" />
+                        <Insets top="24" right="32" bottom="32" left="32" />
                     </padding>
 
-                    <HBox spacing="14" alignment="TOP_LEFT">
-                        <!-- Left: profile summary -->
-                        <VBox spacing="12" styleClass="card" prefWidth="320">
-                            <HBox spacing="12" alignment="CENTER_LEFT">
-                                <StackPane styleClass="avatar-wrap">
-                                    <ImageView fx:id="avatarView" fitWidth="84" fitHeight="84" preserveRatio="true" smooth="true" />
-                                </StackPane>
+                    <!-- Single unified profile card -->
+                    <VBox styleClass="card, profile-main-card" spacing="24">
+                        <padding>
+                            <Insets top="32" right="40" bottom="32" left="40" />
+                        </padding>
 
-                                <VBox spacing="3">
-                                    <Text text="Account" styleClass="h2" />
-                                    <Label fx:id="roleLabel" text="" styleClass="hint" />
-                                </VBox>
-                            </HBox>
+                        <!-- Header with avatar -->
+                        <HBox spacing="24" alignment="CENTER_LEFT">
+                            <StackPane styleClass="avatar-wrap-large">
+                                <ImageView fx:id="avatarView" fitWidth="120" fitHeight="120" preserveRatio="true" smooth="true" />
+                            </StackPane>
 
-                            <Separator />
+                            <VBox spacing="6" HBox.hgrow="ALWAYS">
+                                <Text text="Your Profile" styleClass="h1" />
+                                <Label fx:id="roleLabel" text="" styleClass="role-badge" />
+                                <Label text="Manage your account information and settings" styleClass="subtitle" />
+                            </VBox>
 
-                            <GridPane hgap="10" vgap="8">
-                                <columnConstraints>
-                                    <ColumnConstraints percentWidth="35" />
-                                    <ColumnConstraints percentWidth="65" />
-                                </columnConstraints>
-
-                                <Label text="Email" styleClass="field-label" GridPane.rowIndex="0" GridPane.columnIndex="0" />
-                                <TextField fx:id="emailField" editable="false" GridPane.rowIndex="0" GridPane.columnIndex="1" />
-
-                                <Label text="Phone" styleClass="field-label" GridPane.rowIndex="1" GridPane.columnIndex="0" />
-                                <TextField fx:id="phoneField" GridPane.rowIndex="1" GridPane.columnIndex="1" />
-                            </GridPane>
-
-                            <HBox spacing="10">
+                            <VBox spacing="10" alignment="CENTER_RIGHT">
                                 <Button text="Change picture" onAction="#changePicture" styleClass="btn" />
-                                <Pane HBox.hgrow="ALWAYS" />
-                                <Button text="Save" onAction="#save" styleClass="btn-primary" />
-                            </HBox>
-                        </VBox>
+                                <Button text="Save changes" onAction="#save" styleClass="btn-primary" prefWidth="140" />
+                            </VBox>
+                        </HBox>
 
-                        <!-- Right: full editable information -->
-                        <VBox styleClass="card" spacing="10" HBox.hgrow="ALWAYS">
-                            <Text text="Profile information" styleClass="h2" />
+                        <Separator styleClass="section-separator" />
 
-                            <GridPane hgap="12" vgap="10">
+                        <!-- Basic Information Section -->
+                        <VBox spacing="16">
+                            <Text text="Basic Information" styleClass="section-title" />
+
+                            <GridPane hgap="24" vgap="14" styleClass="profile-grid">
                                 <columnConstraints>
-                                    <ColumnConstraints percentWidth="22" />
-                                    <ColumnConstraints percentWidth="78" />
+                                    <ColumnConstraints percentWidth="15" />
+                                    <ColumnConstraints percentWidth="35" />
+                                    <ColumnConstraints percentWidth="15" />
+                                    <ColumnConstraints percentWidth="35" />
                                 </columnConstraints>
 
                                 <Label text="Full name" styleClass="field-label" GridPane.rowIndex="0" GridPane.columnIndex="0" />
-                                <TextField fx:id="fullNameField" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+                                <TextField fx:id="fullNameField" styleClass="profile-field" GridPane.rowIndex="0" GridPane.columnIndex="1" />
 
-                                <Label text="Address" styleClass="field-label" GridPane.rowIndex="1" GridPane.columnIndex="0" />
-                                <TextField fx:id="addressField" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+                                <Label text="Email" styleClass="field-label" GridPane.rowIndex="0" GridPane.columnIndex="2" />
+                                <TextField fx:id="emailField" editable="false" styleClass="profile-field, readonly-field" GridPane.rowIndex="0" GridPane.columnIndex="3" />
 
-                                <Label text="Bio" styleClass="field-label" GridPane.rowIndex="2" GridPane.columnIndex="0" />
-                                <TextArea fx:id="bioArea" prefRowCount="3" wrapText="true" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+                                <Label text="Phone" styleClass="field-label" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                                <TextField fx:id="phoneField" styleClass="profile-field" GridPane.rowIndex="1" GridPane.columnIndex="1" />
 
-                                <Label text="Company" styleClass="field-label" GridPane.rowIndex="3" GridPane.columnIndex="0" />
-                                <TextField fx:id="companyField" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+                                <Label text="Address" styleClass="field-label" GridPane.rowIndex="1" GridPane.columnIndex="2" />
+                                <TextField fx:id="addressField" styleClass="profile-field" GridPane.rowIndex="1" GridPane.columnIndex="3" />
 
-                                <Label text="Sector" styleClass="field-label" GridPane.rowIndex="4" GridPane.columnIndex="0" />
-                                <TextField fx:id="sectorField" GridPane.rowIndex="4" GridPane.columnIndex="1" />
+                                <Label text="Company" styleClass="field-label" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                                <TextField fx:id="companyField" styleClass="profile-field" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+
+                                <Label text="Sector" styleClass="field-label" GridPane.rowIndex="2" GridPane.columnIndex="2" />
+                                <TextField fx:id="sectorField" styleClass="profile-field" GridPane.rowIndex="2" GridPane.columnIndex="3" />
+
+                                <Label text="Bio" styleClass="field-label" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+                                <TextArea fx:id="bioArea" prefRowCount="3" wrapText="true" styleClass="profile-field" GridPane.rowIndex="3" GridPane.columnIndex="1" GridPane.columnSpan="3" />
                             </GridPane>
-
-                            <Label text="Tip: email cannot be changed." styleClass="hint" />
                         </VBox>
-                    </HBox>
 
-                    <!-- Role-specific sections (only one is shown, depending on current user role) -->
-                    <VBox styleClass="card" spacing="10">
-                        <Text text="Role-specific information" styleClass="h2" />
-                        <Text text="Fields below depend on your account type" styleClass="subtitle" />
+                        <Separator styleClass="section-separator" />
 
-                        <VBox spacing="12">
+                        <!-- Role-specific Section -->
+                        <VBox spacing="16">
+                            <Text text="Role-specific Information" styleClass="section-title" />
+                            <Label text="Fields below depend on your account type" styleClass="hint" />
+
                             <!-- STARTUP -->
-                            <TitledPane fx:id="startupPane" text="Startup" expanded="true" animated="true">
+                            <TitledPane fx:id="startupPane" text="Startup Details" expanded="true" animated="true" styleClass="role-pane">
                                 <content>
-                                    <GridPane hgap="12" vgap="10">
+                                    <GridPane hgap="24" vgap="14" styleClass="profile-grid">
+                                        <padding>
+                                            <Insets top="12" right="16" bottom="12" left="16" />
+                                        </padding>
                                         <columnConstraints>
-                                            <ColumnConstraints percentWidth="22" />
-                                            <ColumnConstraints percentWidth="78" />
+                                            <ColumnConstraints percentWidth="18" />
+                                            <ColumnConstraints percentWidth="82" />
                                         </columnConstraints>
 
                                         <Label text="Description" styleClass="field-label" GridPane.rowIndex="0" GridPane.columnIndex="0" />
-                                        <TextArea fx:id="startupCompanyDescriptionArea" prefRowCount="3" wrapText="true" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+                                        <TextArea fx:id="startupCompanyDescriptionArea" prefRowCount="3" wrapText="true" styleClass="profile-field" GridPane.rowIndex="0" GridPane.columnIndex="1" />
 
                                         <Label text="Website" styleClass="field-label" GridPane.rowIndex="1" GridPane.columnIndex="0" />
-                                        <TextField fx:id="startupWebsiteField" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+                                        <TextField fx:id="startupWebsiteField" styleClass="profile-field" GridPane.rowIndex="1" GridPane.columnIndex="1" />
 
                                         <Label text="Founding date" styleClass="field-label" GridPane.rowIndex="2" GridPane.columnIndex="0" />
-                                        <DatePicker fx:id="startupFoundingDatePicker" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+                                        <DatePicker fx:id="startupFoundingDatePicker" styleClass="profile-field" GridPane.rowIndex="2" GridPane.columnIndex="1" />
                                     </GridPane>
                                 </content>
                             </TitledPane>
 
                             <!-- FOURNISSEUR -->
-                            <TitledPane fx:id="supplierPane" text="Fournisseur" expanded="true" animated="true">
+                            <TitledPane fx:id="supplierPane" text="Supplier Details" expanded="true" animated="true" styleClass="role-pane">
                                 <content>
-                                    <GridPane hgap="12" vgap="10">
+                                    <GridPane hgap="24" vgap="14" styleClass="profile-grid">
+                                        <padding>
+                                            <Insets top="12" right="16" bottom="12" left="16" />
+                                        </padding>
                                         <columnConstraints>
-                                            <ColumnConstraints percentWidth="22" />
-                                            <ColumnConstraints percentWidth="78" />
+                                            <ColumnConstraints percentWidth="18" />
+                                            <ColumnConstraints percentWidth="82" />
                                         </columnConstraints>
 
                                         <Label text="Business type" styleClass="field-label" GridPane.rowIndex="0" GridPane.columnIndex="0" />
-                                        <TextField fx:id="supplierBusinessTypeField" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+                                        <TextField fx:id="supplierBusinessTypeField" styleClass="profile-field" GridPane.rowIndex="0" GridPane.columnIndex="1" />
 
                                         <Label text="Delivery zones" styleClass="field-label" GridPane.rowIndex="1" GridPane.columnIndex="0" />
-                                        <TextArea fx:id="supplierDeliveryZonesArea" prefRowCount="2" wrapText="true" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+                                        <TextArea fx:id="supplierDeliveryZonesArea" prefRowCount="2" wrapText="true" styleClass="profile-field" GridPane.rowIndex="1" GridPane.columnIndex="1" />
 
                                         <Label text="Payment methods" styleClass="field-label" GridPane.rowIndex="2" GridPane.columnIndex="0" />
-                                        <TextArea fx:id="supplierPaymentMethodsArea" prefRowCount="2" wrapText="true" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+                                        <TextArea fx:id="supplierPaymentMethodsArea" prefRowCount="2" wrapText="true" styleClass="profile-field" GridPane.rowIndex="2" GridPane.columnIndex="1" />
 
                                         <Label text="Return policy" styleClass="field-label" GridPane.rowIndex="3" GridPane.columnIndex="0" />
-                                        <TextArea fx:id="supplierReturnPolicyArea" prefRowCount="3" wrapText="true" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+                                        <TextArea fx:id="supplierReturnPolicyArea" prefRowCount="3" wrapText="true" styleClass="profile-field" GridPane.rowIndex="3" GridPane.columnIndex="1" />
                                     </GridPane>
                                 </content>
                             </TitledPane>
 
                             <!-- INVESTISSEUR -->
-                            <TitledPane fx:id="investorPane" text="Investisseur" expanded="true" animated="true">
+                            <TitledPane fx:id="investorPane" text="Investor Details" expanded="true" animated="true" styleClass="role-pane">
                                 <content>
-                                    <GridPane hgap="12" vgap="10">
+                                    <GridPane hgap="24" vgap="14" styleClass="profile-grid">
+                                        <padding>
+                                            <Insets top="12" right="16" bottom="12" left="16" />
+                                        </padding>
                                         <columnConstraints>
-                                            <ColumnConstraints percentWidth="22" />
-                                            <ColumnConstraints percentWidth="78" />
+                                            <ColumnConstraints percentWidth="18" />
+                                            <ColumnConstraints percentWidth="32" />
+                                            <ColumnConstraints percentWidth="18" />
+                                            <ColumnConstraints percentWidth="32" />
                                         </columnConstraints>
 
                                         <Label text="Investment sector" styleClass="field-label" GridPane.rowIndex="0" GridPane.columnIndex="0" />
-                                        <TextField fx:id="investorSectorField" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+                                        <TextField fx:id="investorSectorField" styleClass="profile-field" GridPane.rowIndex="0" GridPane.columnIndex="1" />
 
-                                        <Label text="Max budget" styleClass="field-label" GridPane.rowIndex="1" GridPane.columnIndex="0" />
-                                        <TextField fx:id="investorMaxBudgetField" promptText="e.g. 25000" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+                                        <Label text="Max budget" styleClass="field-label" GridPane.rowIndex="0" GridPane.columnIndex="2" />
+                                        <TextField fx:id="investorMaxBudgetField" promptText="e.g. 25000" styleClass="profile-field" GridPane.rowIndex="0" GridPane.columnIndex="3" />
 
-                                        <Label text="Years experience" styleClass="field-label" GridPane.rowIndex="2" GridPane.columnIndex="0" />
-                                        <TextField fx:id="investorYearsExperienceField" promptText="e.g. 5" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+                                        <Label text="Years experience" styleClass="field-label" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                                        <TextField fx:id="investorYearsExperienceField" promptText="e.g. 5" styleClass="profile-field" GridPane.rowIndex="1" GridPane.columnIndex="1" />
 
-                                        <Label text="Represented company" styleClass="field-label" GridPane.rowIndex="3" GridPane.columnIndex="0" />
-                                        <TextField fx:id="investorRepresentedCompanyField" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+                                        <Label text="Represented company" styleClass="field-label" GridPane.rowIndex="1" GridPane.columnIndex="2" />
+                                        <TextField fx:id="investorRepresentedCompanyField" styleClass="profile-field" GridPane.rowIndex="1" GridPane.columnIndex="3" />
                                     </GridPane>
                                 </content>
                             </TitledPane>
 
                             <!-- FORMATEUR -->
-                            <TitledPane fx:id="trainerPane" text="Formateur" expanded="true" animated="true">
+                            <TitledPane fx:id="trainerPane" text="Trainer Details" expanded="true" animated="true" styleClass="role-pane">
                                 <content>
-                                    <GridPane hgap="12" vgap="10">
+                                    <GridPane hgap="24" vgap="14" styleClass="profile-grid">
+                                        <padding>
+                                            <Insets top="12" right="16" bottom="12" left="16" />
+                                        </padding>
                                         <columnConstraints>
-                                            <ColumnConstraints percentWidth="22" />
-                                            <ColumnConstraints percentWidth="78" />
+                                            <ColumnConstraints percentWidth="18" />
+                                            <ColumnConstraints percentWidth="32" />
+                                            <ColumnConstraints percentWidth="18" />
+                                            <ColumnConstraints percentWidth="32" />
                                         </columnConstraints>
 
                                         <Label text="Specialty" styleClass="field-label" GridPane.rowIndex="0" GridPane.columnIndex="0" />
-                                        <TextField fx:id="trainerSpecialtyField" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+                                        <TextField fx:id="trainerSpecialtyField" styleClass="profile-field" GridPane.rowIndex="0" GridPane.columnIndex="1" />
 
-                                        <Label text="Hourly rate" styleClass="field-label" GridPane.rowIndex="1" GridPane.columnIndex="0" />
-                                        <TextField fx:id="trainerHourlyRateField" promptText="e.g. 120" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+                                        <Label text="Hourly rate" styleClass="field-label" GridPane.rowIndex="0" GridPane.columnIndex="2" />
+                                        <TextField fx:id="trainerHourlyRateField" promptText="e.g. 120" styleClass="profile-field" GridPane.rowIndex="0" GridPane.columnIndex="3" />
 
-                                        <Label text="Availability" styleClass="field-label" GridPane.rowIndex="2" GridPane.columnIndex="0" />
-                                        <TextArea fx:id="trainerAvailabilityArea" prefRowCount="2" wrapText="true" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+                                        <Label text="Availability" styleClass="field-label" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                                        <TextArea fx:id="trainerAvailabilityArea" prefRowCount="2" wrapText="true" styleClass="profile-field" GridPane.rowIndex="1" GridPane.columnIndex="1" GridPane.columnSpan="3" />
 
-                                        <Label text="CV URL" styleClass="field-label" GridPane.rowIndex="3" GridPane.columnIndex="0" />
-                                        <TextField fx:id="trainerCvUrlField" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+                                        <Label text="CV URL" styleClass="field-label" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                                        <TextField fx:id="trainerCvUrlField" styleClass="profile-field" GridPane.rowIndex="2" GridPane.columnIndex="1" GridPane.columnSpan="3" />
                                     </GridPane>
                                 </content>
                             </TitledPane>
 
                             <!-- ADMIN -->
-                            <TitledPane fx:id="adminPane" text="Admin" expanded="true" animated="true">
+                            <TitledPane fx:id="adminPane" text="Admin Details" expanded="true" animated="true" styleClass="role-pane">
                                 <content>
-                                    <GridPane hgap="12" vgap="10">
+                                    <GridPane hgap="24" vgap="14" styleClass="profile-grid">
+                                        <padding>
+                                            <Insets top="12" right="16" bottom="12" left="16" />
+                                        </padding>
                                         <columnConstraints>
-                                            <ColumnConstraints percentWidth="22" />
-                                            <ColumnConstraints percentWidth="78" />
+                                            <ColumnConstraints percentWidth="18" />
+                                            <ColumnConstraints percentWidth="32" />
+                                            <ColumnConstraints percentWidth="18" />
+                                            <ColumnConstraints percentWidth="32" />
                                         </columnConstraints>
 
                                         <Label text="Admin role" styleClass="field-label" GridPane.rowIndex="0" GridPane.columnIndex="0" />
-                                        <TextField fx:id="adminRoleField" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+                                        <TextField fx:id="adminRoleField" styleClass="profile-field" GridPane.rowIndex="0" GridPane.columnIndex="1" />
 
-                                        <Label text="Role start date" styleClass="field-label" GridPane.rowIndex="1" GridPane.columnIndex="0" />
-                                        <DatePicker fx:id="adminRoleStartDatePicker" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+                                        <Label text="Role start date" styleClass="field-label" GridPane.rowIndex="0" GridPane.columnIndex="2" />
+                                        <DatePicker fx:id="adminRoleStartDatePicker" styleClass="profile-field" GridPane.rowIndex="0" GridPane.columnIndex="3" />
                                     </GridPane>
                                 </content>
                             </TitledPane>
                         </VBox>
-                    </VBox>
 
-                    <VBox styleClass="card" spacing="10">
-                        <Text text="Security" styleClass="h2" />
-                        <Text text="Change your password" styleClass="subtitle" />
+                        <Separator styleClass="section-separator" />
 
-                        <GridPane hgap="12" vgap="10">
-                            <columnConstraints>
-                                <ColumnConstraints percentWidth="22" />
-                                <ColumnConstraints percentWidth="78" />
-                            </columnConstraints>
+                        <!-- Security Section -->
+                        <VBox spacing="16">
+                            <Text text="Security" styleClass="section-title" />
+                            <Label text="Change your password" styleClass="hint" />
 
-                            <Label text="New password" styleClass="field-label" GridPane.rowIndex="0" GridPane.columnIndex="0" />
-                            <PasswordField fx:id="newPasswordField" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+                            <GridPane hgap="24" vgap="14" styleClass="profile-grid">
+                                <columnConstraints>
+                                    <ColumnConstraints percentWidth="15" />
+                                    <ColumnConstraints percentWidth="35" />
+                                    <ColumnConstraints percentWidth="15" />
+                                    <ColumnConstraints percentWidth="35" />
+                                </columnConstraints>
 
-                            <Label text="Confirm" styleClass="field-label" GridPane.rowIndex="1" GridPane.columnIndex="0" />
-                            <PasswordField fx:id="confirmPasswordField" GridPane.rowIndex="1" GridPane.columnIndex="1" />
-                        </GridPane>
+                                <Label text="New password" styleClass="field-label" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                                <PasswordField fx:id="newPasswordField" styleClass="profile-field" GridPane.rowIndex="0" GridPane.columnIndex="1" />
 
-                        <HBox spacing="10" alignment="CENTER_LEFT">
-                            <Button text="Update password" onAction="#changePassword" styleClass="btn" />
-                            <Label fx:id="passwordMsgLabel" text="" styleClass="hint" />
-                        </HBox>
+                                <Label text="Confirm" styleClass="field-label" GridPane.rowIndex="0" GridPane.columnIndex="2" />
+                                <PasswordField fx:id="confirmPasswordField" styleClass="profile-field" GridPane.rowIndex="0" GridPane.columnIndex="3" />
+                            </GridPane>
+
+                            <HBox spacing="16" alignment="CENTER_LEFT">
+                                <Button text="Update password" onAction="#changePassword" styleClass="btn" />
+                                <Label fx:id="passwordMsgLabel" text="" styleClass="hint" />
+                            </HBox>
+                        </VBox>
+
+                        <Label text="Note: Email address cannot be changed." styleClass="hint" style="-fx-padding: 12 0 0 0;" />
                     </VBox>
                 </VBox>
             </content>

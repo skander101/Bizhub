@@ -169,6 +169,7 @@ public class ReviewManagementController {
         a.setHeaderText(r.getReviewerName() + " → " + r.getFormationTitle() + " (" + (r.getRating() == null ? "" : r.getRating()) + ")");
         a.setContentText(nullToEmpty(r.getComment()));
         a.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        AlertHelper.styleAlert(a);
         a.showAndWait();
     }
 
@@ -189,6 +190,7 @@ public class ReviewManagementController {
         confirm.setTitle("Confirm deletion");
         confirm.setHeaderText("Delete selected review?");
         confirm.setContentText("This cannot be undone.");
+        AlertHelper.styleAlert(confirm);
         if (confirm.showAndWait().orElse(ButtonType.CANCEL) != ButtonType.OK) return;
 
         try {
@@ -253,6 +255,15 @@ public class ReviewManagementController {
 
             card.getStyleClass().addAll("review-card");
             card.setPadding(new Insets(16));
+
+            // Toggle selected style on the card when cell is selected
+            selectedProperty().addListener((obs, wasSelected, isSelected) -> {
+                if (isSelected) {
+                    card.getStyleClass().add("review-card-selected");
+                } else {
+                    card.getStyleClass().remove("review-card-selected");
+                }
+            });
 
             avatar.getStyleClass().add("review-avatar");
             avatar.setMinSize(44, 44);
@@ -412,18 +423,10 @@ public class ReviewManagementController {
     }
 
     private void showError(String msg) {
-        Alert a = new Alert(Alert.AlertType.ERROR);
-        a.setTitle("Error");
-        a.setHeaderText("Operation failed");
-        a.setContentText(msg);
-        a.showAndWait();
+        AlertHelper.showError(msg);
     }
 
     private void info(String msg) {
-        Alert a = new Alert(Alert.AlertType.INFORMATION);
-        a.setTitle("Info");
-        a.setHeaderText(null);
-        a.setContentText(msg);
-        a.showAndWait();
+        AlertHelper.showInfo(msg);
     }
 }

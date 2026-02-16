@@ -11,7 +11,7 @@
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.bizhub.controller.users_avis.formation.FormationManagementController"
             fx:id="root"
-            stylesheets="@../css/theme.css">
+            stylesheets="@../css/theme.css, @../css/user-management.css">
 
     <left>
         <!-- Admin must not use the non-admin sidebar; controller will swap to the right one at runtime. -->

@@ -4,6 +4,7 @@ import com.bizhub.model.users_avis.formation.Formation;
 import com.bizhub.model.services.user_avis.formation.FormationContext;
 import com.bizhub.controller.users_avis.review.ReviewFormController;
 import com.bizhub.model.users_avis.review.Review;
+import com.bizhub.model.services.common.service.AlertHelper;
 import com.bizhub.model.services.common.service.AppSession;
 import com.bizhub.model.services.common.service.NavigationService;
 import com.bizhub.model.services.common.service.Services;
@@ -13,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -49,6 +51,9 @@ public class FormationDetailsController {
         if (topbar != null) {
             topbar.getChildren().add(TopbarProfileHelper.createProfileBox());
         }
+
+        // Enable multiple selection for reviews table
+        reviewsTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         Integer id = FormationContext.getSelectedFormationId();
         if (id == null) {
@@ -156,18 +161,10 @@ public class FormationDetailsController {
     }
 
     private void showError(String msg) {
-        Alert a = new Alert(Alert.AlertType.ERROR);
-        a.setTitle("Error");
-        a.setHeaderText("Operation failed");
-        a.setContentText(msg);
-        a.showAndWait();
+        AlertHelper.showError(msg);
     }
 
     private void info(String msg) {
-        Alert a = new Alert(Alert.AlertType.INFORMATION);
-        a.setTitle("Info");
-        a.setHeaderText(null);
-        a.setContentText(msg);
-        a.showAndWait();
+        AlertHelper.showInfo(msg);
     }
 }

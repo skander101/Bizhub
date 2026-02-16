@@ -332,3 +332,114 @@
     -fx-text-fill: #FFB84D;
     -fx-font-size: 14px;
 }
+
+/* ===== UNIFIED PROFILE CARD STYLES ===== */
+
+.profile-main-card {
+    -fx-background-color: linear-gradient(to bottom, #1A3352 0%, #152942 100%);
+    -fx-background-radius: 32;
+    -fx-border-radius: 32;
+    -fx-border-color: rgba(255, 184, 77, 0.50);
+    -fx-border-width: 2px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 30, 0.2, 0, 12);
+}
+
+.profile-main-card:hover {
+    -fx-border-color: #FFB84D;
+    -fx-effect: dropshadow(gaussian, rgba(255, 184, 77, 0.28), 36, 0.25, 0, 14);
+}
+
+.avatar-wrap-large {
+    -fx-background-color: linear-gradient(to bottom right, rgba(255, 184, 77, 0.35), rgba(255, 213, 79, 0.20));
+    -fx-background-radius: 999;
+    -fx-padding: 10;
+    -fx-effect: dropshadow(gaussian, rgba(255, 184, 77, 0.35), 20, 0.2, 0, 4);
+}
+
+.role-badge {
+    -fx-background-color: rgba(255, 184, 77, 0.20);
+    -fx-background-radius: 999;
+    -fx-padding: 6 16;
+    -fx-text-fill: #FFD54F;
+    -fx-font-weight: 800;
+    -fx-font-size: 14px;
+    -fx-border-color: rgba(255, 184, 77, 0.45);
+    -fx-border-radius: 999;
+    -fx-border-width: 1;
+}
+
+.section-title {
+    -fx-fill: #FFFFFF;
+    -fx-font-size: 22px;
+    -fx-font-weight: 800;
+}
+
+.section-separator {
+    -fx-background-color: rgba(255, 184, 77, 0.25);
+    -fx-border-color: rgba(255, 184, 77, 0.25);
+    -fx-padding: 0;
+}
+
+.profile-grid {
+    -fx-padding: 8 0;
+}
+
+.profile-field {
+    -fx-background-color: rgba(42, 74, 111, 0.7);
+    -fx-text-fill: #FFFFFF;
+    -fx-border-color: rgba(255, 184, 77, 0.35);
+    -fx-border-width: 1.5px;
+    -fx-border-radius: 16;
+    -fx-background-radius: 16;
+    -fx-font-size: 15px;
+    -fx-padding: 12 16;
+}
+
+.profile-field:focused {
+    -fx-border-color: #FFB84D;
+    -fx-background-color: rgba(42, 74, 111, 0.9);
+    -fx-effect: dropshadow(gaussian, rgba(255, 184, 77, 0.25), 14, 0.18, 0, 0);
+}
+
+.readonly-field {
+    -fx-background-color: rgba(26, 51, 82, 0.5);
+    -fx-text-fill: #A0AEC0;
+    -fx-border-color: rgba(160, 174, 192, 0.25);
+}
+
+.role-pane {
+    -fx-background-color: rgba(10, 25, 47, 0.4);
+    -fx-background-radius: 16;
+    -fx-border-radius: 16;
+    -fx-border-color: rgba(255, 184, 77, 0.20);
+    -fx-border-width: 1px;
+}
+
+.role-pane > .title {
+    -fx-background-color: rgba(42, 74, 111, 0.6);
+    -fx-background-radius: 16 16 0 0;
+    -fx-padding: 12 20;
+}
+
+.role-pane > .title > .text {
+    -fx-fill: #FFD54F;
+    -fx-font-weight: 700;
+    -fx-font-size: 16px;
+}
+
+.role-pane > .content {
+    -fx-background-color: transparent;
+    -fx-padding: 8;
+}
+
+.role-pane:expanded > .title {
+    -fx-border-color: rgba(255, 184, 77, 0.35);
+    -fx-border-width: 0 0 1 0;
+}
+
+/* Arrow styling for TitledPane */
+.role-pane > .title > .arrow-button .arrow {
+    -fx-background-color: #FFB84D;
+}
+
+

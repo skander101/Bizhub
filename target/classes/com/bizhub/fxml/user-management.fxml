@@ -11,7 +11,7 @@
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.bizhub.controller.users_avis.user.UserManagementController"
             fx:id="root"
-            stylesheets="@../css/theme.css">
+            stylesheets="@../css/theme.css, @../css/user-management.css">
 
     <left>
         <!-- Controller will swap this include to admin-sidebar.fxml when needed -->
