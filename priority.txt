@@ -1,0 +1,170 @@
+================================================================================
+                        BIZHUB USER FIELDS PRIORITY
+================================================================================
+
+This document specifies which fields are MANDATORY and which are OPTIONAL
+for the User entity in the BizHub application.
+
+================================================================================
+                        ALL USER TYPES - CORE FIELDS
+================================================================================
+
+MANDATORY (Required for all users):
+-----------------------------------
+- user_id          : Auto-generated primary key
+- email            : Unique email address (NOT NULL)
+- password_hash    : Encrypted password (NOT NULL)
+- user_type        : One of: startup, fournisseur, formateur, investisseur, admin (NOT NULL)
+- full_name        : User's full name (NOT NULL)
+
+OPTIONAL (Common profile fields):
+---------------------------------
+- phone            : Phone number
+- address          : Physical address
+- bio              : User biography/description
+- avatar_url       : Profile picture URL
+- is_active        : Account status (defaults to 1/true)
+- created_at       : Account creation timestamp (auto-generated)
+
+================================================================================
+                        STARTUP - SPECIFIC FIELDS
+================================================================================
+
+MANDATORY:
+----------
+(None beyond core fields)
+
+OPTIONAL:
+---------
+- company_name         : Name of the startup
+- sector               : Business sector
+- company_description  : Detailed description of the startup
+- website              : Company website URL
+- founding_date        : Date the company was founded
+
+================================================================================
+                        FOURNISSEUR (Supplier) - SPECIFIC FIELDS
+================================================================================
+
+MANDATORY:
+----------
+(None beyond core fields)
+
+OPTIONAL:
+---------
+- company_name     : Name of the supply company
+- sector           : Business sector
+- business_type    : Type of business (e.g., wholesale, retail)
+- delivery_zones   : Areas where delivery is available
+- payment_methods  : Accepted payment methods
+- return_policy    : Return/refund policy details
+
+================================================================================
+                        INVESTISSEUR (Investor) - SPECIFIC FIELDS
+================================================================================
+
+MANDATORY:
+----------
+(None beyond core fields)
+
+OPTIONAL:
+---------
+- sector               : Investment sector interest
+- investment_sector    : Specific investment focus area
+- max_budget           : Maximum investment budget (decimal)
+- years_experience     : Years of investment experience (integer)
+- represented_company  : Company the investor represents
+
+================================================================================
+                        FORMATEUR (Trainer) - SPECIFIC FIELDS
+================================================================================
+
+MANDATORY:
+----------
+(None beyond core fields)
+
+OPTIONAL:
+---------
+- specialty     : Area of expertise/specialty
+- hourly_rate   : Hourly rate for training (decimal)
+- availability  : Availability schedule
+- cv_url        : URL to CV/resume document
+
+================================================================================
+                        ADMIN - SPECIFIC FIELDS
+================================================================================
+
+MANDATORY:
+----------
+(None beyond core fields)
+
+OPTIONAL:
+---------
+- admin_role        : Specific admin role/permissions
+- role_start_date   : Date when admin role was assigned
+
+================================================================================
+                        SUMMARY TABLE
+================================================================================
+
++----------------------+------------+------------------------------------------+
+| Field Name           | Priority   | Applicable User Types                    |
++----------------------+------------+------------------------------------------+
+| user_id              | MANDATORY  | All                                      |
+| email                | MANDATORY  | All                                      |
+| password_hash        | MANDATORY  | All                                      |
+| user_type            | MANDATORY  | All                                      |
+| full_name            | MANDATORY  | All                                      |
++----------------------+------------+------------------------------------------+
+| phone                | OPTIONAL   | All                                      |
+| address              | OPTIONAL   | All                                      |
+| bio                  | OPTIONAL   | All                                      |
+| avatar_url           | OPTIONAL   | All                                      |
+| is_active            | OPTIONAL   | All (default: true)                      |
+| created_at           | OPTIONAL   | All (auto-generated)                     |
++----------------------+------------+------------------------------------------+
+| company_name         | OPTIONAL   | startup, fournisseur                     |
+| sector               | OPTIONAL   | startup, fournisseur, investisseur       |
+| company_description  | OPTIONAL   | startup                                  |
+| website              | OPTIONAL   | startup                                  |
+| founding_date        | OPTIONAL   | startup                                  |
++----------------------+------------+------------------------------------------+
+| business_type        | OPTIONAL   | fournisseur                              |
+| delivery_zones       | OPTIONAL   | fournisseur                              |
+| payment_methods      | OPTIONAL   | fournisseur                              |
+| return_policy        | OPTIONAL   | fournisseur                              |
++----------------------+------------+------------------------------------------+
+| investment_sector    | OPTIONAL   | investisseur                             |
+| max_budget           | OPTIONAL   | investisseur                             |
+| years_experience     | OPTIONAL   | investisseur                             |
+| represented_company  | OPTIONAL   | investisseur                             |
++----------------------+------------+------------------------------------------+
+| specialty            | OPTIONAL   | formateur                                |
+| hourly_rate          | OPTIONAL   | formateur                                |
+| availability         | OPTIONAL   | formateur                                |
+| cv_url               | OPTIONAL   | formateur                                |
++----------------------+------------+------------------------------------------+
+| admin_role           | OPTIONAL   | admin                                    |
+| role_start_date      | OPTIONAL   | admin                                    |
++----------------------+------------+------------------------------------------+
+
+================================================================================
+                        NOTES
+================================================================================
+
+1. All fields marked as OPTIONAL can be NULL in the database.
+
+2. The is_active field defaults to true (1) when not specified.
+
+3. The created_at field is automatically set by the database on record creation.
+
+4. Password validation and hashing should be handled at the application level
+   before storing in password_hash.
+
+5. Email must be unique across all users.
+
+6. Role-specific fields are only relevant for their respective user_type.
+   For example, hourly_rate is only meaningful for formateur users.
+
+================================================================================
+

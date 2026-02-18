@@ -41,6 +41,8 @@ public class ReviewManagementController {
 
     @FXML private BorderPane root;
     @FXML private HBox topbar;
+    @FXML private Text titleText;
+    @FXML private Text subtitleText;
 
     @FXML
     public void initialize() {
@@ -60,6 +62,9 @@ public class ReviewManagementController {
             if (root != null && root.getLeft() != null) {
                 NavigationService.setActiveNav(root.getLeft(), NavigationService.ActiveNav.REVIEWS);
             }
+            // Update title for non-admin users
+            if (titleText != null) titleText.setText("My Reviews");
+            if (subtitleText != null) subtitleText.setText("Reviews you've posted");
         }
 
         reviewsList.setItems(backing);
@@ -118,23 +123,44 @@ public class ReviewManagementController {
 
             boolean hasFormation = ff != null && ff.getFormationId() != 0;
             boolean hasRating = rf != null && !"ALL".equals(rf);
+            boolean isAdmin = AppSession.isAdmin();
+            var currentUser = AppSession.getCurrentUser();
 
-            if (hasFormation && hasRating) {
-                rows = Services.reviews().findByFormation(ff.getFormationId(), 2000, 0);
-                int rr = Integer.parseInt(rf);
-                rows = rows.stream().filter(r -> r.getRating() != null && r.getRating() == rr).toList();
-            } else if (hasFormation) {
-                rows = Services.reviews().findByFormation(ff.getFormationId(), 2000, 0);
-            } else if (hasRating) {
-                rows = Services.reviews().findByRating(Integer.parseInt(rf), 2000, 0);
+            if (!isAdmin && currentUser != null) {
+                // Non-admin users only see their own reviews
+                rows = Services.reviews().findByReviewerId(currentUser.getUserId(), 2000, 0);
+
+                // Apply formation filter
+                if (hasFormation) {
+                    int formationId = ff.getFormationId();
+                    rows = rows.stream().filter(r -> r.getFormationId() == formationId).toList();
+                }
+
+                // Apply rating filter
+                if (hasRating) {
+                    int rr = Integer.parseInt(rf);
+                    rows = rows.stream().filter(r -> r.getRating() != null && r.getRating() == rr).toList();
+                }
             } else {
-                rows = Services.reviews().findAllWithJoins(2000, 0);
+                // Admin sees all reviews
+                if (hasFormation && hasRating) {
+                    rows = Services.reviews().findByFormation(ff.getFormationId(), 2000, 0);
+                    int rr = Integer.parseInt(rf);
+                    rows = rows.stream().filter(r -> r.getRating() != null && r.getRating() == rr).toList();
+                } else if (hasFormation) {
+                    rows = Services.reviews().findByFormation(ff.getFormationId(), 2000, 0);
+                } else if (hasRating) {
+                    rows = Services.reviews().findByRating(Integer.parseInt(rf), 2000, 0);
+                } else {
+                    rows = Services.reviews().findAllWithJoins(2000, 0);
+                }
             }
 
             backing.setAll(rows);
             applyClientFilters();
 
-            statsLabel.setText("Total reviews: " + reviewsList.getItems().size());
+            statsLabel.setText(isAdmin ? "Total reviews: " + reviewsList.getItems().size()
+                                       : "My reviews: " + reviewsList.getItems().size());
         } catch (SQLException e) {
             showError(e.getMessage());
         }

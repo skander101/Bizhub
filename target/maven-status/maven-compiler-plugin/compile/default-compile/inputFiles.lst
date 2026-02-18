@@ -1,3 +1,4 @@
+/home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/controller/users_avis/user/VerificationController.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/common/service/NavigationService.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/common/service/ValidationService.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/common/service/AuthService.java
@@ -5,11 +6,14 @@
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/controller/users_avis/formation/FormationDetailsController.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/user_avis/formation/FormationService.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/common/DB/MyDatabase.java
+/home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/common/service/EnvConfig.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/controller/users_avis/user/LoginController.java
+/home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/common/service/TotpService.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/common/service/AppSession.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/users_avis/review/Review.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/controller/users_avis/user/TopbarProfileHelper.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/common/service/Services.java
+/home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/controller/users_avis/user/ForgotPasswordController.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/controller/users_avis/user/UserSidebarController.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/controller/users_avis/review/ReviewManagementController.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/controller/users_avis/user/SignupController.java
@@ -17,12 +21,14 @@
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/users_avis/formation/Formation.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/controller/users_avis/user/AdminDashboardController.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/common/service/ReportService.java
+/home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/common/service/InfobipService.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/controller/users_avis/user/AdminSidebarController.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/controller/users_avis/formation/FormationManagementController.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/user_avis/review/ReviewService.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/user_avis/formation/FormationContext.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/user_avis/user/UserService.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/controller/users_avis/user/UserProfileController.java
+/home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/common/service/Auth0Service.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/controller/users_avis/user/UserFormController.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/controller/users_avis/review/ReviewFormController.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/common/service/AlertHelper.java

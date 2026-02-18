@@ -20,6 +20,9 @@ public final class Services {
     private static AuthService authService;
     private static ValidationService validationService;
     private static ReportService reportService;
+    private static Auth0Service auth0Service;
+    private static InfobipService infobipService;
+    private static TotpService totpService;
 
     private Services() {
     }
@@ -71,5 +74,26 @@ public final class Services {
             reportService = new ReportService(users(), reviews());
         }
         return reportService;
+    }
+
+    public static synchronized Auth0Service auth0() {
+        if (auth0Service == null) {
+            auth0Service = new Auth0Service();
+        }
+        return auth0Service;
+    }
+
+    public static synchronized InfobipService infobip() {
+        if (infobipService == null) {
+            infobipService = new InfobipService();
+        }
+        return infobipService;
+    }
+
+    public static synchronized TotpService totp() {
+        if (totpService == null) {
+            totpService = new TotpService();
+        }
+        return totpService;
     }
 }

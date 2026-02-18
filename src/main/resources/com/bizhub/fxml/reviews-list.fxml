@@ -23,8 +23,8 @@
             </padding>
 
             <VBox spacing="2">
-                <Text text="Reviews" styleClass="h1" />
-                <Text text="Cards view" styleClass="subtitle" />
+                <Text fx:id="titleText" text="Reviews" styleClass="h1" />
+                <Text fx:id="subtitleText" text="Cards view" styleClass="subtitle" />
             </VBox>
 
             <Pane HBox.hgrow="ALWAYS" />

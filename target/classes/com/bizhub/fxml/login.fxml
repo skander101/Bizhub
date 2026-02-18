@@ -37,7 +37,8 @@
 
         <Separator opacity="0.25" />
 
-        <VBox spacing="14">
+        <!-- Login Section (email/password) -->
+        <VBox fx:id="loginSection" spacing="14">
             <VBox spacing="6">
                 <Label text="Email" styleClass="field-label" />
                 <TextField fx:id="emailField" promptText="you@bizhub.tn" styleClass="text-field-modern" />
@@ -46,6 +47,9 @@
             <VBox spacing="6">
                 <Label text="Password" styleClass="field-label" />
                 <PasswordField fx:id="passwordField" promptText="••••••••" styleClass="text-field-modern" />
+                <HBox alignment="CENTER_RIGHT">
+                    <Hyperlink text="Forgot password?" onAction="#goToForgotPassword" />
+                </HBox>
             </VBox>
 
             <Button fx:id="loginButton" text="Sign In" onAction="#onLogin" maxWidth="1.7976931348623157E308" styleClass="btn-primary" />
@@ -54,9 +58,33 @@
                 <Label text="Don't have an account?" styleClass="hint" />
                 <Hyperlink text="Sign up" onAction="#goToSignup" />
             </HBox>
-
-            <Label fx:id="errorLabel" wrapText="true" styleClass="error-text" />
         </VBox>
+
+        <!-- TOTP Verification Section (hidden by default) -->
+        <VBox fx:id="totpSection" spacing="14" visible="false" managed="false">
+            <VBox spacing="4" alignment="CENTER">
+                <Text text="🔐" style="-fx-font-size: 32px;" />
+                <Text text="Two-Factor Authentication" styleClass="section-title" />
+                <Text text="Enter the 6-digit code from your authenticator app" styleClass="subtitle" />
+            </VBox>
+
+            <HBox alignment="CENTER" spacing="8">
+                <TextField fx:id="totpField1" prefWidth="45" styleClass="pin-field" />
+                <TextField fx:id="totpField2" prefWidth="45" styleClass="pin-field" />
+                <TextField fx:id="totpField3" prefWidth="45" styleClass="pin-field" />
+                <TextField fx:id="totpField4" prefWidth="45" styleClass="pin-field" />
+                <TextField fx:id="totpField5" prefWidth="45" styleClass="pin-field" />
+                <TextField fx:id="totpField6" prefWidth="45" styleClass="pin-field" />
+            </HBox>
+
+            <Button fx:id="verifyTotpButton" text="Verify" onAction="#onVerifyTotp" maxWidth="1.7976931348623157E308" styleClass="btn-primary" />
+
+            <Hyperlink text="← Back to login" onAction="#onBackToLogin" />
+
+            <ProgressIndicator fx:id="totpProgress" visible="false" prefWidth="24" prefHeight="24" />
+        </VBox>
+
+        <Label fx:id="errorLabel" wrapText="true" styleClass="error-text" />
 
         <HBox alignment="CENTER" spacing="6">
             <Label text="💡" styleClass="hint-strong" />

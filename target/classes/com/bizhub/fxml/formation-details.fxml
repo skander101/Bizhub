@@ -16,6 +16,7 @@
                 <Insets top="14" right="16" bottom="14" left="16" />
             </padding>
 
+            <Button text="← Back" onAction="#goBack" styleClass="btn-secondary" />
             <Text text="Formation details" styleClass="h1" />
             <Pane HBox.hgrow="ALWAYS" />
             <!-- User profile will be added here programmatically -->
@@ -37,17 +38,17 @@
                         <ColumnConstraints percentWidth="80" />
                     </columnConstraints>
 
-                    <Label text="Trainer ID" GridPane.rowIndex="0" GridPane.columnIndex="0" />
-                    <Label fx:id="trainerLabel" text="" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+                    <Label text="Trainer ID" GridPane.rowIndex="0" GridPane.columnIndex="0" style="-fx-text-fill: white;" />
+                    <Label fx:id="trainerLabel" text="" GridPane.rowIndex="0" GridPane.columnIndex="1" style="-fx-text-fill: white;" />
 
-                    <Label text="Start" GridPane.rowIndex="1" GridPane.columnIndex="0" />
-                    <Label fx:id="startLabel" text="" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+                    <Label text="Start" GridPane.rowIndex="1" GridPane.columnIndex="0" style="-fx-text-fill: white;" />
+                    <Label fx:id="startLabel" text="" GridPane.rowIndex="1" GridPane.columnIndex="1" style="-fx-text-fill: white;" />
 
-                    <Label text="End" GridPane.rowIndex="2" GridPane.columnIndex="0" />
-                    <Label fx:id="endLabel" text="" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+                    <Label text="End" GridPane.rowIndex="2" GridPane.columnIndex="0" style="-fx-text-fill: white;" />
+                    <Label fx:id="endLabel" text="" GridPane.rowIndex="2" GridPane.columnIndex="1" style="-fx-text-fill: white;" />
 
-                    <Label text="Cost" GridPane.rowIndex="3" GridPane.columnIndex="0" />
-                    <Label fx:id="costLabel" text="" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+                    <Label text="Cost" GridPane.rowIndex="3" GridPane.columnIndex="0" style="-fx-text-fill: white;" />
+                    <Label fx:id="costLabel" text="" GridPane.rowIndex="3" GridPane.columnIndex="1" style="-fx-text-fill: white;" />
                 </GridPane>
 
                 <Text text="Description" styleClass="subtitle" />

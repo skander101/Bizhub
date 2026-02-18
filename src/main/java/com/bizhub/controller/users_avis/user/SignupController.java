@@ -303,16 +303,15 @@ public class SignupController {
                 u.setCvUrl(trimToNull(trainerCvUrlField.getText()));
             }
 
-            Services.users().create(u);
+            // Store user for verification (don't create in DB yet)
+            AppSession.setPendingVerificationUser(u);
 
-            // auto-login after signup
-            AppSession.setCurrentUser(u);
-
+            // Navigate to verification page
             Stage stage = (Stage) signupButton.getScene().getWindow();
             NavigationService nav = new NavigationService(stage);
-            nav.goToProfile();
+            nav.goToVerification();
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             errorLabel.setText(e.getMessage());
         }
     }

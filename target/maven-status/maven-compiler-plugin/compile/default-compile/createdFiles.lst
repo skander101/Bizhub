@@ -1,8 +1,11 @@
+com/bizhub/controller/users_avis/user/ForgotPasswordController.class
 com/bizhub/controller/users_avis/user/AdminDashboardController.class
 com/bizhub/controller/users_avis/formation/FormationFormController$2.class
 com/bizhub/model/services/common/service/ValidationService.class
+com/bizhub/model/services/common/service/TotpService$TotpSetupResult.class
 com/bizhub/controller/users_avis/user/UserSidebarController.class
 com/bizhub/model/users_avis/review/Review.class
+com/bizhub/model/services/common/service/EnvConfig.class
 com/bizhub/model/services/user_avis/review/ReviewService$FormationAvg.class
 com/bizhub/model/services/common/service/AlertHelper.class
 com/bizhub/controller/users_avis/user/UserManagementController.class
@@ -11,6 +14,8 @@ com/bizhub/model/services/common/service/AppSession.class
 com/bizhub/controller/users_avis/formation/FormationManagementController$FormationCardCell.class
 com/bizhub/model/users_avis/user/User.class
 com/bizhub/model/services/common/service/NavigationService$ActiveNav.class
+com/bizhub/model/services/common/service/TotpService.class
+com/bizhub/model/services/common/service/Auth0Service.class
 com/bizhub/model/services/common/service/NavigationService.class
 com/bizhub/model/services/common/service/ReportService.class
 com/bizhub/Main.class
@@ -19,6 +24,8 @@ com/bizhub/model/services/common/service/ReportService$DashboardStats.class
 com/bizhub/controller/users_avis/user/UserProfileController.class
 com/bizhub/controller/users_avis/review/ReviewFormController.class
 com/bizhub/controller/users_avis/review/ReviewManagementController$2.class
+com/bizhub/model/services/common/service/InfobipService$TotpSetupResult.class
+com/bizhub/model/services/common/service/InfobipService.class
 com/bizhub/controller/users_avis/user/TopbarProfileHelper.class
 com/bizhub/model/services/user_avis/user/UserService.class
 com/bizhub/model/services/common/DB/MyDatabase.class
@@ -36,6 +43,7 @@ com/bizhub/model/users_avis/formation/Formation.class
 com/bizhub/controller/users_avis/review/ReviewManagementController$ReviewCardCell.class
 com/bizhub/controller/users_avis/user/AdminSidebarController.class
 com/bizhub/controller/users_avis/formation/FormationFormController.class
+com/bizhub/controller/users_avis/user/VerificationController.class
 com/bizhub/model/services/user_avis/formation/FormationContext.class
 com/bizhub/model/services/common/service/Services.class
 com/bizhub/model/services/common/service/AuthService$Session.class

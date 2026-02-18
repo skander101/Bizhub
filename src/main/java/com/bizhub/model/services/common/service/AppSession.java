@@ -6,6 +6,7 @@ import com.bizhub.model.users_avis.user.User;
 public final class AppSession {
 
     private static User currentUser;
+    private static User pendingVerificationUser;
 
     private AppSession() {
     }
@@ -20,6 +21,7 @@ public final class AppSession {
 
     public static void clear() {
         currentUser = null;
+        pendingVerificationUser = null;
     }
 
     public static boolean isAuthenticated() {
@@ -28,5 +30,21 @@ public final class AppSession {
 
     public static boolean isAdmin() {
         return isAuthenticated() && "admin".equalsIgnoreCase(currentUser.getUserType());
+    }
+
+    /**
+     * Store a user that's pending verification (email/phone).
+     * This user is not yet persisted to the database.
+     */
+    public static User getPendingVerificationUser() {
+        return pendingVerificationUser;
+    }
+
+    public static void setPendingVerificationUser(User user) {
+        pendingVerificationUser = user;
+    }
+
+    public static void clearPendingVerificationUser() {
+        pendingVerificationUser = null;
     }
 }

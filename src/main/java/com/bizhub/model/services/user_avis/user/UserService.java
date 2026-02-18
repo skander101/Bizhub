@@ -44,8 +44,8 @@ public class UserService {
                 "business_type, delivery_zones, payment_methods, return_policy, " +
                 "investment_sector, max_budget, years_experience, represented_company, " +
                 "specialty, hourly_rate, availability, cv_url, " +
-                "is_active" +
-                ") VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                "is_active, totp_secret" +
+                ") VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
         try (PreparedStatement pst = cnx.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             int i = 1;
@@ -82,6 +82,7 @@ public class UserService {
             setStringOrNull(pst, i++, u.getCvUrl());
 
             pst.setBoolean(i++, u.isActive());
+            setStringOrNull(pst, i++, u.getTotpSecret());
 
             pst.executeUpdate();
 
@@ -143,7 +144,7 @@ public class UserService {
                 "business_type=?, delivery_zones=?, payment_methods=?, return_policy=?, " +
                 "investment_sector=?, max_budget=?, years_experience=?, represented_company=?, " +
                 "specialty=?, hourly_rate=?, availability=?, cv_url=?, " +
-                "is_active=? " +
+                "is_active=?, totp_secret=? " +
                 "WHERE user_id=?";
 
         try (PreparedStatement pst = cnx.prepareStatement(sql)) {
@@ -178,6 +179,7 @@ public class UserService {
             setStringOrNull(pst, i++, u.getCvUrl());
 
             pst.setBoolean(i++, u.isActive());
+            setStringOrNull(pst, i++, u.getTotpSecret());
             pst.setInt(i++, u.getUserId());
 
             pst.executeUpdate();
@@ -284,6 +286,7 @@ public class UserService {
         // admin_role / role_start_date removed from DB
 
         u.setActive(rs.getBoolean("is_active"));
+        u.setTotpSecret(rs.getString("totp_secret"));
 
         Timestamp createdAt = rs.getTimestamp("created_at");
         u.setCreatedAt(createdAt == null ? null : createdAt.toLocalDateTime());

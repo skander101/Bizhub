@@ -229,7 +229,8 @@ CREATE TABLE `user` (
   `availability` text DEFAULT NULL,
   `cv_url` varchar(500) DEFAULT NULL,
   `admin_role` varchar(50) DEFAULT NULL,
-  `role_start_date` date DEFAULT NULL
+  `role_start_date` date DEFAULT NULL,
+  `totp_secret` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --

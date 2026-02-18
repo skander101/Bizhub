@@ -89,6 +89,14 @@ public class NavigationService {
         loadIntoStage("/com/bizhub/fxml/signup.fxml", 980, 700);
     }
 
+    public void goToVerification() {
+        loadIntoStage("/com/bizhub/fxml/verification.fxml", 600, 700);
+    }
+
+    public void goToForgotPassword() {
+        loadIntoStage("/com/bizhub/fxml/forgot-password.fxml", 550, 650);
+    }
+
     public void goToFormations() {
         loadIntoStage("/com/bizhub/fxml/formations.fxml", 1200, 760);
     }

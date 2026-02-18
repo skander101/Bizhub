@@ -17,18 +17,25 @@
     -fx-font-size: 15px;
     -fx-background-color: #0A192F;
 
-    /* Text selection in inputs */
-    -fx-accent: #FFB84D;              /* brighter gold for selection */
+    /* Text selection in inputs - use derive() for proper color lookups */
+    -fx-accent: #FFB84D;
     -fx-focus-color: #FFB84D;
-    -fx-faint-focus-color: rgba(255, 184, 77, 0.22);
+    -fx-faint-focus-color: #FFB84D22;
+
+    /* Required for Modena compatibility */
+    -fx-text-inner-color: #FFFFFF;
+    -fx-text-base-color: #FFFFFF;
+    -fx-text-background-color: #0A192F;
+    -fx-selection-bar: #FFB84D;
+    -fx-selection-bar-non-focused: #E8A93A;
 
     /* Fallbacks for Modena lookups */
-    -fx-text-box-border: rgba(255, 184, 77, 0.40);
+    -fx-text-box-border: #2A4A6F;
     -fx-control-inner-background: #1A3352;
     -fx-inner-border: transparent;
 
     /* Separators */
-    -fx-box-border: rgba(255, 184, 77, 0.35);
+    -fx-box-border: #E8A93A59;
 }
 
 /* Color Reference (for maintainability):
@@ -866,3 +873,96 @@
 .loading-overlay {
     -fx-background-color: #001F3F;
 }
+
+/* =========================================================
+ * VERIFICATION PAGE STYLES
+ * ========================================================= */
+
+.section-title {
+    -fx-fill: #FFB84D;
+    -fx-font-size: 22px;
+    -fx-font-weight: 800;
+}
+
+.email-highlight {
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 16px;
+    -fx-font-weight: 700;
+    -fx-background-color: rgba(255, 184, 77, 0.15);
+    -fx-padding: 8 16;
+    -fx-background-radius: 8;
+}
+
+/* Step indicator circles */
+.step-circle {
+    -fx-min-width: 36px;
+    -fx-min-height: 36px;
+    -fx-max-width: 36px;
+    -fx-max-height: 36px;
+    -fx-background-color: rgba(30, 58, 95, 0.8);
+    -fx-background-radius: 999;
+    -fx-text-fill: #8892B0;
+    -fx-font-weight: 800;
+    -fx-font-size: 14px;
+    -fx-alignment: center;
+    -fx-border-color: rgba(255, 184, 77, 0.3);
+    -fx-border-radius: 999;
+    -fx-border-width: 2;
+}
+
+.step-circle.step-active {
+    -fx-background-color: rgba(255, 184, 77, 0.2);
+    -fx-text-fill: #FFB84D;
+    -fx-border-color: #FFB84D;
+}
+
+.step-circle.step-complete {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: #FFFFFF;
+    -fx-border-color: #4CAF50;
+}
+
+.step-label {
+    -fx-text-fill: #8892B0;
+    -fx-font-size: 12px;
+    -fx-font-weight: 600;
+}
+
+/* PIN input fields */
+.pin-field {
+    -fx-min-width: 50px;
+    -fx-max-width: 50px;
+    -fx-min-height: 60px;
+    -fx-max-height: 60px;
+    -fx-font-size: 24px;
+    -fx-font-weight: 800;
+    -fx-alignment: center;
+    -fx-background-color: rgba(26, 51, 82, 0.96);
+    -fx-background-radius: 12;
+    -fx-border-color: rgba(255, 184, 77, 0.4);
+    -fx-border-radius: 12;
+    -fx-border-width: 2;
+    -fx-text-fill: #FFFFFF;
+}
+
+.pin-field:focused {
+    -fx-border-color: #FFB84D;
+    -fx-background-color: rgba(255, 184, 77, 0.1);
+}
+
+/* Error label styling */
+.error-label {
+    -fx-text-fill: #EF4444;
+    -fx-font-weight: 600;
+    -fx-font-size: 14px;
+    -fx-wrap-text: true;
+}
+
+/* Success label styling */
+.success-label {
+    -fx-text-fill: #4CAF50;
+    -fx-font-weight: 600;
+    -fx-font-size: 14px;
+}
+
+

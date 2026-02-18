@@ -52,6 +52,9 @@ public class User {
     private String adminRole;
     private LocalDate roleStartDate;
 
+    // 2FA/TOTP
+    private String totpSecret;
+
 
     public User() {
     }
@@ -301,6 +304,14 @@ public class User {
 
     public void setRoleStartDate(LocalDate roleStartDate) {
         this.roleStartDate = roleStartDate;
+    }
+
+    public String getTotpSecret() {
+        return totpSecret;
+    }
+
+    public void setTotpSecret(String totpSecret) {
+        this.totpSecret = totpSecret;
     }
 
     @Override

@@ -148,6 +148,23 @@ public class ReviewService {
         return findByFormation(formationId, 2000, 0);
     }
 
+    /**
+     * Find all reviews by a specific reviewer (user).
+     */
+    public List<Review> findByReviewerId(int reviewerId, int limit, int offset) throws SQLException {
+        String sql = baseSelect() + " WHERE a.reviewer_id=? ORDER BY a.created_at DESC LIMIT ? OFFSET ?";
+        List<Review> out = new ArrayList<>();
+        try (PreparedStatement pst = cnx.prepareStatement(sql)) {
+            pst.setInt(1, reviewerId);
+            pst.setInt(2, limit);
+            pst.setInt(3, offset);
+            try (ResultSet rs = pst.executeQuery()) {
+                while (rs.next()) out.add(mapRow(rs));
+            }
+        }
+        return out;
+    }
+
     // ==================== Helper Methods ====================
 
     private static String baseSelect() {
