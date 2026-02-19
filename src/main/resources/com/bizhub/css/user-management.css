@@ -1,0 +1,445 @@
+/*
+ *  Main stylesheet for BizHub application
+ *  Color Palette derived from hexagonal logo:
+ *    - Primary Gold: #E8A93A (warm honeycomb yellow)
+ *    - Secondary Navy: #1E3A5F (deep blue accent)
+ *    - Dark Background: #0A192F (professional dark)
+ *    - Accent Gold Light: #FDB813 (brighter gold for highlights)
+ *    - Light Text: #E8A93A (gold for visibility)
+ *    - Light Background: #172A45
+ */
+
+.body, .bg-gradient {
+    -fx-background-color: #0A192F;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6 {
+    -fx-text-fill: #FFFFFF;
+    -fx-fill: #FFFFFF;
+}
+
+.label, .field-label {
+    -fx-text-fill: #FFB84D;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.text-field, .password-field, .combo-box, .date-picker, .text-area,
+.text-field-modern, .text-area.text-field-modern {
+    -fx-background-color: #1A3352;
+    -fx-text-fill: #FFFFFF;
+    -fx-border-color: #2A4A6F;
+    -fx-border-width: 1.5px;
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-font-size: 16px;
+    -fx-prompt-text-fill: #FFB84D;
+    -fx-padding: 14 18;
+}
+
+.text-field:focused, .password-field:focused, .combo-box:focused, .date-picker:focused, .text-area:focused,
+.text-field-modern:focused, .text-area.text-field-modern:focused {
+    -fx-border-color: #FFB84D;
+    -fx-effect: dropshadow(gaussian, rgba(255, 184, 77, 0.30), 18, 0.22, 0, 0);
+}
+
+.button, .btn {
+    -fx-background-color: rgba(255, 184, 77, 0.15);
+    -fx-text-fill: #FFB84D;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-border-color: rgba(255, 184, 77, 0.45);
+    -fx-border-width: 1.5;
+    -fx-padding: 16 22;
+    -fx-font-size: 16px;
+    -fx-cursor: hand;
+}
+
+.button:hover, .btn:hover {
+    -fx-background-color: rgba(255, 184, 77, 0.28);
+    -fx-border-color: #FFB84D;
+}
+
+.btn-primary {
+    -fx-background-color: linear-gradient(to bottom, #FFD54F, #FFB84D);
+    -fx-text-fill: #0A192F;
+    -fx-border-color: transparent;
+    -fx-effect: dropshadow(gaussian, rgba(255, 184, 77, 0.35), 12, 0.24, 0, 6);
+}
+
+.btn-primary:hover {
+    -fx-background-color: linear-gradient(to bottom, #FFE082, #FFD54F);
+    -fx-effect: dropshadow(gaussian, rgba(255, 184, 77, 0.50), 16, 0.32, 0, 8);
+}
+
+.button.secondary {
+    -fx-background-color: #2A4A6F;
+    -fx-text-fill: #FFFFFF;
+}
+
+.button.secondary:hover {
+    -fx-background-color: #3A5A7F;
+}
+
+.hyperlink {
+    -fx-text-fill: #FFD54F;
+    -fx-font-size: 15px;
+}
+
+.hyperlink:hover {
+    -fx-underline: true;
+    -fx-text-fill: #FFE082;
+}
+
+.sidebar {
+    -fx-background-color: #1A3352;
+    -fx-padding: 24px;
+}
+
+.sidebar .button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #FFB84D;
+    -fx-alignment: center-left;
+    -fx-padding: 14px 20px;
+    -fx-font-size: 18px;
+}
+
+.sidebar .button:hover {
+    -fx-background-color: #2A4A6F;
+    -fx-text-fill: #FFD54F;
+}
+
+.card {
+    -fx-background-color: #1A3352;
+    -fx-background-radius: 26;
+    -fx-border-radius: 26;
+    -fx-border-color: rgba(255, 184, 77, 0.40);
+    -fx-border-width: 1.5px;
+    -fx-padding: 22px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.30), 20, 0.14, 0, 8);
+}
+
+.card:hover {
+    -fx-border-color: #FFB84D;
+    -fx-effect: dropshadow(gaussian, rgba(255, 184, 77, 0.22), 24, 0.18, 0, 10);
+}
+
+.topbar {
+    -fx-background-color: rgba(26, 51, 82, 0.97);
+    -fx-border-color: rgba(255, 184, 77, 0.30);
+    -fx-border-width: 0 0 1.5 0;
+}
+
+/* Topbar user profile styles */
+.topbar-profile {
+    -fx-alignment: CENTER_RIGHT;
+}
+
+.topbar-name {
+    -fx-fill: #FFFFFF;
+    -fx-font-weight: 800;
+    -fx-font-size: 15px;
+}
+
+.topbar-role {
+    -fx-fill: #FFB84D;
+    -fx-font-size: 13px;
+    -fx-font-weight: 600;
+}
+
+.topbar-avatar {
+    -fx-background-color: linear-gradient(to bottom right, #FFB84D, #FFD54F);
+    -fx-background-radius: 999;
+    -fx-alignment: center;
+}
+
+.topbar-avatar-img {
+    -fx-background-radius: 999;
+}
+
+.topbar-avatar-text {
+    -fx-fill: #0A192F;
+    -fx-font-weight: 900;
+    -fx-font-size: 16px;
+}
+
+.table-view {
+    -fx-background-color: #1A3352;
+    -fx-border-color: #2A4A6F;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #2A4A6F;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+}
+
+.table-view .table-cell {
+    -fx-text-fill: #FFB84D;
+    -fx-border-color: transparent;
+    -fx-padding: 14px;
+    -fx-font-size: 14px;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #1A3352;
+}
+
+.table-row-cell:even {
+    -fx-background-color: #1E3A5F;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: #2A4A6F;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.profile-scroll {
+    -fx-background: transparent;
+    -fx-background-color: transparent;
+}
+
+.profile-scroll > .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:vertical, .scroll-bar:horizontal {
+    -fx-background-color: #1A3352;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #FFB84D;
+    -fx-background-radius: 8px;
+}
+
+.scroll-bar .increment-button, .scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 6px;
+}
+
+.error-text {
+    -fx-fill: #EF4444;
+    -fx-text-fill: #EF4444;
+    -fx-font-weight: 800;
+    -fx-font-size: 14px;
+}
+
+.hint {
+    -fx-fill: #FFD54F;
+    -fx-text-fill: #FFD54F;
+    -fx-font-size: 14px;
+}
+
+.subtitle {
+    -fx-fill: #FFB84D;
+    -fx-text-fill: #FFB84D;
+    -fx-font-size: 15px;
+}
+
+.role-section {
+    -fx-background-color: rgba(15, 23, 42, 0.55);
+    -fx-background-radius: 24;
+    -fx-border-radius: 24;
+    -fx-border-color: #2A4A6F;
+    -fx-border-width: 1.5;
+    -fx-padding: 16;
+}
+
+.section-chip {
+    -fx-background-color: #2A4A6F;
+    -fx-background-radius: 999;
+    -fx-padding: 8 14;
+    -fx-text-fill: #FFB84D;
+    -fx-font-weight: 900;
+    -fx-font-size: 14px;
+}
+
+.user-card {
+    -fx-background-color: #1A3352;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-border-color: #2A4A6F;
+    -fx-border-width: 1.5px;
+    -fx-padding: 22px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 14, 0.5, 0, 4);
+}
+
+.user-card:hover {
+    -fx-border-color: #FFB84D;
+}
+
+.user-avatar {
+    -fx-background-color: #2A4A6F;
+    -fx-background-radius: 50%;
+}
+
+.user-avatar-text {
+    -fx-fill: #FFB84D;
+    -fx-font-weight: bold;
+    -fx-font-size: 22px;
+}
+
+.user-name {
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: bold;
+    -fx-font-size: 18px;
+}
+
+.user-meta {
+    -fx-text-fill: #FFB84D;
+    -fx-font-size: 14px;
+}
+
+.avatar-wrap {
+    -fx-background-color: rgba(255, 184, 77, 0.18);
+    -fx-background-radius: 999;
+    -fx-padding: 14;
+}
+
+.formation-card {
+    -fx-background-color: #1A3352;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-border-color: #2A4A6F;
+    -fx-border-width: 1.5px;
+    -fx-padding: 22px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 14, 0.5, 0, 4);
+}
+
+.formation-card:hover {
+    -fx-border-color: #FFB84D;
+}
+
+.formation-title {
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: bold;
+    -fx-font-size: 18px;
+}
+
+.formation-meta {
+    -fx-text-fill: #FFB84D;
+    -fx-font-size: 14px;
+}
+
+/* ===== UNIFIED PROFILE CARD STYLES ===== */
+
+.profile-main-card {
+    -fx-background-color: linear-gradient(to bottom, #1A3352 0%, #152942 100%);
+    -fx-background-radius: 32;
+    -fx-border-radius: 32;
+    -fx-border-color: rgba(255, 184, 77, 0.50);
+    -fx-border-width: 2px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 30, 0.2, 0, 12);
+}
+
+.profile-main-card:hover {
+    -fx-border-color: #FFB84D;
+    -fx-effect: dropshadow(gaussian, rgba(255, 184, 77, 0.28), 36, 0.25, 0, 14);
+}
+
+.avatar-wrap-large {
+    -fx-background-color: linear-gradient(to bottom right, rgba(255, 184, 77, 0.35), rgba(255, 213, 79, 0.20));
+    -fx-background-radius: 999;
+    -fx-padding: 10;
+    -fx-effect: dropshadow(gaussian, rgba(255, 184, 77, 0.35), 20, 0.2, 0, 4);
+}
+
+.role-badge {
+    -fx-background-color: rgba(255, 184, 77, 0.20);
+    -fx-background-radius: 999;
+    -fx-padding: 6 16;
+    -fx-text-fill: #FFD54F;
+    -fx-font-weight: 800;
+    -fx-font-size: 14px;
+    -fx-border-color: rgba(255, 184, 77, 0.45);
+    -fx-border-radius: 999;
+    -fx-border-width: 1;
+}
+
+.section-title {
+    -fx-fill: #FFFFFF;
+    -fx-font-size: 22px;
+    -fx-font-weight: 800;
+}
+
+.section-separator {
+    -fx-background-color: rgba(255, 184, 77, 0.25);
+    -fx-border-color: rgba(255, 184, 77, 0.25);
+    -fx-padding: 0;
+}
+
+.profile-grid {
+    -fx-padding: 8 0;
+}
+
+.profile-field {
+    -fx-background-color: rgba(42, 74, 111, 0.7);
+    -fx-text-fill: #FFFFFF;
+    -fx-border-color: rgba(255, 184, 77, 0.35);
+    -fx-border-width: 1.5px;
+    -fx-border-radius: 16;
+    -fx-background-radius: 16;
+    -fx-font-size: 15px;
+    -fx-padding: 12 16;
+}
+
+.profile-field:focused {
+    -fx-border-color: #FFB84D;
+    -fx-background-color: rgba(42, 74, 111, 0.9);
+    -fx-effect: dropshadow(gaussian, rgba(255, 184, 77, 0.25), 14, 0.18, 0, 0);
+}
+
+.readonly-field {
+    -fx-background-color: rgba(26, 51, 82, 0.5);
+    -fx-text-fill: #A0AEC0;
+    -fx-border-color: rgba(160, 174, 192, 0.25);
+}
+
+.role-pane {
+    -fx-background-color: rgba(10, 25, 47, 0.4);
+    -fx-background-radius: 16;
+    -fx-border-radius: 16;
+    -fx-border-color: rgba(255, 184, 77, 0.20);
+    -fx-border-width: 1px;
+}
+
+.role-pane > .title {
+    -fx-background-color: rgba(42, 74, 111, 0.6);
+    -fx-background-radius: 16 16 0 0;
+    -fx-padding: 12 20;
+}
+
+.role-pane > .title > .text {
+    -fx-fill: #FFD54F;
+    -fx-font-weight: 700;
+    -fx-font-size: 16px;
+}
+
+.role-pane > .content {
+    -fx-background-color: transparent;
+    -fx-padding: 8;
+}
+
+.role-pane:expanded > .title {
+    -fx-border-color: rgba(255, 184, 77, 0.35);
+    -fx-border-width: 0 0 1 0;
+}
+
+/* Arrow styling for TitledPane */
+.role-pane > .title > .arrow-button .arrow {
+    -fx-background-color: #FFB84D;
+}
+
+

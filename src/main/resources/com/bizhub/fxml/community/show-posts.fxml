@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.bizhub.controller.community.ShowPostsController"
+            stylesheets="@../../css/theme.css, @../../css/user-management.css">
+
+    <!-- Sidebar (same as formations page) -->
+    <left>
+        <fx:include fx:id="sidebarInclude" source="../user-sidebar.fxml" />
+    </left>
+
+    <!-- Topbar -->
+    <top>
+        <HBox fx:id="topbar" spacing="12" alignment="CENTER_LEFT" styleClass="topbar">
+            <padding><Insets top="14" right="16" bottom="14" left="16"/></padding>
+            <ImageView fitHeight="40" fitWidth="40" pickOnBounds="true" preserveRatio="true">
+                <image><Image url="@../../images/site-images/logo.png"/></image>
+            </ImageView>
+            <VBox spacing="2">
+                <Text text="Community" styleClass="h1"/>
+                <Text text="Posts &amp; Discussions" styleClass="subtitle"/>
+            </VBox>
+            <Pane HBox.hgrow="ALWAYS"/>
+        </HBox>
+    </top>
+
+    <!-- Main content: feed on left, form panel on right -->
+    <center>
+        <!-- StackPane so we can overlay the inline form -->
+        <StackPane fx:id="mainStack">
+
+            <!-- Feed + action bar -->
+            <HBox spacing="16">
+                <padding><Insets top="16" right="16" bottom="16" left="16"/></padding>
+
+                <!-- Left: post feed -->
+                <VBox spacing="14" HBox.hgrow="ALWAYS">
+
+                    <!-- Action bar -->
+                    <HBox spacing="10" alignment="CENTER_LEFT" styleClass="card"
+                          style="-fx-padding:10 14;">
+                        <Button fx:id="newPostBtn" text="✏  Write a Post"
+                                onAction="#onShowAddForm" styleClass="btn-primary"/>
+                        <Pane HBox.hgrow="ALWAYS"/>
+                        <Label text="Sort by:" style="-fx-text-fill:#FFB84D;"/>
+                        <ComboBox fx:id="sortCombo" prefWidth="140"/>
+                    </HBox>
+
+                    <!-- Posts feed (each post is a card rendered in cell factory) -->
+                    <ListView fx:id="postsList" VBox.vgrow="ALWAYS" styleClass="cards-list"/>
+                </VBox>
+
+                <!-- Right: inline form panel (hidden by default) -->
+                <VBox fx:id="formPanel" spacing="14" prefWidth="380" minWidth="340"
+                      styleClass="card" visible="false" managed="false"
+                      style="-fx-padding:20;">
+
+                    <Text fx:id="formTitle" text="New Post" styleClass="h2"/>
+
+                    <Label text="Title *" styleClass="hint"/>
+                    <TextField fx:id="titleField" promptText="What's on your mind?"
+                               styleClass="profile-field"/>
+
+                    <Label text="Category" styleClass="hint"/>
+                    <ComboBox fx:id="categoryCombo" maxWidth="Infinity" styleClass="profile-field"/>
+
+                    <Label text="Content *" styleClass="hint"/>
+                    <TextArea fx:id="contentArea" prefRowCount="6" wrapText="true"
+                              promptText="Share details, ideas, or questions..."
+                              styleClass="profile-field"/>
+
+                    <Label fx:id="formError" styleClass="error-text" text="" wrapText="true"/>
+
+                    <HBox spacing="10">
+                        <Button fx:id="saveBtn"   text="Post"   onAction="#onSavePost"
+                                styleClass="btn-primary"   HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                        <Button fx:id="cancelBtn" text="Cancel" onAction="#onCancelForm"
+                                styleClass="btn"           HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                    </HBox>
+                </VBox>
+            </HBox>
+
+            <!-- Comments overlay (hidden by default, slides over everything) -->
+            <StackPane fx:id="commentsOverlay" visible="false" managed="false"
+                       style="-fx-background-color:rgba(0,0,0,0.55);">
+                <VBox fx:id="commentsPanel" maxWidth="680" maxHeight="600"
+                      styleClass="card" spacing="14"
+                      style="-fx-padding:24; -fx-background-radius:16;">
+
+                    <!-- Header -->
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <VBox spacing="2" HBox.hgrow="ALWAYS">
+                            <Text styleClass="h2" text="💬 Comments"/>
+                            <Label fx:id="commentPostTitle" styleClass="subtitle" text=""/>
+                        </VBox>
+                        <Button text="✕ Close" onAction="#onCloseComments" styleClass="btn"/>
+                    </HBox>
+
+                    <Separator opacity="0.3"/>
+
+                    <!-- Comment list -->
+                    <ListView fx:id="commentsList" prefHeight="280" styleClass="cards-list"
+                              VBox.vgrow="ALWAYS"/>
+
+                    <Separator opacity="0.3"/>
+
+                    <!-- Add comment -->
+                    <VBox spacing="8">
+                        <Text text="Add a comment" styleClass="subtitle"/>
+                        <TextArea fx:id="newCommentArea" prefRowCount="3" wrapText="true"
+                                  promptText="Write your comment..."
+                                  styleClass="profile-field"/>
+                        <Label fx:id="commentError" styleClass="error-text" text=""/>
+                        <Button text="💬 Post Comment" onAction="#onAddComment"
+                                styleClass="btn-primary" maxWidth="Infinity"/>
+                    </VBox>
+                </VBox>
+            </StackPane>
+
+            <!-- Edit comment overlay -->
+            <StackPane fx:id="editCommentOverlay" visible="false" managed="false"
+                       style="-fx-background-color:rgba(0,0,0,0.55);">
+                <VBox maxWidth="500" styleClass="card" spacing="14"
+                      style="-fx-padding:24; -fx-background-radius:16;">
+                    <Text text="✏  Edit Comment" styleClass="h2"/>
+                    <TextArea fx:id="editCommentArea" prefRowCount="4" wrapText="true"
+                              styleClass="profile-field"/>
+                    <Label fx:id="editCommentError" styleClass="error-text" text=""/>
+                    <HBox spacing="10">
+                        <Button text="💾 Save"   onAction="#onSaveEditComment"
+                                styleClass="btn-primary" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                        <Button text="Cancel" onAction="#onCancelEditComment"
+                                styleClass="btn"        HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                    </HBox>
+                </VBox>
+            </StackPane>
+
+            <!-- Confirm delete overlay (replaces system Alert) -->
+            <StackPane fx:id="confirmOverlay" visible="false" managed="false"
+                       style="-fx-background-color:rgba(0,0,0,0.65);">
+                <VBox maxWidth="420" styleClass="card" spacing="18"
+                      style="-fx-padding:28; -fx-background-radius:16; -fx-alignment:center;">
+                    <Label text="⚠  Are you sure?" styleClass="h2"
+                           style="-fx-text-fill:#FFB84D;"/>
+                    <Label fx:id="confirmMessage" wrapText="true"
+                           style="-fx-text-fill:#A0B4C8;-fx-font-size:14px;-fx-alignment:center;"/>
+                    <HBox spacing="14" alignment="CENTER">
+                        <Button text="🗑  Yes, Delete" onAction="#onConfirmYes"
+                                style="-fx-background-color:#7f1d1d;-fx-text-fill:white;-fx-font-weight:bold;-fx-background-radius:8;-fx-padding:10 24;-fx-cursor:hand;"/>
+                        <Button text="Cancel" onAction="#onConfirmNo"
+                                styleClass="btn"
+                                style="-fx-padding:10 24;"/>
+                    </HBox>
+                </VBox>
+            </StackPane>
+
+        </StackPane>
+    </center>
+
+</BorderPane>
