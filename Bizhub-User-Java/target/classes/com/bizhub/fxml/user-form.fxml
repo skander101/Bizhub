@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.bizhub.controller.users_avis.user.UserFormController"
+      spacing="12" stylesheets="@../css/theme.css" styleClass="card">
+
+    <padding>
+        <Insets top="16" right="16" bottom="16" left="16" />
+    </padding>
+
+    <Text fx:id="titleText" text="User" styleClass="h1" />
+
+    <GridPane hgap="12" vgap="10">
+        <columnConstraints>
+            <ColumnConstraints percentWidth="28" />
+            <ColumnConstraints percentWidth="72" />
+        </columnConstraints>
+
+        <Label text="Email" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+        <TextField fx:id="emailField" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+        <Label text="Password" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+        <PasswordField fx:id="passwordField" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+        <Label text="Full name" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+        <TextField fx:id="fullNameField" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+
+        <Label text="Type" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+        <ComboBox fx:id="typeBox" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+
+        <Label text="Phone" GridPane.rowIndex="4" GridPane.columnIndex="0" />
+        <TextField fx:id="phoneField" GridPane.rowIndex="4" GridPane.columnIndex="1" />
+
+        <Label text="Company" GridPane.rowIndex="5" GridPane.columnIndex="0" />
+        <TextField fx:id="companyField" GridPane.rowIndex="5" GridPane.columnIndex="1" />
+
+        <Label text="Sector" GridPane.rowIndex="6" GridPane.columnIndex="0" />
+        <TextField fx:id="sectorField" GridPane.rowIndex="6" GridPane.columnIndex="1" />
+
+        <Label text="Active" GridPane.rowIndex="7" GridPane.columnIndex="0" />
+        <CheckBox fx:id="activeCheck" text="Enabled" GridPane.rowIndex="7" GridPane.columnIndex="1" />
+    </GridPane>
+
+    <Label fx:id="errorLabel" text="" styleClass="error-text" wrapText="true" />
+
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="Cancel" onAction="#cancel" styleClass="btn" />
+        <Button fx:id="saveButton" text="Save" onAction="#save" styleClass="btn-primary" />
+    </HBox>
+
+</VBox>
+
