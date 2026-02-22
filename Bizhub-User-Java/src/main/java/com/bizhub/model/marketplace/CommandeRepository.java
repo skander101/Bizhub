@@ -90,7 +90,7 @@ public class CommandeRepository {
         if (idClient <= 0) throw new IllegalArgumentException("Id client invalide");
 
         String sql =
-                "SELECT c.id_commande, c.id_client, c.id_produit, c.quantite AS quantite_commande, c.statut, p.nom AS produit_nom " +
+                "SELECT c.id_commande, c.id_client, c.id_produit, c.quantite AS quantite_commande, c.statut, p.nom AS produit_nom ,c.payment_status, c.payment_ref, c.payment_url" +
                         "FROM commande c " +
                         "JOIN produit_service p ON p.id_produit = c.id_produit " +
                         "WHERE c.id_client = ? " +
@@ -155,6 +155,19 @@ public class CommandeRepository {
             ps.setString(1, nouveauStatut);
             ps.setInt(2, idCommande);
             return ps.executeUpdate(); // 1 si changé, 0 si déjà modifiée
+        }
+    }
+    public int setPaymentInitiatedIfNull(int idCommande, String ref, String url) throws SQLException {
+        String sql = """
+        UPDATE commande
+        SET payment_status='en_cours', payment_ref=?, payment_url=?
+        WHERE id_commande=? AND (payment_ref IS NULL OR payment_ref='')
+    """;
+        try (PreparedStatement ps = cnx.prepareStatement(sql)) {
+            ps.setString(1, ref);
+            ps.setString(2, url);
+            ps.setInt(3, idCommande);
+            return ps.executeUpdate(); // 1 si ok, 0 si déjà initié
         }
     }
 

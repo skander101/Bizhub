@@ -48,4 +48,17 @@ public class CommandeJoinProduit {
 
     public java.util.Date getDateCommande() { return dateCommande; }
     public void setDateCommande(java.util.Date dateCommande) { this.dateCommande = dateCommande; }
+    private String paymentStatus;
+    private String paymentRef;
+    private String paymentUrl;
+
+    public String getPaymentStatus() { return paymentStatus; }
+    public void setPaymentStatus(String s) { this.paymentStatus = s; }
+
+    public String getPaymentRef() { return paymentRef; }
+    public void setPaymentRef(String s) { this.paymentRef = s; }
+
+    public String getPaymentUrl() { return paymentUrl; }
+    public void setPaymentUrl(String s) { this.paymentUrl = s; }
 }
+
