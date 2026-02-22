@@ -3,8 +3,10 @@ package com.bizhub.model.marketplace;
 import java.math.BigDecimal;
 
 public class ProduitService {
+
     private int idProduit;
     private int idProfile;
+    private int ownerUserId;          // ✅ NEW
     private String nom;
     private String description;
     private BigDecimal prix;
@@ -14,10 +16,11 @@ public class ProduitService {
 
     public ProduitService() {}
 
-    public ProduitService(int idProduit, int idProfile, String nom, String description,
+    public ProduitService(int idProduit, int idProfile, int ownerUserId, String nom, String description,
                           BigDecimal prix, int quantite, String categorie, boolean disponible) {
         this.idProduit = idProduit;
         this.idProfile = idProfile;
+        this.ownerUserId = ownerUserId;
         this.nom = nom;
         this.description = description;
         this.prix = prix;
@@ -31,6 +34,9 @@ public class ProduitService {
 
     public int getIdProfile() { return idProfile; }
     public void setIdProfile(int idProfile) { this.idProfile = idProfile; }
+
+    public int getOwnerUserId() { return ownerUserId; }
+    public void setOwnerUserId(int ownerUserId) { this.ownerUserId = ownerUserId; }
 
     public String getNom() { return nom; }
     public void setNom(String nom) { this.nom = nom; }
@@ -52,6 +58,6 @@ public class ProduitService {
 
     @Override
     public String toString() {
-        return nom + " (" + prix + ")";
+        return (nom == null ? "" : nom) + " | " + (prix == null ? "" : prix);
     }
 }

@@ -26,4 +26,12 @@ public class CommandeService {
     public List<CommandeJoinProduit> getByClientJoinProduit(int idClient) throws SQLException {
         return repo.findByClientJoinProduit(idClient);
     }
+
+    public void supprimer(int idCommande) throws SQLException {
+        try {
+            repo.delete(idCommande);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

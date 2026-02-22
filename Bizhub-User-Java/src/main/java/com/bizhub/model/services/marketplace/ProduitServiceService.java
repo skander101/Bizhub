@@ -4,6 +4,7 @@ import com.bizhub.model.marketplace.ProduitService;
 import com.bizhub.model.marketplace.ProduitServiceRepository;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProduitServiceService {
@@ -14,32 +15,22 @@ public class ProduitServiceService {
         return repo.findAll();
     }
 
-    public List<ProduitService> getAllByProfile(int idProfile) throws SQLException {
-        if (idProfile <= 0) throw new IllegalArgumentException("ID profile invalide");
-        return repo.findAllByProfile(idProfile);
+    public List<ProduitService> getAllDisponibles() throws SQLException {
+        List<ProduitService> all = repo.findAll();
+        List<ProduitService> out = new ArrayList<>();
+        for (ProduitService p : all) if (p.isDisponible()) out.add(p);
+        return out;
     }
 
-    public void ajouter(ProduitService p) throws SQLException {
-        validate(p, false);
+    public void add(ProduitService p) throws SQLException {
         repo.add(p);
     }
 
-    public void modifier(ProduitService p) throws SQLException {
-        validate(p, true);
+    public void update(ProduitService p) throws SQLException {
         repo.update(p);
     }
 
-    public void supprimer(int idProduit) throws SQLException {
-        if (idProduit <= 0) throw new IllegalArgumentException("ID produit invalide");
+    public void delete(int idProduit) throws SQLException {
         repo.delete(idProduit);
-    }
-
-    private void validate(ProduitService p, boolean isUpdate) {
-        if (p == null) throw new IllegalArgumentException("Produit null");
-        if (isUpdate && p.getIdProduit() <= 0) throw new IllegalArgumentException("ID produit invalide");
-        if (p.getIdProfile() <= 0) throw new IllegalArgumentException("id_profile invalide");
-        if (p.getNom() == null || p.getNom().isBlank()) throw new IllegalArgumentException("Nom obligatoire");
-        if (p.getPrix() == null) throw new IllegalArgumentException("Prix obligatoire");
-        if (p.getQuantite() < 0) throw new IllegalArgumentException("Quantité invalide");
     }
 }

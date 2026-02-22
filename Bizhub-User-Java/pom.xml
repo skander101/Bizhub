@@ -52,22 +52,30 @@
             </properties>
         </profile>
     </profiles>
-
     <dependencies>
-        <!-- Fixed MySQL connector dependency -->
+
+        <!-- ControlsFX (Toast / Notifications) -->
+        <dependency>
+            <groupId>org.controlsfx</groupId>
+            <artifactId>controlsfx</artifactId>
+            <version>11.2.0</version>
+        </dependency>
+
+        <!-- MySQL -->
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
             <version>8.0.33</version>
         </dependency>
 
-        <!-- JavaFX dependencies with platform classifier for runtime natives -->
+        <!-- JavaFX -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
             <version>${javafx.version}</version>
             <classifier>${javafx.platform}</classifier>
         </dependency>
+
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
@@ -75,13 +83,14 @@
             <classifier>${javafx.platform}</classifier>
         </dependency>
 
+        <!-- BCrypt -->
         <dependency>
             <groupId>org.mindrot</groupId>
             <artifactId>jbcrypt</artifactId>
             <version>0.4</version>
         </dependency>
-    </dependencies>
 
+    </dependencies>
     <build>
         <plugins>
             <!-- JavaFX run plugin -->
@@ -91,10 +100,6 @@
                 <version>0.0.8</version>
                 <configuration>
                     <mainClass>com.bizhub.Main</mainClass>
-                    <jvmArgs>
-                        <!-- Prevent Modena stylesheet from logging casting warnings on some Linux builds -->
-                        <jvmArg>-Djavafx.userAgentStylesheetUrl=none</jvmArg>
-                    </jvmArgs>
                 </configuration>
             </plugin>
 

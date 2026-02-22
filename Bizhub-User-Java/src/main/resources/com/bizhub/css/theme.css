@@ -11,6 +11,115 @@
  * Design philosophy: Modern, clean, honeycomb-inspired
  * with smooth curves and subtle depth effects.
  */
+/* Texte du ComboBox (valeur sélectionnée) */
+/* =========================
+   Labels (noms des champs) en jaune
+   ========================= */
+.form-label {
+    -fx-text-fill: #f6b21a; /* jaune */
+    -fx-font-weight: bold;
+}
+
+/* Titres h2/h1 si tu veux plus jaune */
+.h2, .h1 {
+    -fx-fill: #f6b21a;
+}
+
+/* =========================
+   PromptText (placeholder) en jaune
+   ========================= */
+/* JavaFX promptText */
+.text-field, .text-area, .combo-box-base {
+    -fx-prompt-text-fill: #f6b21a;
+}
+
+/* Couleur du texte saisi (optionnel, tu peux garder blanc si tu veux) */
+.text-field, .text-area {
+    -fx-text-fill: white;
+}
+
+/* ComboBox editor (si editable) */
+.combo-box .text-field {
+    -fx-prompt-text-fill: #f6b21a;
+}
+
+/* =========================
+   Reutiliser boutons user-management
+   (si tes classes existent déjà, garde juste l'affectation dans FXML)
+   ========================= */
+
+/* Exemple si tu as ces classes dans user-management.css :
+   .btn-primary, .btn-secondary, .btn-danger
+   sinon, tu peux les définir ici:
+*/
+.btn-primary {
+    -fx-background-color: #f6b21a;
+    -fx-text-fill: #0b1a2b;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+}
+
+.btn-secondary {
+    -fx-background-color: #2b3b55;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+}
+
+.btn-danger {
+    -fx-background-color: #d83a3a;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+}
+
+/* Hover */
+.btn-primary:hover { -fx-opacity: 0.92; }
+.btn-secondary:hover { -fx-opacity: 0.92; }
+.btn-danger:hover { -fx-opacity: 0.92; }
+
+.combo-box .text {
+    -fx-fill: white;
+}
+
+/* Texte dans la liste dropdown */
+.combo-box-popup .list-view .list-cell {
+    -fx-text-fill: white;
+    -fx-background-color: #0f2238; /* adapte à ton thème */
+}
+
+/* TableView texte cellules */
+.table-view .table-cell {
+    -fx-text-fill: white;
+}
+
+/* Header table */
+.table-view .column-header .label {
+    -fx-text-fill: #f5b642; /* doré / orange comme ton thème */
+}
+
+.stat-card{
+    -fx-background-color: rgba(255,255,255,0.06);
+    -fx-background-radius: 14;
+    -fx-padding: 12 14 12 14;
+    -fx-border-color: rgba(255,255,255,0.12);
+    -fx-border-radius: 14;
+}
+
+.stat-title{
+    -fx-fill: rgba(255,255,255,0.65);
+    -fx-font-size: 12px;
+}
+
+.stat-value{
+    -fx-fill: white;
+    -fx-font-size: 22px;
+    -fx-font-weight: 700;
+}
+
 
 .root {
     -fx-font-family: "Inter", "Segoe UI", "System";
@@ -789,4 +898,44 @@
  * ========================================================= */
 .loading-overlay {
     -fx-background-color: #001F3F;
+}
+
+/* =========================================================
+ * VALIDATION INLINE — Commandes (ajouté — ne pas supprimer)
+ * Utilisé par CommandeController : showError() / showSuccess()
+ * Couleurs alignées avec badge-danger (#EF4444) et badge-success (#10B981)
+ * ========================================================= */
+
+/* ── Icône ✓ succès ── */
+.val-icon-success {
+    -fx-text-fill: #10B981;
+    -fx-font-size: 13px;
+    -fx-font-weight: 900;
+}
+
+/* ── Texte succès ── */
+.val-text-success {
+    -fx-text-fill: #10B981;
+    -fx-font-size: 11px;
+    -fx-font-weight: 700;
+}
+
+/* ── Icône ✗ erreur ── */
+.val-icon-error {
+    -fx-text-fill: #EF4444;
+    -fx-font-size: 13px;
+    -fx-font-weight: 900;
+}
+
+/* ── Texte erreur ── */
+.val-text-error {
+    -fx-text-fill: #EF4444;
+    -fx-font-size: 11px;
+    -fx-font-weight: 700;
+}
+
+/* ── Label muted sous les boutons (conseils / hints) ── */
+.muted {
+    -fx-text-fill: rgba(232, 169, 58, 0.55);
+    -fx-font-size: 11px;
 }

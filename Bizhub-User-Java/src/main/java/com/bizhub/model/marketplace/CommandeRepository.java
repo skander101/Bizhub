@@ -127,4 +127,35 @@ public class CommandeRepository {
         j.setProduitNom(rs.getString("produit_nom"));
         return j;
     }
+
+    public List<CommandeJoinProduit> findByOwnerJoinProduit(int ownerId) throws SQLException {
+        if (ownerId <= 0) throw new IllegalArgumentException("OwnerId invalide");
+
+        String sql =
+                "SELECT c.id_commande, c.id_client, c.id_produit, c.quantite AS quantite_commande, c.statut, " +
+                        "       p.nom AS produit_nom " +
+                        "FROM commande c " +
+                        "JOIN produit_service p ON p.id_produit = c.id_produit " +
+                        "WHERE p.owner_user_id = ? " +   // ✅ investisseur propriétaire du produit
+                        "ORDER BY c.id_commande DESC";
+
+        List<CommandeJoinProduit> list = new ArrayList<>();
+
+        try (PreparedStatement ps = cnx.prepareStatement(sql)) {
+            ps.setInt(1, ownerId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) list.add(mapJoin(rs));
+            }
+        }
+        return list;
+    }
+    public int updateStatutIfEnAttente(int idCommande, String nouveauStatut) throws SQLException {
+        String sql = "UPDATE commande SET statut=? WHERE id_commande=? AND statut='en_attente'";
+        try (PreparedStatement ps = cnx.prepareStatement(sql)) {
+            ps.setString(1, nouveauStatut);
+            ps.setInt(2, idCommande);
+            return ps.executeUpdate(); // 1 si changé, 0 si déjà modifiée
+        }
+    }
+
 }

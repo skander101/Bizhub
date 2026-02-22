@@ -49,7 +49,7 @@
     <Button text="Reviews" onAction="#goReviews" styleClass="nav-button" />
 
     <!-- ✅ IMPORTANT -->
-    <Button text="Marketplace" onAction="#goMarketplace" styleClass="nav-button" />
+    <Button text="Marketplace" onAction="#goMarketplace" styleClass="nav-button"/>
 
     <Pane VBox.vgrow="ALWAYS" />
 

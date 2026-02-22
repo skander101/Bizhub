@@ -1,9 +1,8 @@
 package com.bizhub.controller.marketplace;
-
+import com.bizhub.model.services.common.ui.toastUtil;
 import com.bizhub.model.marketplace.Commande;
 import com.bizhub.model.marketplace.CommandeJoinProduit;
 import com.bizhub.model.marketplace.ProduitService;
-
 import com.bizhub.model.services.common.service.AppSession;
 import com.bizhub.model.services.marketplace.CommandeService;
 import com.bizhub.model.services.marketplace.ProduitServiceService;
@@ -13,279 +12,673 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.util.StringConverter;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CommandeController {
 
-    // ===== UI : blocs role-based =====
+    private static final Logger LOGGER = Logger.getLogger(CommandeController.class.getName());
+
+    // ── Constantes métier ────────────────────────────────
+    private static final int    QTE_MAX          = 10_000;
+    private static final String STATUT_ATTENTE   = "en_attente";
+    private static final String STATUT_CONFIRMEE = "confirmee";
+    private static final String STATUT_LIVREE    = "livree";
+    // ✅ DB ENUM contient "annule" (pas annulee)
+    private static final String STATUT_ANNULEE   = "annule";
+
+    // Couleurs de bordure inline
+    private static final String BORDER_OK  = "-fx-border-color:#10B981;-fx-border-width:2;-fx-border-radius:12;";
+    private static final String BORDER_ERR = "-fx-border-color:#EF4444;-fx-border-width:2;-fx-border-radius:12;";
+    private static final String BORDER_DEF = "";
+
+    // ── FXML Layout ──────────────────────────────────────
     @FXML private VBox boxAdd;
     @FXML private VBox boxManage;
-    @FXML private TextField tfQuantite;
+    @FXML private Text titleForm;
+
+    // ── FXML Startup ─────────────────────────────────────
     @FXML private ComboBox<ProduitService> cbProduit;
-    @FXML private Button btnAjouter;
+    @FXML private TextField                tfQuantite;
+    @FXML private Button                   btnAjouter;
+    @FXML private Button                   btnSupprimer;
 
-    @FXML private ComboBox<String> cbStatut;
-    @FXML private Button btnChangerStatut;
+    @FXML private HBox  hboxValProduit;
+    @FXML private Label iconValProduit;
+    @FXML private Label lblValProduit;
 
-    @FXML private TextField tfFilterClient;
+    @FXML private HBox  hboxValQte;
+    @FXML private Label iconValQte;
+    @FXML private Label lblValQte;
+
+    @FXML private HBox  hboxMsgAdd;
+    @FXML private Label iconMsgAdd;
+    @FXML private Label lblMsgAdd;
+
+    @FXML private HBox  hboxMsgDel;
+    @FXML private Label iconMsgDel;
+    @FXML private Label lblMsgDel;
+
+    // ── FXML Investisseur ────────────────────────────────
+    @FXML private Button btnConfirmer;
+    @FXML private Button btnAnnuler;
+
+    @FXML private HBox  hboxSelectedInfo;
+    @FXML private Label lblSelectedInfo;
+
+    @FXML private HBox  hboxMsgStatut;
+    @FXML private Label iconMsgStatut;
+    @FXML private Label lblMsgStatut;
+
+    // ── FXML Filtres ─────────────────────────────────────
+    @FXML private Label            lblFilterClient;
+    @FXML private TextField        tfFilterClient;
     @FXML private ComboBox<String> cbFilterStatut;
 
-    @FXML private TableView<CommandeJoinProduit> tableCommandes;
+    // ── FXML KPIs ────────────────────────────────────────
+    @FXML private Text kpiTotal;
+    @FXML private Text kpiAttente;
+    @FXML private Text kpiConfirmee;
+    @FXML private Text kpiLivree;
+    @FXML private Text kpiAnnulee;
+
+    // ── FXML Table ───────────────────────────────────────
+    @FXML private TableView<CommandeJoinProduit>            tableCommandes;
+
     @FXML private TableColumn<CommandeJoinProduit, Integer> colIdCommande;
     @FXML private TableColumn<CommandeJoinProduit, Integer> colIdClient;
-    @FXML private TableColumn<CommandeJoinProduit, String> colProduitNom;
+    @FXML private TableColumn<CommandeJoinProduit, String>  colProduitNom;
     @FXML private TableColumn<CommandeJoinProduit, Integer> colQte;
-    @FXML private TableColumn<CommandeJoinProduit, String> colStatut;
+    @FXML private TableColumn<CommandeJoinProduit, String>  colStatut;
 
-    @FXML private javafx.scene.text.Text titleForm;
-
-    // ===== Services =====
-    private final CommandeService commandeService = new CommandeService();
-    private final ProduitServiceService produitService = new ProduitServiceService();
+    // ── Services / Data ──────────────────────────────────
+    private final CommandeService        commandeService = new CommandeService();
+    private final ProduitServiceService  produitService  = new ProduitServiceService();
 
     private final ObservableList<CommandeJoinProduit> masterData = FXCollections.observableArrayList();
     private FilteredList<CommandeJoinProduit> filteredData;
 
-    private boolean isStartup;
-    private boolean isInvestor;
-
+    // =====================================================
+    // INITIALISATION
+    // =====================================================
     @FXML
     public void initialize() {
-        // ===== columns =====
-        colIdCommande.setCellValueFactory(new PropertyValueFactory<>("idCommande"));
-        colIdClient.setCellValueFactory(new PropertyValueFactory<>("idClient"));
-        colProduitNom.setCellValueFactory(new PropertyValueFactory<>("produitNom"));
-        colQte.setCellValueFactory(new PropertyValueFactory<>("quantiteCommande"));
-        colStatut.setCellValueFactory(new PropertyValueFactory<>("statut"));
 
-        // ===== combos =====
-        cbStatut.setItems(FXCollections.observableArrayList("en_attente", "confirmee", "livree", "annule"));
-        cbStatut.getSelectionModel().select("en_attente");
+        // Tableau toujours visible par défaut
+        setVM(tableCommandes, true);
 
-        cbFilterStatut.setItems(FXCollections.observableArrayList("Tous", "en_attente", "confirmee", "livree", "annule"));
-        cbFilterStatut.getSelectionModel().select("Tous");
+        // Colonnes principales
+        if (colIdCommande != null) colIdCommande.setCellValueFactory(new PropertyValueFactory<>("idCommande"));
+        if (colIdClient   != null) colIdClient  .setCellValueFactory(new PropertyValueFactory<>("idClient"));
+        if (colProduitNom != null) colProduitNom.setCellValueFactory(new PropertyValueFactory<>("produitNom"));
+        if (colQte        != null) colQte       .setCellValueFactory(new PropertyValueFactory<>("quantiteCommande"));
+        if (colStatut     != null) colStatut    .setCellValueFactory(new PropertyValueFactory<>("statut"));
+        setupStatutBadgesStartup();     // statut en badge coloré
+        setupRowHoverGlowStartup();     // hover fun
+        // ✅ Masquer IDs (restent utilisables en code)
+        hideColumn(colIdCommande);
+        hideColumn(colIdClient);
 
-        // ===== table data =====
+        // Filtre statut
+        if (cbFilterStatut != null) {
+            cbFilterStatut.setItems(FXCollections.observableArrayList(
+                    "Tous", STATUT_ATTENTE, STATUT_CONFIRMEE, STATUT_LIVREE, STATUT_ANNULEE
+            ));
+            if (cbFilterStatut.getValue() == null) cbFilterStatut.setValue("Tous");
+        }
+
+        // FilteredList + SortedList
         filteredData = new FilteredList<>(masterData, x -> true);
         SortedList<CommandeJoinProduit> sorted = new SortedList<>(filteredData);
-        sorted.comparatorProperty().bind(tableCommandes.comparatorProperty());
-        tableCommandes.setItems(sorted);
+        if (tableCommandes != null) {
+            sorted.comparatorProperty().bind(tableCommandes.comparatorProperty());
+            tableCommandes.setItems(sorted);
+        }
 
-        // listeners filters
-        if (tfFilterClient != null) tfFilterClient.textProperty().addListener((obs, o, n) -> applyFilters());
-        if (cbFilterStatut != null) cbFilterStatut.valueProperty().addListener((obs, o, n) -> applyFilters());
 
-        // ===== role =====
-        resolveRoleAndApplyUI();
+        // Listeners filtres
+        if (cbFilterStatut != null)
+            cbFilterStatut.valueProperty().addListener((obs, o, n) -> applyFilters());
+        if (tfFilterClient != null)
+            tfFilterClient.textProperty().addListener((obs, o, n) -> applyFilters());
 
-        // load
+        // Listener sélection table
+        if (tableCommandes != null)
+            tableCommandes.getSelectionModel().selectedItemProperty().addListener(
+                    (obs, o, sel) -> onSelectionChanged(sel));
+
+        // Validation temps réel — quantité
+        if (tfQuantite != null)
+            tfQuantite.textProperty().addListener((obs, o, n) -> validerQuantiteRealTime(n));
+
+        // Boutons investisseur désactivés par défaut
+        if (btnConfirmer != null) btnConfirmer.setDisable(true);
+        if (btnAnnuler   != null) btnAnnuler.setDisable(true);
+
+        // Chargement
         loadProduits();
+        applyRoleUI();
         refreshJoin();
-        applyFilters();
     }
 
-    private void resolveRoleAndApplyUI() {
-        var me = AppSession.getCurrentUser();
-        String role = (me == null || me.getUserType() == null) ? "" : me.getUserType().toLowerCase().trim();
+    private void setupStatutBadgesStartup() {
+        if (colStatut == null) return;
 
-        // ✅ adapte si chez toi c’est "investisseur" / "startup" exactement
-        isStartup = role.contains("startup");
-        isInvestor = role.contains("invest") || role.contains("investisseur");
-
-        // Si aucun rôle reconnu => fallback startup
-        if (!isStartup && !isInvestor) isStartup = true;
-
-        // ===== UI rules =====
-        if (isStartup) {
-            // startup: show add, hide manage
-            showNode(boxAdd, true);
-            showNode(boxManage, false);
-
-            // filters: startup ne doit pas filtrer par client
-            if (tfFilterClient != null) {
-                tfFilterClient.clear();
-                tfFilterClient.setDisable(true);
-                tfFilterClient.setVisible(false);
-                tfFilterClient.setManaged(false);
+        colStatut.setCellFactory(col -> new TableCell<>() {
+            private final Label badge = new Label();
+            {
+                badge.setStyle("-fx-padding:4 10; -fx-font-weight:800;"
+                        + "-fx-background-radius:999; -fx-border-radius:999; -fx-border-width:1;"
+                        + "-fx-font-size:11px;");
             }
+            @Override protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) { setGraphic(null); return; }
 
-            titleForm.setText("Passer une commande");
-        } else {
-            // investor: show manage, hide add
-            showNode(boxAdd, false);
-            showNode(boxManage, true);
+                String s = item.trim().toLowerCase();
+                // reset base
+                badge.setStyle("-fx-padding:4 10; -fx-font-weight:800;"
+                        + "-fx-background-radius:999; -fx-border-radius:999; -fx-border-width:1;"
+                        + "-fx-font-size:11px;");
 
-            // investor: peut filtrer par client
-            if (tfFilterClient != null) {
-                tfFilterClient.setDisable(false);
-                tfFilterClient.setVisible(true);
-                tfFilterClient.setManaged(true);
-            }
-
-            titleForm.setText("Gestion des statuts");
-        }
-    }
-
-    private void showNode(javafx.scene.Node n, boolean show) {
-        if (n == null) return;
-        n.setVisible(show);
-        n.setManaged(show);
-    }
-
-    // ===== Refresh =====
-    @FXML
-    public void refreshJoin() {
-        try {
-            var me = AppSession.getCurrentUser();
-            if (me == null) {
-                masterData.clear();
-                return;
-            }
-
-            int idClient = me.getUserId();
-
-            if (isStartup) {
-                // ✅ startup voit uniquement ses commandes
-                masterData.setAll(commandeService.getByClientJoinProduit(idClient));
-            } else {
-                // ✅ investisseur voit tout
-                masterData.setAll(commandeService.getAllJoinProduit());
-            }
-
-            applyFilters();
-        } catch (Exception e) {
-            error("Erreur DB", e.getMessage());
-        }
-    }
-
-    // ===== Startup: add order =====
-    @FXML
-    private void onAjouter() {
-        try {
-            if (!isStartup) {
-                error("Accès refusé", "Seul le startup peut passer une commande.");
-                return;
-            }
-
-            var me = AppSession.getCurrentUser();
-            if (me == null) throw new IllegalStateException("Session vide (utilisateur non connecté).");
-
-            ProduitService p = cbProduit.getValue();
-            if (p == null) throw new IllegalArgumentException("Sélectionnez un produit.");
-
-            int qte = parseInt(tfQuantite.getText(), "quantite");
-            if (qte <= 0) throw new IllegalArgumentException("Quantité doit être > 0");
-
-            Commande c = new Commande();
-            c.setIdClient(me.getUserId());
-            c.setIdProduit(p.getIdProduit());
-            c.setQuantite(qte);
-            c.setStatut("en_attente"); // ✅ startup ne choisit pas le statut
-
-            commandeService.ajouter(c);
-
-            tfQuantite.clear();
-            cbProduit.getSelectionModel().clearSelection();
-            refreshJoin();
-            info("Succès", "Commande ajoutée.");
-        } catch (Exception e) {
-            error("Erreur", e.getMessage());
-        }
-    }
-
-    // ===== Investisseur: change status =====
-    @FXML
-    private void onChangerStatut() {
-        try {
-            if (!isInvestor) {
-                error("Accès refusé", "Seul l’investisseur peut changer le statut.");
-                return;
-            }
-
-            CommandeJoinProduit selected = tableCommandes.getSelectionModel().getSelectedItem();
-            if (selected == null) {
-                error("Erreur", "Sélectionnez une commande.");
-                return;
-            }
-
-            String newStatut = cbStatut.getValue();
-            if (newStatut == null || newStatut.isBlank()) {
-                error("Erreur", "Choisissez un statut.");
-                return;
-            }
-
-            commandeService.changerStatut(selected.getIdCommande(), newStatut);
-
-            refreshJoin();
-            info("Succès", "Statut modifié.");
-        } catch (Exception e) {
-            error("Erreur", e.getMessage());
-        }
-    }
-
-    // ===== products =====
-    private void loadProduits() {
-        try {
-            cbProduit.setItems(FXCollections.observableArrayList(produitService.getAll()));
-
-            cbProduit.setCellFactory(list -> new ListCell<>() {
-                @Override protected void updateItem(ProduitService item, boolean empty) {
-                    super.updateItem(item, empty);
-                    setText(empty || item == null ? null : item.getNom() + " | " + item.getPrix());
+                switch (s) {
+                    case "en_attente" -> { badge.setText("⏳ En attente");
+                        badge.setStyle(badge.getStyle()
+                                + " -fx-background-color: rgba(245,158,11,0.18);"
+                                + " -fx-text-fill:#FCD34D;"
+                                + " -fx-border-color: rgba(245,158,11,0.55);");
+                    }
+                    case "confirmee" -> { badge.setText("✅ Confirmée");
+                        badge.setStyle(badge.getStyle()
+                                + " -fx-background-color: rgba(16,185,129,0.18);"
+                                + " -fx-text-fill:#6EE7B7;"
+                                + " -fx-border-color: rgba(16,185,129,0.55);");
+                    }
+                    case "livree" -> { badge.setText("📦 Livrée");
+                        badge.setStyle(badge.getStyle()
+                                + " -fx-background-color: rgba(59,130,246,0.18);"
+                                + " -fx-text-fill:#93C5FD;"
+                                + " -fx-border-color: rgba(59,130,246,0.55);");
+                    }
+                    case "annule" -> { badge.setText("⛔ Annulée");
+                        badge.setStyle(badge.getStyle()
+                                + " -fx-background-color: rgba(239,68,68,0.18);"
+                                + " -fx-text-fill:#FCA5A5;"
+                                + " -fx-border-color: rgba(239,68,68,0.55);");
+                    }
+                    default -> badge.setText(item);
                 }
-            });
-            cbProduit.setButtonCell(new ListCell<>() {
-                @Override protected void updateItem(ProduitService item, boolean empty) {
-                    super.updateItem(item, empty);
-                    setText(empty || item == null ? null : item.getNom() + " | " + item.getPrix());
-                }
-            });
-        } catch (Exception e) {
-            error("Erreur DB", e.getMessage());
-        }
-    }
-
-    // ===== filters =====
-    private void applyFilters() {
-        if (filteredData == null) return;
-
-        String clientTxt = (tfFilterClient == null || tfFilterClient.getText() == null) ? "" : tfFilterClient.getText().trim();
-        String statut = (cbFilterStatut == null) ? "Tous" : cbFilterStatut.getValue();
-
-        filteredData.setPredicate(c -> {
-            boolean okClient = true;
-
-            // ✅ filtre client seulement si investisseur
-            if (isInvestor && !clientTxt.isEmpty()) {
-                try {
-                    int idClient = Integer.parseInt(clientTxt);
-                    okClient = c.getIdClient() == idClient;
-                } catch (Exception ignored) {
-                    okClient = true;
-                }
+                setGraphic(badge);
             }
-
-            boolean okStatut = (statut == null || "Tous".equals(statut)) ||
-                    (c.getStatut() != null && c.getStatut().equalsIgnoreCase(statut));
-
-            return okClient && okStatut;
         });
     }
 
-    private int parseInt(String v, String field) {
-        try { return Integer.parseInt(v.trim()); }
-        catch (Exception e) { throw new IllegalArgumentException("Champ " + field + " invalide"); }
+    private void setupRowHoverGlowStartup() {
+        if (tableCommandes == null) return;
+
+        tableCommandes.setRowFactory(tv -> {
+            TableRow<CommandeJoinProduit> row = new TableRow<>();
+            row.hoverProperty().addListener((obs, oldV, hover) -> {
+                if (row.isEmpty()) { row.setStyle(""); return; }
+                row.setStyle(hover ? "-fx-background-color: rgba(251,191,36,0.07);" : "");
+            });
+            return row;
+        });
     }
 
-    private void info(String title, String msg) {
-        Alert a = new Alert(Alert.AlertType.INFORMATION);
-        a.setTitle(title); a.setHeaderText(null); a.setContentText(msg); a.showAndWait();
+    // =====================================================
+    // RÔLES
+    // =====================================================
+    private String getCurrentRole() {
+        var u = AppSession.getCurrentUser();
+        if (u == null || u.getUserType() == null) return "";
+        return u.getUserType().trim().toLowerCase();
     }
 
-    private void error(String title, String msg) {
-        Alert a = new Alert(Alert.AlertType.ERROR);
-        a.setTitle(title); a.setHeaderText(null); a.setContentText(msg); a.showAndWait();
+    private boolean isStartup()      { return getCurrentRole().contains("startup"); }
+    private boolean isInvestisseur() { return getCurrentRole().contains("investisseur"); }
+
+    // =====================================================
+    // UI ROLE-BASED
+    // =====================================================
+    private void applyRoleUI() {
+        boolean startup = isStartup();
+        boolean invest  = isInvestisseur();
+
+        LOGGER.info(">>> applyRoleUI | userType='" + getCurrentRole()
+                + "' | startup=" + startup + " | invest=" + invest);
+
+        // Formulaire gauche
+        setVM(boxAdd,    startup);
+        setVM(boxManage, invest);
+
+        // Filtre client — investisseur uniquement
+        setVM(lblFilterClient, invest);
+        setVM(tfFilterClient,  invest);
+
+        // Le tableau doit rester visible
+        setVM(tableCommandes, true);
+
+        // Titre
+        if (titleForm != null)
+            titleForm.setText(startup ? "Passer une commande" : "Gestion des commandes");
+
+        // Investisseur : boutons actifs seulement si sélection en attente (géré par onSelectionChanged)
     }
+
+    private void setVM(Node node, boolean v) {
+        if (node != null) { node.setVisible(v); node.setManaged(v); }
+    }
+
+    private void hideColumn(TableColumn<?, ?> col) {
+        if (col == null) return;
+        col.setVisible(false);
+        col.setMinWidth(0);
+        col.setPrefWidth(0);
+        col.setMaxWidth(0);
+        col.setResizable(false);
+    }
+
+    // =====================================================
+    // SELECTION TABLE → info investisseur + activation boutons
+    // =====================================================
+    private void onSelectionChanged(CommandeJoinProduit sel) {
+        resetMsg(hboxMsgStatut, iconMsgStatut, lblMsgStatut);
+
+        // Désactive par défaut
+        if (btnConfirmer != null) btnConfirmer.setDisable(true);
+        if (btnAnnuler   != null) btnAnnuler.setDisable(true);
+
+        if (sel == null) {
+            setVM(hboxSelectedInfo, false);
+            return;
+        }
+
+        // Info sélection
+        if (lblSelectedInfo != null)
+            lblSelectedInfo.setText("Commande #" + sel.getIdCommande()
+                    + "  |  " + sel.getProduitNom()
+                    + "  |  Qté : " + sel.getQuantiteCommande()
+                    + "  |  Statut : " + sel.getStatut()+ ")");
+
+
+
+        setVM(hboxSelectedInfo, true);
+
+        // Si pas investisseur -> on ne gère pas les boutons
+        if (!isInvestisseur()) return;
+
+        // ✅ Règle métier : seulement en_attente = actions autorisées
+        boolean editable = STATUT_ATTENTE.equalsIgnoreCase(safe(sel.getStatut()));
+        if (btnConfirmer != null) btnConfirmer.setDisable(!editable);
+        if (btnAnnuler   != null) btnAnnuler.setDisable(!editable);
+    }
+
+    // =====================================================
+    // REFRESH DONNÉES
+    // =====================================================
+    @FXML
+    public void refreshJoin() {
+        try {
+            if (AppSession.getCurrentUser() == null) {
+                masterData.clear();
+                updateKpis();
+                return;
+            }
+
+            if (isStartup()) {
+                int idClient = AppSession.getCurrentUser().getUserId();
+                masterData.setAll(commandeService.getByClientJoinProduit(idClient));
+
+            } else if (isInvestisseur()) {
+                masterData.setAll(commandeService.getAllJoinProduit());
+                LOGGER.info("Investisseur — commandes chargées : " + masterData.size());
+
+            } else {
+                masterData.clear();
+                LOGGER.warning("Rôle non reconnu : '" + getCurrentRole() + "'");
+            }
+
+
+            applyFilters();
+
+
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "refreshJoin", e);
+
+            if (isStartup())
+                showErr(hboxMsgAdd, iconMsgAdd, lblMsgAdd, null,
+                        "Erreur chargement : " + e.getMessage());
+            else
+                showErr(hboxMsgStatut, iconMsgStatut, lblMsgStatut, null,
+                        "Erreur chargement : " + e.getMessage());
+        }
+    }
+
+    // =====================================================
+    // STARTUP : AJOUTER COMMANDE
+    // =====================================================
+    @FXML
+    private void onAjouter() {
+        resetAllValidation();
+        boolean valid = true;
+
+        ProduitService produit = cbProduit != null ? cbProduit.getValue() : null;
+        if (produit == null) {
+            showErr(hboxValProduit, iconValProduit, lblValProduit, cbProduit, "Sélectionnez un produit.");
+            valid = false;
+        } else {
+            showOk(hboxValProduit, iconValProduit, lblValProduit, cbProduit, "Produit sélectionné.");
+        }
+
+        int qte;
+        try {
+            qte = parseQuantite(tfQuantite != null ? tfQuantite.getText() : "");
+            showOk(hboxValQte, iconValQte, lblValQte, tfQuantite, "Quantité valide.");
+        } catch (IllegalArgumentException e) {
+            showErr(hboxValQte, iconValQte, lblValQte, tfQuantite, e.getMessage());
+            return;
+        }
+
+        if (!valid) return;
+
+        try {
+            if (!isStartup())
+                throw new IllegalStateException("Action réservée aux Startup.");
+            if (AppSession.getCurrentUser() == null)
+                throw new IllegalStateException("Session expirée. Reconnectez-vous.");
+
+            Commande c = new Commande();
+            c.setIdClient(AppSession.getCurrentUser().getUserId());
+            c.setIdProduit(produit.getIdProduit());
+            c.setQuantite(qte);
+            c.setStatut(STATUT_ATTENTE);
+
+            commandeService.ajouter(c);
+            clearStartupForm();
+            refreshJoin();
+            showOk(hboxMsgAdd, iconMsgAdd, lblMsgAdd, null, "✓ Commande ajoutée avec succès !");
+
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "onAjouter", e);
+            showErr(hboxMsgAdd, iconMsgAdd, lblMsgAdd, null, e.getMessage());
+        }
+    }
+
+    // =====================================================
+    // STARTUP : SUPPRIMER COMMANDE
+    // =====================================================
+    @FXML
+    private void onSupprimer() {
+        resetMsg(hboxMsgDel, iconMsgDel, lblMsgDel);
+
+        if (tableCommandes == null) return;
+        CommandeJoinProduit sel = tableCommandes.getSelectionModel().getSelectedItem();
+        if (sel == null) {
+            showErr(hboxMsgDel, iconMsgDel, lblMsgDel, null, "Sélectionnez une commande dans le tableau.");
+            return;
+        }
+
+        int me = AppSession.getCurrentUser().getUserId();
+        if (sel.getIdClient() != me) {
+            showErr(hboxMsgDel, iconMsgDel, lblMsgDel, null,
+                    "Vous ne pouvez supprimer que vos propres commandes.");
+            return;
+        }
+
+        if (!STATUT_ATTENTE.equalsIgnoreCase(safe(sel.getStatut()))) {
+            showErr(hboxMsgDel, iconMsgDel, lblMsgDel, null,
+                    "Statut « " + sel.getStatut() + " » — suppression impossible.\n"
+                            + "Seules les commandes en attente sont supprimables.");
+            return;
+        }
+
+        try {
+            commandeService.supprimer(sel.getIdCommande());
+            refreshJoin();
+            showOk(hboxMsgDel, iconMsgDel, lblMsgDel, null,
+                    "✓ Commande #" + sel.getIdCommande() + " supprimée.");
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "onSupprimer", e);
+            showErr(hboxMsgDel, iconMsgDel, lblMsgDel, null, e.getMessage());
+        }
+    }
+
+    // =====================================================
+    // INVESTISSEUR : CONFIRMER
+    // =====================================================
+    @FXML
+    private void onConfirmer() {
+        resetMsg(hboxMsgStatut, iconMsgStatut, lblMsgStatut);
+
+        if (!isInvestisseur()) {
+            showErr(hboxMsgStatut, iconMsgStatut, lblMsgStatut, null, "Action réservée à l'investisseur.");
+            return;
+        }
+        if (tableCommandes == null) return;
+
+        CommandeJoinProduit sel = tableCommandes.getSelectionModel().getSelectedItem();
+        if (sel == null) {
+            showErr(hboxMsgStatut, iconMsgStatut, lblMsgStatut, null,
+                    "Sélectionnez une commande dans le tableau.");
+            return;
+        }
+        if (!STATUT_ATTENTE.equalsIgnoreCase(safe(sel.getStatut()))) {
+            showErr(hboxMsgStatut, iconMsgStatut, lblMsgStatut, null,
+                    "Impossible — statut actuel : « " + sel.getStatut() + " ».\n"
+                            + "Seules les commandes en attente peuvent être confirmées.");
+            return;
+        }
+
+        try {
+            commandeService.changerStatut(sel.getIdCommande(), STATUT_CONFIRMEE);
+            refreshJoin();
+            showOk(hboxMsgStatut, iconMsgStatut, lblMsgStatut, null,
+                    "✓ Commande #" + sel.getIdCommande() + " confirmée.");
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "onConfirmer", e);
+            showErr(hboxMsgStatut, iconMsgStatut, lblMsgStatut, null, e.getMessage());
+        }
+    }
+
+    // =====================================================
+    // INVESTISSEUR : ANNULER (✅ uniquement en_attente)
+    // =====================================================
+    @FXML
+    private void onAnnuler() {
+        resetMsg(hboxMsgStatut, iconMsgStatut, lblMsgStatut);
+
+        if (!isInvestisseur()) {
+            showErr(hboxMsgStatut, iconMsgStatut, lblMsgStatut, null, "Action réservée à l'investisseur.");
+            return;
+        }
+        if (tableCommandes == null) return;
+
+        CommandeJoinProduit sel = tableCommandes.getSelectionModel().getSelectedItem();
+        if (sel == null) {
+            showErr(hboxMsgStatut, iconMsgStatut, lblMsgStatut, null,
+                    "Sélectionnez une commande dans le tableau.");
+            return;
+        }
+
+        // ✅ même règle que confirmer : seulement en_attente
+        if (!STATUT_ATTENTE.equalsIgnoreCase(safe(sel.getStatut()))) {
+            showErr(hboxMsgStatut, iconMsgStatut, lblMsgStatut, null,
+                    "Impossible — statut actuel : « " + sel.getStatut() + " ».\n"
+                            + "Seules les commandes en attente peuvent être annulées.");
+            return;
+        }
+
+        try {
+            commandeService.changerStatut(sel.getIdCommande(), STATUT_ANNULEE);
+            refreshJoin();
+            showOk(hboxMsgStatut, iconMsgStatut, lblMsgStatut, null,
+                    "✓ Commande #" + sel.getIdCommande() + " annulée.");
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "onAnnuler", e);
+            showErr(hboxMsgStatut, iconMsgStatut, lblMsgStatut, null, e.getMessage());
+        }
+    }
+
+    // =====================================================
+    // CHARGEMENT PRODUITS
+    // =====================================================
+    private void loadProduits() {
+        try {
+            if (cbProduit == null) return;
+
+            cbProduit.setItems(FXCollections.observableArrayList(produitService.getAllDisponibles()));
+            cbProduit.setConverter(new StringConverter<>() {
+                @Override public String toString(ProduitService p) {
+                    return p == null ? "" : p.getNom() + "  —  " + p.getPrix() + " TND";
+                }
+                @Override public ProduitService fromString(String s) { return null; }
+            });
+
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "loadProduits", e);
+            showErr(hboxMsgAdd, iconMsgAdd, lblMsgAdd, null,
+                    "Impossible de charger les produits : " + e.getMessage());
+        }
+    }
+
+    // =====================================================
+    // FILTRES + KPIs
+    // =====================================================
+    private void applyFilters() {
+        if (filteredData == null) return;
+
+        String statut    = cbFilterStatut == null ? "Tous" : safe(cbFilterStatut.getValue());
+        String clientTxt = tfFilterClient == null ? "" : safe(tfFilterClient.getText()).trim();
+
+        if (tfFilterClient != null) tfFilterClient.setStyle(BORDER_DEF);
+
+        filteredData.setPredicate(c -> {
+            boolean okStatut = "Tous".equalsIgnoreCase(statut)
+                    || (c.getStatut() != null && c.getStatut().equalsIgnoreCase(statut));
+
+            boolean okClient = true;
+            if (isInvestisseur() && !clientTxt.isEmpty()) {
+                if (!clientTxt.matches("\\d+")) {
+                    if (tfFilterClient != null) tfFilterClient.setStyle(BORDER_ERR);
+                    okClient = false;
+                } else {
+                    okClient = (c.getIdClient() == Integer.parseInt(clientTxt));
+                }
+            }
+
+            return okStatut && okClient;
+        });
+
+        updateKpis();
+    }
+
+    private void updateKpis() {
+        int total = 0, att = 0, conf = 0, liv = 0, ann = 0;
+
+        for (CommandeJoinProduit c : masterData) {
+            total++;
+            String s = safe(c.getStatut()).toLowerCase();
+            switch (s) {
+                case "en_attente" -> att++;
+                case "confirmee"  -> conf++;
+                case "livree"     -> liv++;
+                case "annule"     -> ann++;
+            }
+        }
+
+        setText(kpiTotal, total);
+        setText(kpiAttente, att);
+        setText(kpiConfirmee, conf);
+        setText(kpiLivree, liv);
+        setText(kpiAnnulee, ann);
+    }
+
+    // =====================================================
+    // VALIDATION TEMPS RÉEL — Quantité
+    // =====================================================
+    private void validerQuantiteRealTime(String val) {
+        if (val == null || val.isBlank()) {
+            resetMsg(hboxValQte, iconValQte, lblValQte);
+            if (tfQuantite != null) tfQuantite.setStyle(BORDER_DEF);
+            return;
+        }
+        try {
+            parseQuantite(val);
+            showOk(hboxValQte, iconValQte, lblValQte, tfQuantite, "Quantité valide ✓");
+        } catch (IllegalArgumentException e) {
+            showErr(hboxValQte, iconValQte, lblValQte, tfQuantite, e.getMessage());
+        }
+    }
+
+    // =====================================================
+    // HELPERS — Messages inline (PAS de Alert popup)
+    // =====================================================
+    private void showErr(HBox hbox, Label icon, Label lbl, Control field, String msg) {
+        if (field != null) field.setStyle(BORDER_ERR);
+        applyStyle(icon, lbl, "✗", msg, "#EF4444");
+        setVM(hbox, true);
+    }
+
+    private void showOk(HBox hbox, Label icon, Label lbl, Control field, String msg) {
+        if (field != null) field.setStyle(BORDER_OK);
+        applyStyle(icon, lbl, "✓", msg, "#10B981");
+        setVM(hbox, true);
+    }
+
+    private void applyStyle(Label icon, Label lbl, String icone, String msg, String color) {
+        String style = "-fx-text-fill:" + color + ";-fx-font-weight:700;-fx-font-size:12px;";
+        if (icon != null) { icon.setText(icone); icon.setStyle(style + "-fx-font-size:13px;"); }
+        if (lbl  != null) { lbl.setText(msg);   lbl.setStyle(style); }
+    }
+
+    private void resetMsg(HBox hbox, Label icon, Label lbl) {
+        setVM(hbox, false);
+        if (icon != null) { icon.setText(""); icon.setStyle(""); }
+        if (lbl  != null) { lbl.setText("");  lbl.setStyle(""); }
+    }
+
+    private void resetAllValidation() {
+        resetMsg(hboxValProduit, iconValProduit, lblValProduit);
+        resetMsg(hboxValQte,     iconValQte,     lblValQte);
+        resetMsg(hboxMsgAdd,     iconMsgAdd,     lblMsgAdd);
+        resetMsg(hboxMsgDel,     iconMsgDel,     lblMsgDel);
+        resetMsg(hboxMsgStatut,  iconMsgStatut,  lblMsgStatut);
+
+        if (cbProduit  != null) cbProduit.setStyle(BORDER_DEF);
+        if (tfQuantite != null) tfQuantite.setStyle(BORDER_DEF);
+    }
+
+    // =====================================================
+    // UTILITAIRES
+    // =====================================================
+    private void clearStartupForm() {
+        if (tfQuantite     != null) tfQuantite.clear();
+        if (cbProduit      != null) cbProduit.getSelectionModel().clearSelection();
+        if (tableCommandes != null) tableCommandes.getSelectionModel().clearSelection();
+        resetAllValidation();
+    }
+
+    private int parseQuantite(String value) {
+        String v = safe(value).trim();
+        if (v.isEmpty()) throw new IllegalArgumentException("La quantité est obligatoire.");
+        if (!v.matches("\\d+")) throw new IllegalArgumentException("Entrez un nombre entier (ex: 3).");
+
+        int qte = Integer.parseInt(v);
+        if (qte <= 0) throw new IllegalArgumentException("La quantité doit être supérieure à 0.");
+        if (qte > QTE_MAX) throw new IllegalArgumentException("Maximum : " + QTE_MAX + " unités.");
+
+        return qte;
+    }
+
+    private void setText(Text t, int v) { if (t != null) t.setText(String.valueOf(v)); }
+    private String safe(String s) { return s == null ? "" : s; }
 }
