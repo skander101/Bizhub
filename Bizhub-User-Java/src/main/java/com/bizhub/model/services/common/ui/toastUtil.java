@@ -13,7 +13,7 @@ public class toastUtil {
 
             Notifications n = Notifications.create()
                     .text(text)
-                    .hideAfter(Duration.seconds(3))
+                    .hideAfter(Duration.seconds(8))
                     .position(Pos.BOTTOM_RIGHT);
 
             // 🎨 Style selon type
