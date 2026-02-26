@@ -18,32 +18,6 @@ import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- * StripeWebhookServer
- *
- * Remplace StripeWebhookController (qui nécessitait Spring Boot absent du pom.xml).
- * Utilise com.sun.net.httpserver intégré au JDK — aucune dépendance supplémentaire.
- *
- * ── Démarrage ───────────────────────────────────────────────────────────────
- * Dans Main.java (Application JavaFX), méthode init() :
- *
- *   Properties props = new Properties();
- *   props.load(getClass().getClassLoader().getResourceAsStream("stripe.properties"));
- *   String secret = props.getProperty("stripe.webhook.secret", "").trim();
- *   StripeWebhookServer.start(secret);
- *
- * Dans Main.java, méthode stop() :
- *   StripeWebhookServer.stop();
- *
- * ── Test en local ────────────────────────────────────────────────────────────
- *   stripe listen --forward-to localhost:8081/webhook/stripe
- *   (la commande affiche le whsec_ à mettre dans stripe.properties)
- *
- * ── Configuration Dashboard Stripe (prod) ───────────────────────────────────
- *   Developers > Webhooks > Add endpoint
- *   URL : https://TON_DOMAINE/webhook/stripe
- *   Événement : checkout.session.completed
- */
 public class StripeWebhookServer {
 
     private static final Logger LOGGER = Logger.getLogger(StripeWebhookServer.class.getName());
@@ -52,14 +26,6 @@ public class StripeWebhookServer {
 
     private static HttpServer server;
 
-    // ─────────────────────────────────────────────────────────────────────────
-    // CYCLE DE VIE
-    // ─────────────────────────────────────────────────────────────────────────
-
-    /**
-     * Lance le serveur webhook dans un thread daemon.
-     * @param webhookSecret  Secret Stripe (whsec_xxx)
-     */
     public static void start(String webhookSecret) {
         if (webhookSecret == null || webhookSecret.isBlank()) {
             LOGGER.warning("⚠ StripeWebhookServer : webhookSecret vide — serveur non démarré.");
@@ -76,7 +42,6 @@ public class StripeWebhookServer {
             t.start();
 
             LOGGER.info("✅ StripeWebhookServer démarré : http://localhost:" + PORT + PATH);
-
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Impossible de démarrer StripeWebhookServer", e);
         }
@@ -89,25 +54,19 @@ public class StripeWebhookServer {
         }
     }
 
-    // ─────────────────────────────────────────────────────────────────────────
-    // HANDLER HTTP
-    // ─────────────────────────────────────────────────────────────────────────
-
     private static void handleRequest(HttpExchange exchange, String webhookSecret) throws IOException {
 
-        // Stripe envoie uniquement des POST
         if (!"POST".equalsIgnoreCase(exchange.getRequestMethod())) {
             send(exchange, 405, "Method Not Allowed");
             return;
         }
 
-        // Lire le body brut (Stripe vérifie la signature sur le body exact)
-        String payload;
+        byte[] rawBytes;
         try (InputStream is = exchange.getRequestBody()) {
-            payload = new String(is.readAllBytes(), StandardCharsets.UTF_8);
+            rawBytes = is.readAllBytes();
         }
+        String payload = new String(rawBytes, StandardCharsets.UTF_8);
 
-        // Header Stripe-Signature obligatoire
         String sigHeader = exchange.getRequestHeaders().getFirst("Stripe-Signature");
         if (sigHeader == null || sigHeader.isBlank()) {
             LOGGER.warning("Webhook reçu sans Stripe-Signature header");
@@ -115,102 +74,137 @@ public class StripeWebhookServer {
             return;
         }
 
-        // Vérification signature Stripe (HMAC SHA-256)
         Event event;
         try {
             event = Webhook.constructEvent(payload, sigHeader, webhookSecret);
         } catch (Exception e) {
-            LOGGER.log(Level.WARNING, "Signature webhook invalide : " + e.getMessage());
+            LOGGER.warning("Signature webhook invalide : " + e.getMessage());
             send(exchange, 400, "Invalid signature");
             return;
         }
 
-        // Traitement de l'événement — toujours répondre 200 rapidement à Stripe
+        LOGGER.info("Webhook reçu : type=" + event.getType() + " | id=" + event.getId());
+
         try {
-            switch (event.getType()) {
-                case "checkout.session.completed":
-                    handleCheckoutSessionCompleted(event);
-                    break;
-                case "checkout.session.expired":
-                    LOGGER.info("Session Stripe expirée : " + event.getId());
-                    break;
-                default:
-                    LOGGER.fine("Événement Stripe non géré : " + event.getType());
+            if ("checkout.session.completed".equals(event.getType())) {
+                handleCheckoutSessionCompleted(event, payload);
             }
         } catch (Exception e) {
-            // On logue mais on répond 200 pour éviter que Stripe ne réessaie indéfiniment
-            LOGGER.log(Level.SEVERE, "Erreur traitement événement webhook", e);
+            LOGGER.log(Level.SEVERE, "Erreur traitement webhook", e);
         }
 
         send(exchange, 200, "OK");
     }
 
-    // ─────────────────────────────────────────────────────────────────────────
-    // TRAITEMENT checkout.session.completed
-    // ─────────────────────────────────────────────────────────────────────────
+    private static void handleCheckoutSessionCompleted(Event event, String rawPayload) {
 
-    private static void handleCheckoutSessionCompleted(Event event) {
+        String sessionId = null;
+        String paymentStatus = null;
+        String orderIdStr = null;
 
-        // Désérialisation de l'objet Session
-        EventDataObjectDeserializer deserializer = event.getDataObjectDeserializer();
-        StripeObject stripeObject;
+        // ── 1) SDK (préférable) ──
+        try {
+            EventDataObjectDeserializer deserializer = event.getDataObjectDeserializer();
+            if (deserializer.getObject().isPresent()) {
+                StripeObject obj = deserializer.getObject().get();
+                if (obj instanceof Session session) {
+                    sessionId = session.getId();
+                    paymentStatus = session.getPaymentStatus();
 
-        if (deserializer.getObject().isPresent()) {
-            stripeObject = deserializer.getObject().get();
-        } else {
-            stripeObject = event.getData().getObject();
+                    if (session.getMetadata() != null) {
+                        orderIdStr = session.getMetadata().get("orderId"); // ✅ IMPORTANT
+                    }
+                    if (orderIdStr == null || orderIdStr.isBlank()) {
+                        orderIdStr = session.getClientReferenceId(); // fallback
+                    }
+
+                    LOGGER.info("✅ SDK | sessionId=" + sessionId
+                            + " | paymentStatus=" + paymentStatus
+                            + " | orderId=" + orderIdStr
+                            + " | clientRef=" + session.getClientReferenceId()
+                            + " | meta=" + session.getMetadata());
+                }
+            }
+        } catch (Exception e) {
+            LOGGER.warning("Désérialisation SDK échouée, fallback JSON : " + e.getMessage());
         }
 
-        if (!(stripeObject instanceof Session)) {
-            LOGGER.warning("Objet inattendu dans checkout.session.completed");
+        // ── 2) fallback JSON ──
+        if (sessionId == null) {
+            sessionId = jsonPickDataObjectValue(rawPayload, "id");
+            paymentStatus = jsonPickDataObjectValue(rawPayload, "payment_status");
+            orderIdStr = jsonPickDataObjectValue(rawPayload, "orderId");
+            if (orderIdStr == null || orderIdStr.isBlank()) {
+                orderIdStr = jsonPickDataObjectValue(rawPayload, "client_reference_id");
+            }
+        }
+
+        if (sessionId == null || sessionId.isBlank()) {
+            LOGGER.severe("❌ sessionId introuvable dans l'événement " + event.getId());
             return;
         }
 
-        Session session = (Session) stripeObject;
-        String sessionId     = session.getId();
-        String paymentStatus = session.getPaymentStatus(); // "paid", "unpaid", "no_payment_required"
-
-        if (!"paid".equals(paymentStatus)) {
-            LOGGER.warning("Paiement non réussi pour session " + sessionId + " : " + paymentStatus);
+        if (!"paid".equalsIgnoreCase(paymentStatus)) {
+            LOGGER.warning("Paiement non réussi : paymentStatus='" + paymentStatus + "' | session=" + sessionId);
             return;
         }
 
-        // ✅ Récupérer orderId depuis metadata
-        //    Mis dans metadata par StripeGatewayClient.createStripeCheckout() via .putMetadata("orderId", ...)
-        var metadata = session.getMetadata();
-        if (metadata == null || !metadata.containsKey("orderId")) {
-            LOGGER.severe("❌ orderId absent de la metadata de la session " + sessionId
-                    + " — vérifier StripeGatewayClient.createStripeCheckout() → .putMetadata(\"orderId\", ...)");
+        if (orderIdStr == null || orderIdStr.isBlank()) {
+            LOGGER.severe("❌ orderId introuvable (metadata + client_reference_id) | session=" + sessionId
+                    + " — vérifiez StripeGatewayClient : .putMetadata(\"orderId\", ...) et .setClientReferenceId(...)");
             return;
         }
-
-        String orderIdStr = metadata.get("orderId");
 
         try {
-            int orderId = Integer.parseInt(orderIdStr);
-
-            // ✅ Marquer commande comme payée en DB
-            //    → est_payee = 1, paid_at = NOW(), payment_status = 'paid'
+            int orderId = Integer.parseInt(orderIdStr.trim());
             CommandeService commandeService = new CommandeService();
             int rows = commandeService.markAsPaid(orderId, sessionId);
 
-            if (rows > 0) {
-                LOGGER.info("✅ Commande #" + orderId + " marquée payée (session: " + sessionId + ")");
-            } else {
-                LOGGER.warning("⚠ Aucune ligne mise à jour pour commande #" + orderId
-                        + " (déjà payée ou ID introuvable)");
-            }
+            if (rows > 0) LOGGER.info("✅ Commande #" + orderId + " marquée payée ! (session: " + sessionId + ")");
+            else LOGGER.warning("⚠ markAsPaid : 0 lignes pour commande #" + orderId + " (déjà payée ou introuvable)");
 
         } catch (NumberFormatException e) {
-            LOGGER.severe("orderId invalide dans metadata : '" + orderIdStr + "'");
+            LOGGER.severe("orderId invalide : '" + orderIdStr + "'");
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Erreur SQL lors du markAsPaid", e);
+            LOGGER.log(Level.SEVERE, "❌ Erreur SQL markAsPaid", e);
         }
     }
 
-    // ─────────────────────────────────────────────────────────────────────────
-    // HELPER
-    // ─────────────────────────────────────────────────────────────────────────
+    private static String jsonPick(String json, String key) {
+        if (json == null || key == null) return null;
+        String k = "\"" + key + "\"";
+        int idx = json.indexOf(k);
+        if (idx < 0) return null;
+
+        int colon = json.indexOf(':', idx + k.length());
+        if (colon < 0) return null;
+
+        String rest = json.substring(colon + 1).trim();
+
+        if (rest.startsWith("\"")) {
+            int start = 1;
+            int end = rest.indexOf('"', start);
+            if (end < 0) return null;
+            return rest.substring(start, end);
+        } else {
+            int end = 0;
+            while (end < rest.length() && (Character.isDigit(rest.charAt(end))
+                    || rest.charAt(end) == '-' || rest.charAt(end) == '.')) end++;
+            return end > 0 ? rest.substring(0, end) : null;
+        }
+    }
+
+    private static String jsonPickDataObjectValue(String json, String key) {
+        if (json == null) return null;
+        int dataIdx = json.indexOf("\"data\"");
+        if (dataIdx < 0) return null;
+
+        int objIdx = json.indexOf("\"object\"", dataIdx);
+        if (objIdx < 0) return null;
+
+        String sub = json.substring(objIdx);
+        return jsonPick(sub, key);
+    }
 
     private static void send(HttpExchange exchange, int code, String body) throws IOException {
         byte[] bytes = body.getBytes(StandardCharsets.UTF_8);

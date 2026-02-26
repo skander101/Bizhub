@@ -1,10 +1,12 @@
 package com.bizhub.model.marketplace;
 
 import com.bizhub.model.services.common.dao.MyDatabase;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CommandeRepository {
 
@@ -198,12 +200,32 @@ public class CommandeRepository {
         }
     }
 
+    public void updatePaymentRef(int idCommande, String ref, String url) throws SQLException {
+        if (idCommande <= 0) throw new IllegalArgumentException("Id commande invalide");
+        if (ref == null || ref.isBlank()) throw new IllegalArgumentException("ref invalide");
+        if (url == null || url.isBlank()) throw new IllegalArgumentException("url invalide");
+
+        String sql =
+                "UPDATE commande " +
+                        "SET payment_status = 'en_cours', " +
+                        "    payment_ref    = ?, " +
+                        "    payment_url    = ? " +
+                        "WHERE id_commande  = ?";
+
+        try (PreparedStatement ps = cnx.prepareStatement(sql)) {
+            ps.setString(1, ref);
+            ps.setString(2, url);
+            ps.setInt(3, idCommande);
+            ps.executeUpdate();
+        }
+    }
+
     // =====================================================
     // ✅ MARK AS PAID (à appeler après paiement validé)
     // =====================================================
 
     public int markAsPaid(int idCommande, String sessionId) throws SQLException {
-        if (idCommande <= 0)  throw new IllegalArgumentException("Id commande invalide");
+        if (idCommande <= 0) throw new IllegalArgumentException("Id commande invalide");
         if (sessionId == null || sessionId.isBlank())
             throw new IllegalArgumentException("sessionId invalide");
 
@@ -283,4 +305,21 @@ public class CommandeRepository {
 
         return j;
     }
+
+    public String findStartupPhoneByCommandeId(int idCommande) throws SQLException {
+        String sql = """
+        SELECT u.phone
+        FROM commande c
+        JOIN user u ON u.user_id = c.id_client
+        WHERE c.id_commande = ?
+    """;
+        try (PreparedStatement ps = cnx.prepareStatement(sql)) {
+            ps.setInt(1, idCommande);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next() ? rs.getString("phone") : null;
+            }
+        }
+    }
+
+
 }

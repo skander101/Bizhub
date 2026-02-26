@@ -11,14 +11,6 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- * StripeGatewayClient — appelle l'API Stripe directement (pas de serveur local).
- *
- * ✅ FIX : orderId passé en metadata → le webhook peut identifier la commande
- * ✅ FIX : prix unitaire passé en paramètre
- *
- * Lit la config depuis src/main/resources/stripe.properties
- */
 public class StripeGatewayClient {
 
     private static final Logger LOGGER = Logger.getLogger(StripeGatewayClient.class.getName());
@@ -30,37 +22,23 @@ public class StripeGatewayClient {
 
     public StripeGatewayClient() {
         Properties props = new Properties();
-        try (InputStream in = getClass().getClassLoader()
-                .getResourceAsStream("stripe.properties")) {
+        try (InputStream in = getClass().getClassLoader().getResourceAsStream("stripe.properties")) {
             if (in == null)
-                throw new IllegalStateException(
-                        "stripe.properties introuvable dans src/main/resources/");
+                throw new IllegalStateException("stripe.properties introuvable dans src/main/resources/");
             props.load(in);
         } catch (IOException e) {
-            throw new IllegalStateException(
-                    "Impossible de lire stripe.properties : " + e.getMessage(), e);
+            throw new IllegalStateException("Impossible de lire stripe.properties : " + e.getMessage(), e);
         }
 
         this.secretKey  = props.getProperty("stripe.secret.key", "").trim();
         this.currency   = props.getProperty("stripe.currency", "eur").trim();
-        this.successUrl = props.getProperty("stripe.success.url",
-                "https://bizhub.app/succes").trim();
-        this.cancelUrl  = props.getProperty("stripe.cancel.url",
-                "https://bizhub.app/annule").trim();
+        this.successUrl = props.getProperty("stripe.success.url", "https://bizhub.app/succes").trim();
+        this.cancelUrl  = props.getProperty("stripe.cancel.url", "https://bizhub.app/annule").trim();
 
         if (secretKey.isEmpty())
-            throw new IllegalStateException(
-                    "stripe.secret.key vide dans stripe.properties");
+            throw new IllegalStateException("stripe.secret.key vide dans stripe.properties");
     }
 
-    /**
-     * Crée une Stripe Checkout Session.
-     *
-     * @param orderId       ID de la commande (stocké en metadata → utilisé par le webhook)
-     * @param productName   Nom du produit (affiché sur la page Stripe)
-     * @param quantity      Quantité commandée
-     * @param unitCentimes  Prix unitaire en centimes (ex: 1000 = 10.00 EUR)
-     */
     public PaymentResult createStripeCheckout(int orderId,
                                               String productName,
                                               int quantity,
@@ -72,9 +50,11 @@ public class StripeGatewayClient {
                     .setMode(SessionCreateParams.Mode.PAYMENT)
                     .setSuccessUrl(successUrl + "?session_id={CHECKOUT_SESSION_ID}")
                     .setCancelUrl(cancelUrl)
-                    // ✅ CRITIQUE : orderId en metadata → utilisé par StripeWebhookServer
-                    //    pour appeler commandeService.markAsPaid(orderId, sessionId)
+
+                    // ✅ double sécurité : metadata + client_reference_id
                     .putMetadata("orderId", String.valueOf(orderId))
+                    .setClientReferenceId(String.valueOf(orderId))
+
                     .addLineItem(
                             SessionCreateParams.LineItem.builder()
                                     .setQuantity((long) quantity)
@@ -83,13 +63,11 @@ public class StripeGatewayClient {
                                                     .setCurrency(currency)
                                                     .setUnitAmount(unitCentimes)
                                                     .setProductData(
-                                                            SessionCreateParams.LineItem.PriceData
-                                                                    .ProductData.builder()
+                                                            SessionCreateParams.LineItem.PriceData.ProductData.builder()
                                                                     .setName(safe(productName).isEmpty()
                                                                             ? "Commande #" + orderId
                                                                             : safe(productName))
-                                                                    .setDescription(
-                                                                            "BizHub — Commande #" + orderId)
+                                                                    .setDescription("BizHub — Commande #" + orderId)
                                                                     .build()
                                                     )
                                                     .build()
@@ -116,9 +94,6 @@ public class StripeGatewayClient {
         }
     }
 
-    /**
-     * Surcharge rétro-compatible : prix par défaut 10.00 EUR (1000 centimes).
-     */
     public PaymentResult createStripeCheckout(int orderId, String productName, int quantity) {
         return createStripeCheckout(orderId, productName, quantity, 1000L);
     }

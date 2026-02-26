@@ -8,6 +8,7 @@ import com.bizhub.model.services.common.service.AppSession;
 import com.bizhub.model.services.common.ui.toastUtil;
 import com.bizhub.model.services.marketplace.CommandeNotificationService;
 import com.bizhub.model.services.marketplace.CommandePriorityEngine;
+import com.bizhub.model.services.marketplace.CommandeService;
 import com.bizhub.model.services.marketplace.payment.PaymentResult;
 import com.bizhub.model.services.marketplace.payment.PaymentService;
 
@@ -73,6 +74,7 @@ public class ProduitServiceController {
     // ── Services / Repos ──────────────────────────────────────
     private final ProduitServiceRepository repo         = new ProduitServiceRepository();
     private final CommandeRepository       commandeRepo = new CommandeRepository();
+    private final CommandeService          commandeService = new CommandeService(); // ✅ SMS
 
     private final CommandePriorityEngine       priorityEngine = new CommandePriorityEngine();
     private final CommandeNotificationService  notifService   =
@@ -353,7 +355,8 @@ public class ProduitServiceController {
                     int     score     = c.getPriorityScore();
 
                     if (enAttente && rec && score >= AUTO_CONFIRM_THRESHOLD) {
-                        int updated = commandeRepo.updateStatutIfEnAttente(
+                        // ✅ FIX : passe par commandeService → déclenche le SMS Twilio
+                        int updated = commandeService.changerStatutSiEnAttente(
                                 c.getIdCommande(), STATUT_CONFIRMEE);
 
                         if (updated == 1) {
@@ -494,8 +497,8 @@ public class ProduitServiceController {
         }
 
         try {
-            // 1) Confirmer en DB
-            commandeRepo.updateStatut(sel.getIdCommande(), STATUT_CONFIRMEE);
+            // 1) Confirmer en DB + ✅ déclenche SMS Twilio via CommandeService
+            commandeService.changerStatut(sel.getIdCommande(), STATUT_CONFIRMEE);
 
             // 2) Générer lien Stripe SANS ouvrir le navigateur
             PaymentResult pay = paymentService.initiateStripeCheckout(sel);

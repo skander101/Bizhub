@@ -35,7 +35,7 @@ import java.sql.SQLException;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import com.bizhub.model.services.marketplace.TwilioSmsService;
 public class CommandeController {
 
     private static final Logger LOGGER = Logger.getLogger(CommandeController.class.getName());
@@ -130,6 +130,7 @@ public class CommandeController {
 
     private final ObservableList<CommandeJoinProduit> masterData = FXCollections.observableArrayList();
     private FilteredList<CommandeJoinProduit> filteredData;
+    private volatile boolean paying = false;
 
     // =====================================================
     // INITIALISATION
@@ -297,17 +298,21 @@ public class CommandeController {
 
         resetMsg(hboxMsgPaiement, iconMsgPaiement, lblMsgPaiement);
 
+        if (paying) return;
+        paying = true;
+
         CommandeJoinProduit sel = tableCommandes != null
                 ? tableCommandes.getSelectionModel().getSelectedItem()
                 : null;
 
-        if (sel == null) { safeToastError("Sélectionnez une commande."); return; }
-        if (!isStartup()) { safeToastWarning("Action réservée au Startup."); return; }
+        if (sel == null)          { safeToastError("Sélectionnez une commande."); paying = false; return; }
+        if (!isStartup())         { safeToastWarning("Action réservée au Startup."); paying = false; return; }
         if (!STATUT_CONFIRMEE.equalsIgnoreCase(safe(sel.getStatut()))) {
             safeToastWarning("Paiement disponible uniquement après confirmation ✅");
+            paying = false;
             return;
         }
-        if (sel.isEstPayee()) { safeToastWarning("Commande déjà payée ✅"); return; }
+        if (sel.isEstPayee())     { safeToastWarning("Commande déjà payée ✅"); paying = false; return; }
 
         // UI loading
         if (btnPayer != null) {
@@ -321,50 +326,38 @@ public class CommandeController {
 
         Task<PaymentResult> task = new Task<>() {
             @Override
-            protected PaymentResult call() {
+            protected PaymentResult call() throws Exception {
+
+                PaymentResult pay = paymentService.initiateStripeCheckout(cmdFinal);
+                if (pay == null || !pay.isSuccess()) return pay;
+
+                LOGGER.info("PAY INIT | orderId=" + cmdFinal.getIdCommande()
+                        + " | ref=" + pay.getRef()
+                        + " | url=" + pay.getPaymentUrl());
 
                 try {
-                    // 1) URL déjà stockée => ouvrir direct
-                    String url = commandeRepo.getPaymentUrl(cmdFinal.getIdCommande());
-                    if (url != null && !url.isBlank()) {
-                        paymentService.openInBrowser(url);
-                        return PaymentResult.ok("existing", url);
-                    }
+                    commandeRepo.updatePaymentRef(
+                            cmdFinal.getIdCommande(),
+                            pay.getRef(),
+                            pay.getPaymentUrl()
+                    );
+                } catch (Exception ignore) { }
 
-                    // 2) sinon init Stripe
-                    PaymentResult pay = paymentService.initiateStripeCheckout(cmdFinal);
-                    if (pay == null || !pay.isSuccess()) return pay;
-
-                    // 3) save anti-doublon (si null)
-                    try {
-                        commandeRepo.setPaymentInitiatedIfNull(
-                                cmdFinal.getIdCommande(),
-                                pay.getRef(),
-                                pay.getPaymentUrl()
-                        );
-                    } catch (SQLException ignore) {}
-
-                    // 4) ouvrir navigateur
-                    paymentService.openInBrowser(pay.getPaymentUrl());
-                    return pay;
-
-                } catch (Exception e) {
-                    return PaymentResult.fail("Erreur paiement : " + e.getMessage());
-                }
+                paymentService.openInBrowser(pay.getPaymentUrl());
+                return pay;
             }
         };
 
         task.setOnSucceeded(e -> Platform.runLater(() -> {
+            paying = false;
             stopProgress();
 
             PaymentResult res = task.getValue();
             if (res == null || !res.isSuccess()) {
-
                 if (btnPayer != null) {
                     btnPayer.setDisable(false);
                     btnPayer.setText("💳  Payer cette commande");
                 }
-
                 String msg = (res == null) ? "Erreur Stripe" : safe(res.getErrorMessage());
                 safeToastError("Stripe : " + msg);
                 showErr(hboxMsgPaiement, iconMsgPaiement, lblMsgPaiement, null,
@@ -382,22 +375,20 @@ public class CommandeController {
         }));
 
         task.setOnFailed(e -> Platform.runLater(() -> {
+            paying = false;
             stopProgress();
-
             if (btnPayer != null) {
                 btnPayer.setDisable(false);
                 btnPayer.setText("💳  Payer cette commande");
             }
-
-            String err = task.getException() != null ? task.getException().getMessage() : "Erreur inconnue";
+            String err = task.getException() != null
+                    ? task.getException().getMessage() : "Erreur inconnue";
             safeToastError("Erreur : " + err);
-            showErr(hboxMsgPaiement, iconMsgPaiement, lblMsgPaiement, null,
-                    "Erreur : " + err);
+            showErr(hboxMsgPaiement, iconMsgPaiement, lblMsgPaiement, null, "Erreur : " + err);
         }));
 
         new Thread(task, "stripe-thread").start();
     }
-
     private void stopProgress() {
         if (progressPaiement != null) progressPaiement.setProgress(1);
         setVM(progressPaiement, false);
@@ -533,16 +524,19 @@ public class CommandeController {
         resetMsg(hboxMsgStatut, iconMsgStatut, lblMsgStatut);
 
         if (!isInvestisseur()) {
-            showErr(hboxMsgStatut, iconMsgStatut, lblMsgStatut, null, "Action réservée à l'investisseur.");
+            showErr(hboxMsgStatut, iconMsgStatut, lblMsgStatut, null,
+                    "Action réservée à l'investisseur.");
             return;
         }
         if (tableCommandes == null) return;
 
         CommandeJoinProduit sel = tableCommandes.getSelectionModel().getSelectedItem();
         if (sel == null) {
-            showErr(hboxMsgStatut, iconMsgStatut, lblMsgStatut, null, "Sélectionnez une commande.");
+            showErr(hboxMsgStatut, iconMsgStatut, lblMsgStatut, null,
+                    "Sélectionnez une commande.");
             return;
         }
+
         if (!STATUT_ATTENTE.equalsIgnoreCase(safe(sel.getStatut()))) {
             showErr(hboxMsgStatut, iconMsgStatut, lblMsgStatut, null,
                     "Impossible — statut actuel : « " + sel.getStatut() + " ».\n"
@@ -551,16 +545,21 @@ public class CommandeController {
         }
 
         try {
+            // ✅ Change le statut + (dans le Service) envoie le SMS au startup si Twilio est configuré
             commandeService.changerStatut(sel.getIdCommande(), STATUT_CONFIRMEE);
+
             refreshJoin();
+
             showOk(hboxMsgStatut, iconMsgStatut, lblMsgStatut, null,
-                    "✓ Commande #" + sel.getIdCommande() + " confirmée.\nLe startup peut maintenant la payer.");
+                    "✓ Commande #" + sel.getIdCommande() + " confirmée.\n"
+                            + "Le startup peut maintenant la payer.");
+
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "onConfirmer", e);
-            showErr(hboxMsgStatut, iconMsgStatut, lblMsgStatut, null, e.getMessage());
+            showErr(hboxMsgStatut, iconMsgStatut, lblMsgStatut, null,
+                    (e.getMessage() == null ? "Erreur confirmation" : e.getMessage()));
         }
     }
-
     @FXML
     private void onAnnuler() {
         resetMsg(hboxMsgStatut, iconMsgStatut, lblMsgStatut);
