@@ -1,23 +1,31 @@
 package com.bizhub.controller.users_avis.user;
 
-import com.bizhub.model.users_avis.user.User;
-import com.bizhub.model.services.common.service.*;
-import javafx.collections.FXCollections;
-import javafx.fxml.FXML;
-import javafx.scene.chart.PieChart;
-import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
-
-import java.net.URL;
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
-import java.util.ResourceBundle;
+
+import com.bizhub.model.services.common.service.AiChatWidget;
+import com.bizhub.model.services.common.service.AlertHelper;
+import com.bizhub.model.services.common.service.AppSession;
+import com.bizhub.model.services.common.service.NavigationService;
+import com.bizhub.model.services.common.service.ReportService;
+import com.bizhub.model.services.common.service.Services;
+import com.bizhub.model.users_avis.user.User;
+
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.fxml.FXML;
+import javafx.scene.chart.PieChart;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class AdminDashboardController {
 
@@ -59,6 +67,14 @@ public class AdminDashboardController {
         } catch (Exception ignored) {
         }
 
+        // Add AI Chat Widget
+        Platform.runLater(() -> {
+            if (topbar != null && topbar.getScene() != null) {
+                Stage stage = (Stage) topbar.getScene().getWindow();
+                StackPane rootPane = (StackPane) topbar.getScene().getRoot();
+                AiChatWidget.addToStackPane(rootPane, stage);
+            }
+        });
 
         colLatestName.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(nullToEmpty(c.getValue().getFullName())));
         colLatestEmail.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(nullToEmpty(c.getValue().getEmail())));

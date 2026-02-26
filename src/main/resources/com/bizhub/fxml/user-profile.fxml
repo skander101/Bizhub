@@ -6,10 +6,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.bizhub.controller.users_avis.user.UserProfileController"
-            fx:id="root"
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.bizhub.controller.users_avis.user.UserProfileController">
+
+<BorderPane fx:id="root"
             styleClass="bg-gradient"
             stylesheets="@../css/theme.css, @../css/user-management.css">
 
@@ -284,3 +285,4 @@
 
 </BorderPane>
 
+</StackPane>

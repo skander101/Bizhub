@@ -33,13 +33,35 @@
 
         <VBox spacing="4" alignment="CENTER">
             <Text text="Welcome Back" styleClass="h1" />
-            <Text text="Sign in to manage users &amp; reviews" styleClass="subtitle" />
+            <Text text="Choose your login method" styleClass="subtitle" />
         </VBox>
 
         <Separator opacity="0.25" />
 
-        <!-- Login Section (email/password) -->
-        <VBox fx:id="loginSection" spacing="14">
+        <!-- Path Selection Section -->
+        <VBox fx:id="pathSelectionSection" spacing="14">
+            <VBox spacing="10" alignment="CENTER">
+                <Button fx:id="standardLoginButton" text="Standard Login" onAction="#onStandardLoginPath"
+                        maxWidth="1.7976931348623157E308" styleClass="btn-primary" />
+                <Text text="Email + Password + 2FA" styleClass="hint" />
+            </VBox>
+
+            <Separator opacity="0.25" />
+
+            <VBox spacing="10" alignment="CENTER">
+                <Button fx:id="faceLoginButton" text="Face Login" onAction="#onFaceLoginPath"
+                        maxWidth="1.7976931348623157E308" styleClass="btn-primary" />
+                <Text text="Just scan your face to log in" styleClass="hint" />
+            </VBox>
+
+            <HBox spacing="8" alignment="CENTER">
+                <Label text="Don't have an account?" styleClass="hint" />
+                <Hyperlink text="Sign up" onAction="#goToSignup" />
+            </HBox>
+        </VBox>
+
+        <!-- Standard Login Section (email/password) - hidden by default -->
+        <VBox fx:id="loginSection" spacing="14" visible="false" managed="false">
             <VBox spacing="6">
                 <Label text="Email" styleClass="field-label" />
                 <TextField fx:id="emailField" promptText="you@bizhub.tn" styleClass="text-field-modern" />
@@ -55,10 +77,55 @@
 
             <Button fx:id="loginButton" text="Sign In" onAction="#onLogin" maxWidth="1.7976931348623157E308" styleClass="btn-primary" />
 
-            <HBox spacing="8" alignment="CENTER">
-                <Label text="Don't have an account?" styleClass="hint" />
-                <Hyperlink text="Sign up" onAction="#goToSignup" />
+            <Hyperlink text="← Back to options" onAction="#onBackToPathSelection" />
+        </VBox>
+
+        <!-- TOTP Verification Section (hidden by default) -->
+        <VBox fx:id="totpSection" spacing="14" visible="false" managed="false">
+            <VBox spacing="4" alignment="CENTER">
+                <Text text="🔐" style="-fx-font-size: 32px;" />
+                <Text text="Two-Factor Authentication" styleClass="section-title" />
+                <Text text="Enter the 6-digit code from your authenticator app" styleClass="subtitle" />
+            </VBox>
+
+            <HBox alignment="CENTER" spacing="8">
+                <TextField fx:id="totpField1" prefWidth="45" styleClass="pin-field" />
+                <TextField fx:id="totpField2" prefWidth="45" styleClass="pin-field" />
+                <TextField fx:id="totpField3" prefWidth="45" styleClass="pin-field" />
+                <TextField fx:id="totpField4" prefWidth="45" styleClass="pin-field" />
+                <TextField fx:id="totpField5" prefWidth="45" styleClass="pin-field" />
+                <TextField fx:id="totpField6" prefWidth="45" styleClass="pin-field" />
             </HBox>
+
+            <Button fx:id="verifyTotpButton" text="Verify" onAction="#onVerifyTotp" maxWidth="1.7976931348623157E308" styleClass="btn-primary" />
+
+            <Hyperlink text="← Back to login" onAction="#onBackToStandardLogin" />
+
+            <ProgressIndicator fx:id="totpProgress" visible="false" prefWidth="24" prefHeight="24" />
+        </VBox>
+
+        <!-- Face Login Section (standalone face scan) - hidden by default -->
+        <VBox fx:id="faceLoginSection" spacing="14" visible="false" managed="false">
+            <VBox spacing="4" alignment="CENTER">
+                <Text text="🔐" style="-fx-font-size: 32px;" />
+                <Text text="Face Login" styleClass="section-title" />
+                <Text text="Position your face in front of the camera" styleClass="subtitle" />
+            </VBox>
+
+            <!-- Webcam Preview -->
+            <StackPane alignment="CENTER">
+                <ImageView fx:id="faceLoginWebcamPreview" fitWidth="320" fitHeight="240" preserveRatio="true" style="-fx-border-color: #ddd; -fx-border-radius: 8px;" />
+                <Rectangle fx:id="faceLoginBoundingBox" visible="false" fill="transparent" stroke="#4CAF50" strokeWidth="3" />
+            </StackPane>
+
+            <Label fx:id="faceLoginStatusLabel" text="" styleClass="subtitle" textAlignment="CENTER" />
+
+            <Button fx:id="scanFaceButton" text="Scan Face" onAction="#onScanFaceForLogin"
+                    maxWidth="1.7976931348623157E308" styleClass="btn-primary" />
+
+            <Hyperlink text="← Back to options" onAction="#onBackToPathSelection" />
+
+            <ProgressIndicator fx:id="faceLoginProgress" visible="false" prefWidth="24" prefHeight="24" />
         </VBox>
 
         <!-- Face Verification Section (hidden by default) -->

@@ -1,8 +1,5 @@
 package com.bizhub.model.services.user_avis.user;
 
-import com.bizhub.model.services.common.DB.MyDatabase;
-import com.bizhub.model.users_avis.user.User;
-
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -10,12 +7,22 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
+import java.sql.Types;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+import com.bizhub.model.services.common.DB.MyDatabase;
+import com.bizhub.model.users_avis.user.User;
 
 /**
  * UserService: Merged service combining UserDAO + UserService functionality.
@@ -314,6 +321,21 @@ public class UserService {
     private static void setStringOrNull(PreparedStatement pst, int idx, String value) throws SQLException {
         if (value == null || value.trim().isEmpty()) pst.setNull(idx, Types.VARCHAR);
         else pst.setString(idx, value.trim());
+    }
+
+    /**
+     * Finds all users who have a face token set (for face login).
+     *
+     * @return list of users with face tokens
+     * @throws SQLException if query fails
+     */
+    public List<User> findUsersWithFaceTokens() throws SQLException {
+        String sql = "SELECT * FROM `user` WHERE face_token IS NOT NULL AND face_token != '' AND is_active = true";
+        List<User> users = new ArrayList<>();
+        try (Statement st = cnx.createStatement(); ResultSet rs = st.executeQuery(sql)) {
+            while (rs.next()) users.add(mapRow(rs));
+        }
+        return users;
     }
 
     /**

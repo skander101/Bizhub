@@ -1,26 +1,43 @@
 package com.bizhub.controller.users_avis.user;
 
-import com.bizhub.model.users_avis.user.User;
-import com.bizhub.model.services.common.service.*;
-import javafx.concurrent.Task;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.SQLException;
+
+import com.bizhub.model.services.common.service.AiChatWidget;
+import com.bizhub.model.services.common.service.AlertHelper;
+import com.bizhub.model.services.common.service.AppSession;
+import com.bizhub.model.services.common.service.EnvConfig;
+import com.bizhub.model.services.common.service.NavigationService;
+import com.bizhub.model.services.common.service.Services;
+import com.bizhub.model.users_avis.user.User;
+
+import javafx.application.Platform;
+import javafx.concurrent.Task;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputControl;
+import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.TitledPane;
+import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 public class UserProfileController {
 
@@ -127,6 +144,15 @@ public class UserProfileController {
                 generateAiBtn.setTooltip(new Tooltip("AI generation not configured. Add CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACC_ID to .env"));
             }
         }
+
+        // Add AI Chat Widget
+        Platform.runLater(() -> {
+            if (topbar != null && topbar.getScene() != null) {
+                Stage stage = (Stage) topbar.getScene().getWindow();
+                StackPane rootPane = (StackPane) topbar.getScene().getRoot();
+                AiChatWidget.addToStackPane(rootPane, stage);
+            }
+        });
     }
 
     private boolean isCloudflareConfigured() {

@@ -10,10 +10,13 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane stylesheets="@../css/theme.css, @../css/user-management.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bizhub.controller.users_avis.user.AdminDashboardController">
+<StackPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bizhub.controller.users_avis.user.AdminDashboardController">
+
+<BorderPane stylesheets="@../css/theme.css, @../css/user-management.css">
 
     <left>
         <fx:include source="admin-sidebar.fxml" />
@@ -76,3 +79,5 @@
     </center>
 
 </BorderPane>
+
+</StackPane>

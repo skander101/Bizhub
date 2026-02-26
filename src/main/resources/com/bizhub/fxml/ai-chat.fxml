@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+
+<!-- Root container with floating button and chat window -->
+<StackPane xmlns="http://javafx.com/javafx/21"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.bizhub.controller.AiChatController"
+           style="-fx-background-color: transparent;">
+
+    <!-- Floating Chat Button -->
+    <Button fx:id="chatButton" text="🤖" onAction="#onOpenChat"
+            visible="true" managed="true"
+            style="-fx-background-color: linear-gradient(to bottom, #FFD54F, #FFB84D);
+                   -fx-text-fill: #0A192F;
+                   -fx-font-size: 24px;
+                   -fx-min-width: 56;
+                   -fx-min-height: 56;
+                   -fx-background-radius: 50%;
+                   -fx-cursor: hand;
+                   -fx-effect: dropshadow(gaussian, rgba(255, 184, 77, 0.45), 12, 0.30, 0, 6);"
+            StackPane.alignment="BOTTOM_RIGHT">
+        <StackPane.margin>
+            <Insets bottom="20" right="20" />
+        </StackPane.margin>
+    </Button>
+
+    <!-- Chat Window (initially hidden) -->
+    <VBox fx:id="chatWindow"
+          visible="false" managed="false"
+          spacing="0"
+          prefWidth="320"
+          prefHeight="450"
+          style="-fx-background-color: rgba(26, 51, 82, 0.98); -fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: rgba(255, 184, 77, 0.35); -fx-border-width: 1.5; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.30), 24, 0.18, 0, 12);"
+          StackPane.alignment="BOTTOM_RIGHT">
+        <StackPane.margin>
+            <Insets bottom="20" right="20" />
+        </StackPane.margin>
+
+        <!-- Chat Header -->
+        <HBox style="-fx-background-color: linear-gradient(to bottom, #172A45, #0A192F); -fx-background-radius: 20 20 0 0; -fx-border-color: rgba(255, 184, 77, 0.35); -fx-border-width: 0 0 1 0; -fx-padding: 12 16;">
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <!-- Bot Avatar -->
+                <StackPane style="-fx-background-color: linear-gradient(to bottom right, #FFB84D, #FFD54F); -fx-background-radius: 50%; -fx-padding: 4; -fx-min-width: 36; -fx-min-height: 36; -fx-max-width: 36; -fx-max-height: 36;">
+                    <ImageView fitWidth="28" fitHeight="28" preserveRatio="true">
+                        <image>
+                            <Image url="@../../images/site-images/logo.png" />
+                        </image>
+                    </ImageView>
+                </StackPane>
+                <VBox spacing="2">
+                    <Label text="BizHub Assistant" style="-fx-text-fill: #FFFFFF; -fx-font-size: 14px; -fx-font-weight: bold;" />
+                    <Label text="Online" style="-fx-text-fill: #FFB84D; -fx-font-size: 11px;" />
+                </VBox>
+            </HBox>
+            <Region HBox.hgrow="ALWAYS" />
+            <!-- Minimize Button -->
+            <Button fx:id="minimizeButton" text="−" onAction="#onMinimizeChat"
+                    style="-fx-background-color: rgba(255, 184, 77, 0.18); -fx-text-fill: #FFB84D; -fx-font-size: 14px; -fx-min-width: 28; -fx-min-height: 28; -fx-background-radius: 50%; -fx-border-color: rgba(255, 184, 77, 0.45); -fx-border-width: 1.5;" />
+        </HBox>
+
+        <!-- Messages Area -->
+        <ScrollPane fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER"
+                    style="-fx-background-color: #0A192F; -fx-padding: 0;"
+                    VBox.vgrow="ALWAYS">
+            <VBox fx:id="messagesContainer" spacing="10" style="-fx-padding: 16; -fx-background-color: #0A192F;">
+                <!-- Welcome Message -->
+                <HBox alignment="TOP_LEFT" spacing="8">
+                    <StackPane style="-fx-background-color: linear-gradient(to bottom right, #FFB84D, #FFD54F); -fx-background-radius: 50%; -fx-min-width: 32; -fx-min-height: 32; -fx-max-width: 32; -fx-max-height: 32;">
+                        <ImageView fitWidth="24" fitHeight="24" preserveRatio="true">
+                            <image>
+                                <Image url="@../../images/site-images/logo.png" />
+                            </image>
+                        </ImageView>
+                    </StackPane>
+                    <VBox style="-fx-background-color: rgba(26, 51, 82, 0.98); -fx-background-radius: 12; -fx-padding: 12; -fx-max-width: 220; -fx-border-color: rgba(255, 184, 77, 0.30); -fx-border-width: 1.5;">
+                        <Label text="Hi there! 👋 I'm your BizHub navigation assistant." wrapText="true" style="-fx-font-size: 13px; -fx-text-fill: #FFFFFF;" />
+                        <Label text="Type 'help' to see what I can do!" wrapText="true" style="-fx-font-size: 13px; -fx-text-fill: #FFB84D; -fx-padding: 4 0 0 0;" />
+                    </VBox>
+                </HBox>
+            </VBox>
+        </ScrollPane>
+
+        <!-- Input Area -->
+        <HBox spacing="8" alignment="CENTER" style="-fx-background-color: #172A45; -fx-padding: 12; -fx-border-color: rgba(255, 184, 77, 0.35); -fx-border-width: 1 0 0 0;">
+            <TextField fx:id="inputField" promptText="Type a command..."
+                       style="-fx-background-color: rgba(10, 25, 47, 0.70); -fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: rgba(42, 74, 111, 0.85); -fx-border-width: 1.5; -fx-padding: 10 14; -fx-font-size: 13px; -fx-text-fill: #FFFFFF; -fx-prompt-text-fill: #FFB84D;"
+                       HBox.hgrow="ALWAYS" />
+            <Button fx:id="sendButton" text="➤" onAction="#onSendMessage"
+                    style="-fx-background-color: linear-gradient(to bottom, #FFD54F, #FFB84D); -fx-text-fill: #0A192F; -fx-font-size: 14px; -fx-font-weight: 900; -fx-min-width: 36; -fx-min-height: 36; -fx-background-radius: 50%;" />
+        </HBox>
+    </VBox>
+
+</StackPane>
