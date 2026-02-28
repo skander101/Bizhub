@@ -9,13 +9,18 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class NavigationService {
+
+    private static final Logger LOGGER = Logger.getLogger(NavigationService.class.getName());
 
     public enum ActiveNav {
         DASHBOARD,
@@ -60,23 +65,23 @@ public class NavigationService {
     }
 
     // ====== AUTH / BASE ======
-    public void goToLogin() { loadIntoStage("/com/bizhub/fxml/login.fxml", 980, 640); }
+    public void goToLogin()  { loadIntoStage("/com/bizhub/fxml/login.fxml", 980, 640); }
     public void goToSignup() { loadIntoStage("/com/bizhub/fxml/signup.fxml", 980, 700); }
 
     // ====== ADMIN ======
-    public void goToAdminDashboard() { loadIntoStage("/com/bizhub/fxml/admin-dashboard.fxml", 1200, 760); }
-    public void goToUserManagement() { loadIntoStage("/com/bizhub/fxml/user-management.fxml", 1200, 760); }
+    public void goToAdminDashboard()  { loadIntoStage("/com/bizhub/fxml/admin-dashboard.fxml", 1200, 760); }
+    public void goToUserManagement()  { loadIntoStage("/com/bizhub/fxml/user-management.fxml", 1200, 760); }
 
     // ====== COMMON ======
-    public void goToReviews() { loadIntoStage("/com/bizhub/fxml/reviews-list.fxml", 1200, 760); }
-    public void goToProfile() { loadIntoStage("/com/bizhub/fxml/user-profile.fxml", 1000, 700); }
-    public void goToFormations() { loadIntoStage("/com/bizhub/fxml/formations.fxml", 1200, 760); }
+    public void goToReviews()          { loadIntoStage("/com/bizhub/fxml/reviews-list.fxml", 1200, 760); }
+    public void goToProfile()          { loadIntoStage("/com/bizhub/fxml/user-profile.fxml", 1000, 700); }
+    public void goToFormations()       { loadIntoStage("/com/bizhub/fxml/formations.fxml", 1200, 760); }
     public void goToFormationDetails() { loadIntoStage("/com/bizhub/fxml/formation-details.fxml", 1200, 760); }
 
     // ====== MARKETPLACE ======
-    public void goToCommande() { loadIntoStage("/com/bizhub/fxml/commande.fxml", 1300, 820); }
-    public void goToProduitService() { loadIntoStage("/com/bizhub/fxml/produit_service.fxml", 1300, 820); }
-    public void goToMarketplace() { goToCommande(); }
+    public void goToCommande()      { loadIntoStage("/com/bizhub/fxml/commande.fxml", 1300, 820); }
+    public void goToProduitService(){ loadIntoStage("/com/bizhub/fxml/produit_service.fxml", 1300, 820); }
+    public void goToMarketplace()   { goToCommande(); }
 
     // ================== CORE LOADER ==================
     private void loadIntoStage(String fxmlPath, double w, double h) {
@@ -88,27 +93,48 @@ public class NavigationService {
             if (res == null) throw new IllegalStateException("Missing FXML: " + fxmlPath);
 
             Scene scene = stage.getScene();
+
+            // 1) Première scène → création directe
             if (scene == null) {
+                LOGGER.info("⏳ First scene load: " + fxmlPath);
                 Parent first = loadFxml(res);
                 Scene newScene = new Scene(first, w, h);
                 stage.setScene(newScene);
+
+                var bounds = Screen.getPrimary().getVisualBounds();
+                stage.setX(bounds.getMinX() + 50);
+                stage.setY(bounds.getMinY() + 50);
+                stage.setWidth(Math.min(1200, bounds.getWidth() - 100));
+                stage.setHeight(Math.min(800, bounds.getHeight() - 100));
+
+                stage.setFullScreen(false);
+                stage.setMaximized(false);
+
                 stage.show();
+                stage.toFront();
+                stage.requestFocus();
+
+                LOGGER.info("✅ Scene affichée: " + fxmlPath);
                 return;
             }
 
-            Parent currentRoot = (Parent) scene.getRoot();
-            Node overlay = findOverlay(currentRoot);
+            Parent currentRoot = null;
+            if (scene.getRoot() instanceof Parent) {
+                currentRoot = (Parent) scene.getRoot();
+            }            Node overlay = findOverlay(currentRoot);
 
-            // ✅ Pas d'overlay → swap direct (FIABLE)
+            // 2) Pas d’overlay → swap direct
             if (overlay == null) {
+                LOGGER.info("⏳ Swap root (no overlay): " + fxmlPath);
                 safeRunLater(() -> {
                     Parent nextRoot = loadFxml(res);
                     scene.setRoot(nextRoot);
+                    LOGGER.info("✅ Root swapped: " + fxmlPath);
                 });
                 return;
             }
 
-            // ✅ Overlay existe
+            // 3) Overlay → animation + swap root
             overlay.setManaged(true);
             overlay.setVisible(true);
             overlay.setOpacity(0.0);
@@ -131,14 +157,15 @@ public class NavigationService {
             fadeIn.setInterpolator(Interpolator.EASE_BOTH);
 
             Timeline finalProgressTimeline = progressTimeline;
+
             fadeIn.setOnFinished(ev -> safeRunLater(() -> {
                 try {
+                    LOGGER.info("⏳ Loading next root: " + fxmlPath);
                     Parent nextRoot = loadFxml(res);
 
-                    // ✅ Swap la root scene (le plus stable)
                     scene.setRoot(nextRoot);
+                    LOGGER.info("✅ Root swapped: " + fxmlPath);
 
-                    // ⚠️ overlay a disparu car root a changé => on essaye de retrouver overlay dans nouvelle root
                     Node newOverlay = findOverlay(nextRoot);
                     if (newOverlay != null) {
                         newOverlay.setManaged(true);
@@ -147,6 +174,7 @@ public class NavigationService {
                         newOverlay.toFront();
 
                         PauseTransition hold = new PauseTransition(MIN_OVERLAY_VISIBLE);
+
                         FadeTransition fadeOut = new FadeTransition(OVERLAY_FADE_OUT, newOverlay);
                         fadeOut.setFromValue(1.0);
                         fadeOut.setToValue(0.0);
@@ -163,7 +191,7 @@ public class NavigationService {
                     if (finalProgressTimeline != null) finalProgressTimeline.stop();
 
                 } catch (RuntimeException ex) {
-                    ex.printStackTrace();
+                    LOGGER.log(Level.SEVERE, "Navigation error while loading " + fxmlPath, ex);
                     showNavigationError("Navigation error", ex.getMessage());
                     throw ex;
                 }
@@ -172,21 +200,38 @@ public class NavigationService {
             fadeIn.play();
 
         } catch (RuntimeException ex) {
-            ex.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Navigation error", ex);
             showNavigationError("Navigation error", ex.getMessage());
             throw ex;
         } finally {
-            // ✅ Toujours libérer le lock (même si erreur)
             navigating = false;
         }
     }
 
+    /**
+     * ✅ Loader fiable : ferme le stream + donne exception claire
+     */
     private static Parent loadFxml(URL res) {
-        try {
-            return FXMLLoader.load(res);
-        } catch (IOException e) {
+        try (InputStream is = res.openStream()) {
+            FXMLLoader loader = new FXMLLoader(res);
+            return loader.load(is);
+        } catch (Exception e) {
             throw new RuntimeException("Failed to load " + res + ": " + e.getMessage(), e);
         }
+    }
+
+    public static Parent loadFxmlSafe(String fxmlPath) {
+        try {
+            URL res = NavigationService.class.getResource(fxmlPath);
+            if (res == null) throw new IllegalStateException("Missing FXML: " + fxmlPath);
+            return loadFxml(res);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to load " + fxmlPath + ": " + e.getMessage(), e);
+        }
+    }
+
+    public static Parent loadFxmlSafe(URL res) {
+        return loadFxml(res);
     }
 
     private static Node findOverlay(Parent root) {

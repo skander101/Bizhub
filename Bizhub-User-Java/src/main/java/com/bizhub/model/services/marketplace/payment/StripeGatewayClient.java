@@ -1,13 +1,11 @@
 package com.bizhub.model.services.marketplace.payment;
 
+import com.bizhub.model.services.common.config.EnvLoader;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.checkout.Session;
 import com.stripe.param.checkout.SessionCreateParams;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,22 +19,15 @@ public class StripeGatewayClient {
     private final String cancelUrl;
 
     public StripeGatewayClient() {
-        Properties props = new Properties();
-        try (InputStream in = getClass().getClassLoader().getResourceAsStream("stripe.properties")) {
-            if (in == null)
-                throw new IllegalStateException("stripe.properties introuvable dans src/main/resources/");
-            props.load(in);
-        } catch (IOException e) {
-            throw new IllegalStateException("Impossible de lire stripe.properties : " + e.getMessage(), e);
-        }
 
-        this.secretKey  = props.getProperty("stripe.secret.key", "").trim();
-        this.currency   = props.getProperty("stripe.currency", "eur").trim();
-        this.successUrl = props.getProperty("stripe.success.url", "https://bizhub.app/succes").trim();
-        this.cancelUrl  = props.getProperty("stripe.cancel.url", "https://bizhub.app/annule").trim();
+        // ✅ Lire depuis .env (via EnvLoader)
+        this.secretKey  = EnvLoader.getRequired("STRIPE_SECRET_KEY");
+        this.currency   = EnvLoader.getOrDefault("STRIPE_CURRENCY",    "eur");
+        this.successUrl = EnvLoader.getOrDefault("STRIPE_SUCCESS_URL", "http://localhost/success");
+        this.cancelUrl  = EnvLoader.getOrDefault("STRIPE_CANCEL_URL",  "http://localhost/cancel");
 
-        if (secretKey.isEmpty())
-            throw new IllegalStateException("stripe.secret.key vide dans stripe.properties");
+        Stripe.apiKey = secretKey;
+        LOGGER.info("✅ StripeGatewayClient initialisé (currency=" + currency + ")");
     }
 
     public PaymentResult createStripeCheckout(int orderId,
@@ -44,17 +35,12 @@ public class StripeGatewayClient {
                                               int quantity,
                                               long unitCentimes) {
         try {
-            Stripe.apiKey = secretKey;
-
             SessionCreateParams params = SessionCreateParams.builder()
                     .setMode(SessionCreateParams.Mode.PAYMENT)
                     .setSuccessUrl(successUrl + "?session_id={CHECKOUT_SESSION_ID}")
                     .setCancelUrl(cancelUrl)
-
-                    // ✅ double sécurité : metadata + client_reference_id
                     .putMetadata("orderId", String.valueOf(orderId))
                     .setClientReferenceId(String.valueOf(orderId))
-
                     .addLineItem(
                             SessionCreateParams.LineItem.builder()
                                     .setQuantity((long) quantity)

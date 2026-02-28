@@ -1,10 +1,9 @@
 package com.bizhub.model.services.marketplace;
 
+import com.bizhub.model.services.common.config.EnvLoader;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 
-import java.io.InputStream;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,23 +16,14 @@ public class TwilioSmsService {
     private final String fromNumber;
 
     public TwilioSmsService() {
-        Properties props = new Properties();
-        try (InputStream in = getClass().getClassLoader().getResourceAsStream("twilio.properties")) {
-            if (in == null) throw new IllegalStateException("twilio.properties introuvable dans src/main/resources/");
-            props.load(in);
-        } catch (Exception e) {
-            throw new IllegalStateException("Impossible de lire twilio.properties : " + e.getMessage(), e);
-        }
 
-        accountSid = props.getProperty("twilio.account.sid", "").trim();
-        authToken  = props.getProperty("twilio.auth.token", "").trim();
-        fromNumber = props.getProperty("twilio.from.number", "").trim();
-
-        if (accountSid.isEmpty() || authToken.isEmpty() || fromNumber.isEmpty()) {
-            throw new IllegalStateException("twilio.properties incomplet (sid/token/from).");
-        }
+        // ✅ Lire depuis .env (via EnvLoader)
+        this.accountSid = EnvLoader.getRequired("TWILIO_ACCOUNT_SID");
+        this.authToken  = EnvLoader.getRequired("TWILIO_AUTH_TOKEN");
+        this.fromNumber = EnvLoader.getRequired("TWILIO_FROM_NUMBER");
 
         Twilio.init(accountSid, authToken);
+        LOGGER.info("✅ TwilioSmsService initialisé (from=" + fromNumber + ")");
     }
 
     public boolean sendSms(String toNumber, String body) {

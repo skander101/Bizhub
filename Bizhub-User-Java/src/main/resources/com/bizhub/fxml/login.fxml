@@ -23,9 +23,7 @@
         <!-- Logo and Brand -->
         <VBox alignment="CENTER" spacing="8">
             <ImageView fitHeight="64" fitWidth="64" preserveRatio="true" styleClass="logo-image">
-                <image>
-                    <Image url="@../images/site-images/logo.png" />
-                </image>
+                <Image url="@../images/site-images/logo.png" backgroundLoading="true"/>
             </ImageView>
             <Text text="BizHub" styleClass="brand-title" />
         </VBox>

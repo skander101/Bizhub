@@ -1,5 +1,17 @@
-target/
-target/
+# ── Secrets — NE JAMAIS committer ──────────────────────────────
+.env
+*.properties
 
-stripe.properties
-twilio.properties
+# ── À committer (templates publics) ────────────────────────────
+!.env.example
+
+# ── Java / Maven ────────────────────────────────────────────────
+target/
+*.class
+*.jar
+
+# ── IntelliJ ────────────────────────────────────────────────────
+.idea/
+*.iml
+*.iws
+*.ipr
