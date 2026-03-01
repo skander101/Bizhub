@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
-import com.bizhub.model.services.common.service.AiChatWidget;
 import com.bizhub.model.services.common.service.AlertHelper;
 import com.bizhub.model.services.common.service.AppSession;
 import com.bizhub.model.services.common.service.NavigationService;
@@ -22,7 +21,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -67,14 +65,6 @@ public class AdminDashboardController {
         } catch (Exception ignored) {
         }
 
-        // Add AI Chat Widget
-        Platform.runLater(() -> {
-            if (topbar != null && topbar.getScene() != null) {
-                Stage stage = (Stage) topbar.getScene().getWindow();
-                StackPane rootPane = (StackPane) topbar.getScene().getRoot();
-                AiChatWidget.addToStackPane(rootPane, stage);
-            }
-        });
 
         colLatestName.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(nullToEmpty(c.getValue().getFullName())));
         colLatestEmail.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(nullToEmpty(c.getValue().getEmail())));

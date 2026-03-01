@@ -42,6 +42,12 @@ public class AdminSidebarController {
     }
 
     @FXML
+    public void goAiChat() {
+        Stage stage = (Stage) goDashboardBtn.getScene().getWindow();
+        new NavigationService(stage).goToAiChat();
+    }
+
+    @FXML
     public void logout() {
         AppSession.clear();
         Services.auth().logout();

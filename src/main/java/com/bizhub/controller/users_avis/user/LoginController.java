@@ -454,11 +454,6 @@ public class LoginController {
         new NavigationService(stage).goToSignup();
     }
 
-    @FXML
-    public void goToForgotPassword() {
-        Stage stage = (Stage) errorLabel.getScene().getWindow();
-        new NavigationService(stage).goToForgotPassword();
-    }
 
     private void showError(String msg) {
         errorLabel.setText(msg == null ? "" : msg);

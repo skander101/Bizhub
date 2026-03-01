@@ -136,6 +136,8 @@
                     <jvmArgs>
                         <!-- Prevent Modena stylesheet from logging casting warnings on some Linux builds -->
                         <jvmArg>-Djavafx.userAgentStylesheetUrl=none</jvmArg>
+                        <jvmArg>-Xmx512m</jvmArg>
+                        <jvmArg>-Xms128m</jvmArg>
                     </jvmArgs>
                 </configuration>
             </plugin>

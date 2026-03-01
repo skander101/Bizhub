@@ -6,7 +6,6 @@
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/controller/users_avis/formation/FormationDetailsController.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/user_avis/formation/FormationService.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/common/DB/MyDatabase.java
-/home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/controller/FaceRecognitionController.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/common/service/EnvConfig.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/controller/users_avis/user/LoginController.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/common/service/TotpService.java
@@ -14,7 +13,6 @@
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/users_avis/review/Review.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/controller/users_avis/user/TopbarProfileHelper.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/common/service/Services.java
-/home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/controller/users_avis/user/ForgotPasswordController.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/controller/users_avis/user/UserSidebarController.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/controller/users_avis/review/ReviewManagementController.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/controller/users_avis/user/SignupController.java
@@ -23,7 +21,6 @@
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/users_avis/formation/Formation.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/controller/users_avis/user/AdminDashboardController.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/common/service/AiNavigationBotService.java
-/home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/common/service/AiChatWidget.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/service/WebcamService.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/common/service/ReportService.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/common/service/FaceDetectionResult.java

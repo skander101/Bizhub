@@ -40,7 +40,21 @@
 
     <Pane VBox.vgrow="ALWAYS" />
 
-    <Button text="Logout" onAction="#logout" styleClass="danger-button" />
+    <HBox spacing="10" alignment="CENTER">
+        <Button fx:id="aiChatBtn" onAction="#goAiChat" styleClass="icon-button" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-padding: 8;">
+            <graphic>
+                <ImageView fitWidth="32" fitHeight="32" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/site-images/robotic-logo.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+            <tooltip>
+                <Tooltip text="AI Assistant" />
+            </tooltip>
+        </Button>
+        <Button text="Logout" onAction="#logout" styleClass="danger-button" HBox.hgrow="ALWAYS" />
+    </HBox>
 
 </VBox>
 

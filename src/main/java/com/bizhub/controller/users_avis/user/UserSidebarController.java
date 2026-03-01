@@ -38,6 +38,12 @@ public class UserSidebarController {
     }
 
     @FXML
+    public void goAiChat() {
+        Stage stage = (Stage) goProfileBtn.getScene().getWindow();
+        new NavigationService(stage).goToAiChat();
+    }
+
+    @FXML
     public void logout() {
         AppSession.clear();
         Services.auth().logout();

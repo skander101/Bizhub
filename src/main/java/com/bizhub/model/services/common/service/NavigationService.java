@@ -27,12 +27,14 @@ public class NavigationService {
         USERS,
         FORMATIONS,
         REVIEWS,
-        PROFILE
+        PROFILE,
+        AI_CHAT
     }
 
     public static void setActiveNav(Node sidebarRoot, ActiveNav activeNav) {
         if (sidebarRoot == null || activeNav == null) return;
 
+        // Handle regular nav buttons
         for (Node n : sidebarRoot.lookupAll(".nav-button")) {
             n.getStyleClass().remove("active");
 
@@ -45,10 +47,20 @@ public class NavigationService {
                 case FORMATIONS -> t.contains("formations");
                 case REVIEWS -> t.contains("reviews");
                 case PROFILE -> t.contains("profile");
+                case AI_CHAT -> false; // AI chat is an icon button, handled separately
             };
 
             if (match) {
                 n.getStyleClass().add("active");
+            }
+        }
+
+        // Handle AI chat icon button
+        Node aiChatBtn = sidebarRoot.lookup("#aiChatBtn");
+        if (aiChatBtn != null) {
+            aiChatBtn.getStyleClass().remove("active");
+            if (activeNav == ActiveNav.AI_CHAT) {
+                aiChatBtn.getStyleClass().add("active");
             }
         }
     }
@@ -93,9 +105,6 @@ public class NavigationService {
         loadIntoStage("/com/bizhub/fxml/verification.fxml", 600, 700);
     }
 
-    public void goToForgotPassword() {
-        loadIntoStage("/com/bizhub/fxml/forgot-password.fxml", 550, 650);
-    }
 
     public void goToFormations() {
         loadIntoStage("/com/bizhub/fxml/formations.fxml", 1200, 760);
@@ -103,6 +112,10 @@ public class NavigationService {
 
     public void goToFormationDetails() {
         loadIntoStage("/com/bizhub/fxml/formation-details.fxml", 1200, 760);
+    }
+
+    public void goToAiChat() {
+        loadIntoStage("/com/bizhub/fxml/ai-chat.fxml", 1200, 760);
     }
 
     private void loadIntoStage(String fxmlPath, double w, double h) {

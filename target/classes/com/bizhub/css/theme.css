@@ -270,6 +270,20 @@
     -fx-border-width: 0 0 0 4;
 }
 
+/* Icon button (AI chat) active state */
+.icon-button.active {
+    -fx-background-color: rgba(255, 184, 77, 0.25);
+    -fx-background-radius: 8;
+    -fx-border-color: #FFB84D;
+    -fx-border-width: 2;
+    -fx-border-radius: 8;
+}
+
+.icon-button:hover {
+    -fx-background-color: rgba(255, 184, 77, 0.15);
+    -fx-background-radius: 8;
+}
+
 .hint {
     -fx-text-fill: #FFD54F;
     -fx-fill: #FFD54F;

@@ -70,9 +70,6 @@
             <VBox spacing="6">
                 <Label text="Password" styleClass="field-label" />
                 <PasswordField fx:id="passwordField" promptText="••••••••" styleClass="text-field-modern" />
-                <HBox alignment="CENTER_RIGHT">
-                    <Hyperlink text="Forgot password?" onAction="#goToForgotPassword" />
-                </HBox>
             </VBox>
 
             <Button fx:id="loginButton" text="Sign In" onAction="#onLogin" maxWidth="1.7976931348623157E308" styleClass="btn-primary" />

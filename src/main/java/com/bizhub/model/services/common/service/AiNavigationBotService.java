@@ -15,11 +15,9 @@ public class AiNavigationBotService {
         GO_TO_LOGIN,
         GO_TO_SIGNUP,
         GO_TO_PROFILE,
-        GO_TO_ADMIN_DASHBOARD,
         GO_TO_USER_MANAGEMENT,
         GO_TO_FORMATIONS,
         GO_TO_REVIEWS,
-        GO_TO_FORGOT_PASSWORD,
         GO_BACK,
         HELP,
         QUERY_DATABASE,
@@ -51,9 +49,6 @@ public class AiNavigationBotService {
             "go to profile", "go to account", "go to settings"
         ));
 
-        keywords.put(NavigationIntent.GO_TO_ADMIN_DASHBOARD, Arrays.asList(
-            "go to dashboard", "go to admin", "go to home", "go to main"
-        ));
 
         keywords.put(NavigationIntent.GO_TO_USER_MANAGEMENT, Arrays.asList(
             "go to users", "go to user management"
@@ -67,10 +62,6 @@ public class AiNavigationBotService {
             "go to reviews", "go to feedback", "go to avis"
         ));
 
-        keywords.put(NavigationIntent.GO_TO_FORGOT_PASSWORD, Arrays.asList(
-            "go to forgot password", "forgot password", "reset password", "password reset", "change password",
-            "recover password", "lost password", "password recovery"
-        ));
 
         keywords.put(NavigationIntent.GO_BACK, Arrays.asList(
             "go back", "back", "go back", "previous", "return", "go home", "previous page"
@@ -87,7 +78,13 @@ public class AiNavigationBotService {
             "how many", "count", "number of", "what are", "show me", "list",
             "reviews for", "formations with", "database", "query",
             "tell me", "give me", "find", "search for", "average", "total",
-            "oldest", "youngest", "newest", "latest", "first", "last"
+            "oldest", "youngest", "newest", "latest", "first", "last",
+            "which", "who", "best", "worst", "most", "least", "popular",
+            "trending", "popping", "top", "highest", "lowest", "rated",
+            "formation", "user", "review", "application", "request",
+            "right now", "currently", "active", "recent", "compare",
+            "rating", "rate", "score", "stats", "statistics", "info",
+            "about", "detail", "describe", "what is", "how much", "how old"
         ));
 
         return keywords;
@@ -98,11 +95,9 @@ public class AiNavigationBotService {
         desc.put(NavigationIntent.GO_TO_LOGIN, "Navigate to the login page");
         desc.put(NavigationIntent.GO_TO_SIGNUP, "Create a new account");
         desc.put(NavigationIntent.GO_TO_PROFILE, "View and edit your profile");
-        desc.put(NavigationIntent.GO_TO_ADMIN_DASHBOARD, "View admin dashboard and statistics");
         desc.put(NavigationIntent.GO_TO_USER_MANAGEMENT, "Manage system users");
         desc.put(NavigationIntent.GO_TO_FORMATIONS, "Browse available formations/training");
         desc.put(NavigationIntent.GO_TO_REVIEWS, "View and manage reviews");
-        desc.put(NavigationIntent.GO_TO_FORGOT_PASSWORD, "Reset your password");
         desc.put(NavigationIntent.GO_BACK, "Navigate to previous page");
         desc.put(NavigationIntent.HELP, "Show available commands or refuse sensitive information requests");
         desc.put(NavigationIntent.QUERY_DATABASE, "Query database information");
@@ -173,6 +168,11 @@ public class AiNavigationBotService {
             }
         }
 
+        // FALLBACK: anything that isn't navigation or help → send to AI database assistant
+        if (bestMatch == NavigationIntent.UNKNOWN) {
+            bestMatch = NavigationIntent.QUERY_DATABASE;
+        }
+
         return bestMatch;
     }
 
@@ -213,16 +213,12 @@ public class AiNavigationBotService {
                 return "Opening the registration page...";
             case GO_TO_PROFILE:
                 return "Navigating to your profile...";
-            case GO_TO_ADMIN_DASHBOARD:
-                return "Opening the admin dashboard...";
             case GO_TO_USER_MANAGEMENT:
                 return "Taking you to user management...";
             case GO_TO_FORMATIONS:
                 return "Opening the formations page...";
             case GO_TO_REVIEWS:
                 return "Showing the reviews page...";
-            case GO_TO_FORGOT_PASSWORD:
-                return "Navigating to password recovery...";
             case GO_BACK:
                 return "Going back...";
             case HELP:
@@ -261,10 +257,9 @@ public class AiNavigationBotService {
         }
 
         sb.append("\nJust type what you want to do, like:\n");
-        sb.append("• \"take me to profile\"\n");
-        sb.append("• \"show dashboard\"\n");
+        sb.append("• \"go to profile\"\n");
         sb.append("• \"go to formations\"\n");
-        sb.append("• \"open user management\"\n");
+        sb.append("• \"go to reviews\"\n");
         sb.append("• \"how many reviews for formation F2\"\n");
         sb.append("• \"show me all users\"");
 
@@ -294,9 +289,6 @@ public class AiNavigationBotService {
                 case GO_TO_PROFILE:
                     navService.goToProfile();
                     return true;
-                case GO_TO_ADMIN_DASHBOARD:
-                    navService.goToAdminDashboard();
-                    return true;
                 case GO_TO_USER_MANAGEMENT:
                     navService.goToUserManagement();
                     return true;
@@ -306,13 +298,10 @@ public class AiNavigationBotService {
                 case GO_TO_REVIEWS:
                     navService.goToReviews();
                     return true;
-                case GO_TO_FORGOT_PASSWORD:
-                    navService.goToForgotPassword();
-                    return true;
                 case GO_BACK:
                     // Note: Back navigation requires history tracking
-                    // For now, go to dashboard as fallback
-                    navService.goToAdminDashboard();
+                    // For now, go to profile as fallback
+                    navService.goToProfile();
                     return true;
                 default:
                     return false;

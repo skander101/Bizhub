@@ -7,7 +7,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.SQLException;
 
-import com.bizhub.model.services.common.service.AiChatWidget;
 import com.bizhub.model.services.common.service.AlertHelper;
 import com.bizhub.model.services.common.service.AppSession;
 import com.bizhub.model.services.common.service.EnvConfig;
@@ -144,15 +143,6 @@ public class UserProfileController {
                 generateAiBtn.setTooltip(new Tooltip("AI generation not configured. Add CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACC_ID to .env"));
             }
         }
-
-        // Add AI Chat Widget
-        Platform.runLater(() -> {
-            if (topbar != null && topbar.getScene() != null) {
-                Stage stage = (Stage) topbar.getScene().getWindow();
-                StackPane rootPane = (StackPane) topbar.getScene().getRoot();
-                AiChatWidget.addToStackPane(rootPane, stage);
-            }
-        });
     }
 
     private boolean isCloudflareConfigured() {
