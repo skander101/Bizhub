@@ -45,6 +45,14 @@ public class Main extends Application {
                 LOGGER.log(Level.WARNING, "⚠ Impossible de démarrer InvestorStatsApiServer : " + e.getMessage(), e);
             }
 
+            // ✅ Démarrer le serveur IA Insights
+            try {
+                int insightsPort = com.bizhub.controller.marketplace.InvestorInsightsApiServer.start();
+                LOGGER.info("✅ InvestorInsightsApiServer démarré sur : http://localhost:" + insightsPort + "/api/investor/insights");
+            } catch (Exception e) {
+                LOGGER.log(Level.WARNING, "⚠ Impossible de démarrer InvestorInsightsApiServer : " + e.getMessage(), e);
+            }
+
             if (port > 0) {
                 LOGGER.info("✅ StripeWebhookServer démarré sur : http://localhost:" + port + "/webhook/stripe");
             }
