@@ -105,11 +105,18 @@ public class AdminDashboardController {
         if (sidebar != null) {
             sidebar.sceneProperty().addListener((obs, oldScene, newScene) -> {
                 if (newScene != null) {
-                    String css = getClass().getResource("/com/bizhub/css/user-management.css").toExternalForm();
-                    if (!newScene.getStylesheets().contains(css)) {
-                        newScene.getStylesheets().add(css);
+                    try {
+                        URL cssUrl = getClass().getResource("/com/bizhub/css/user-management.css");
+                        if (cssUrl != null) {
+                            String css = cssUrl.toURI().toString();
+                            if (!newScene.getStylesheets().contains(css)) {
+                                newScene.getStylesheets().add(css);
+                            }
+                        }
+                    } catch (Exception e) {
+                        // Ignore CSS loading errors
                     }
-                }
+                    }
             });
         }
     }

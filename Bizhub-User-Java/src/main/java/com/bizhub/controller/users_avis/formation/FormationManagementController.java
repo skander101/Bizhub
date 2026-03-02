@@ -42,7 +42,7 @@ public class FormationManagementController {
         // Swap sidebar for admins (prevents routing into user mode)
         if (AppSession.isAdmin()) {
             try {
-                Parent n = FXMLLoader.load(getClass().getResource("/com/bizhub/fxml/admin-sidebar.fxml"));
+                Parent n = NavigationService.loadFxmlSafe("/com/bizhub/fxml/admin-sidebar.fxml");
                 if (root != null) root.setLeft(n);
                 NavigationService.setActiveNav(n, NavigationService.ActiveNav.FORMATIONS);
             } catch (Exception ignored) {
@@ -196,8 +196,8 @@ public class FormationManagementController {
 
     private void openForm(Formation f, Runnable onSaved) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/bizhub/fxml/formation-form.fxml"));
-            Parent root = loader.load();
+            FXMLLoader loader = new FXMLLoader();
+            Parent root = NavigationService.loadFxmlSafe("/com/bizhub/fxml/formation-form.fxml");
             FormationFormController ctl = loader.getController();
             ctl.setEditing(f, onSaved);
 

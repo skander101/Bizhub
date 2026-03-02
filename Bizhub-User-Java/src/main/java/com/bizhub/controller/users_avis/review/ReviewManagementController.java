@@ -44,7 +44,7 @@ public class ReviewManagementController {
     public void initialize() {
         if (AppSession.isAdmin()) {
             try {
-                Parent n = FXMLLoader.load(getClass().getResource("/com/bizhub/fxml/admin-sidebar.fxml"));
+                Parent n = NavigationService.loadFxmlSafe("/com/bizhub/fxml/admin-sidebar.fxml");
                 if (root != null) root.setLeft(n);
                 NavigationService.setActiveNav(n, NavigationService.ActiveNav.REVIEWS);
             } catch (Exception ignored) {

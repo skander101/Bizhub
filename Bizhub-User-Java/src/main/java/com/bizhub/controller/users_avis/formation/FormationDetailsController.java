@@ -113,8 +113,8 @@ public class FormationDetailsController {
 
     private void openReviewForm(Review existing) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/bizhub/fxml/review-form.fxml"));
-            Parent root = loader.load();
+            FXMLLoader loader = new FXMLLoader();
+            Parent root = NavigationService.loadFxmlSafe("/com/bizhub/fxml/review-form.fxml");
             ReviewFormController ctl = loader.getController();
             ctl.setContext(formationId, existing, this::load);
 

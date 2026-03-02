@@ -5,7 +5,6 @@ import com.bizhub.model.services.common.service.AppSession;
 import com.bizhub.model.services.common.service.NavigationService;
 import com.bizhub.model.services.common.service.Services;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -80,9 +79,9 @@ public class UserSidebarController {
         NavigationService.setActiveNav(nameText.getParent(), NavigationService.ActiveNav.REVIEWS);
     }
 
-    // ✅ Marketplace routing selon rôle
+    // ✅ UNE SEULE méthode (sans paramètres) pour éviter les conflits FXML
     @FXML
-    public void goMarketplace(ActionEvent event) {
+    public void goMarketplace() {
         User me = AppSession.getCurrentUser();
         if (me == null) {
             nav().goToLogin();
@@ -93,15 +92,21 @@ public class UserSidebarController {
         System.out.println("CLICK Marketplace ?");
         System.out.println("ROLE = " + role);
 
-        // Startup et Investisseur -> commande.fxml (mais actions différentes dedans)
-        if (role.contains("startup") || role.contains("investisseur")) {
+        // ✅ ROUTING CORRECT
+        // Startup -> commande.fxml
+        if (role.contains("startup")) {
             nav().goToCommande();
+        }
+        // Investisseur -> produit_service.fxml (car il a CRUD produits + gestion commandes)
+        else if (role.contains("investisseur")) {
+            nav().goToProduitService();
         }
         // Fournisseur -> produit_service.fxml
         else if (role.contains("fournisseur")) {
             nav().goToProduitService();
-        } else {
-            // fallback
+        }
+        // fallback
+        else {
             nav().goToCommande();
         }
 

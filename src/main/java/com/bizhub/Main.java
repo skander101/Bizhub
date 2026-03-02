@@ -1,5 +1,8 @@
 package com.bizhub;
 
+import com.bizhub.controller.marketplace.InvestorStatsApiServer;
+import com.bizhub.controller.marketplace.StripeWebhookServer;
+import com.bizhub.model.services.marketplace.payment.StripeGatewayClient;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,8 +12,38 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Main extends Application {
+
+    private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
+
+    @Override
+    public void init() throws Exception {
+        super.init();
+
+        // 1) Initialize Stripe
+        initStripe();
+
+        // 2) Start webhook + API stats servers
+        try {
+            int port = StripeWebhookServer.start("");
+
+            try {
+                int apiPort = InvestorStatsApiServer.start();
+                LOGGER.info("✅ InvestorStatsApiServer started on : http://localhost:" + apiPort + "/api/investor/stats");
+            } catch (Exception e) {
+                LOGGER.log(Level.WARNING, "⚠ Could not start InvestorStatsApiServer : " + e.getMessage(), e);
+            }
+
+            if (port > 0) {
+                LOGGER.info("✅ StripeWebhookServer started on : http://localhost:" + port + "/webhook/stripe");
+            }
+        } catch (Exception e) {
+            LOGGER.log(Level.WARNING, "⚠ Could not start StripeWebhookServer : " + e.getMessage(), e);
+        }
+    }
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -53,6 +86,38 @@ public class Main extends Application {
         stage.setFullScreen(true);
 
         stage.show();
+    }
+
+    @Override
+    public void stop() throws Exception {
+        // ✅ Clean stop: webhook + API stats
+        try {
+            StripeWebhookServer.stop();
+            LOGGER.info("✅ StripeWebhookServer stopped.");
+        } catch (Exception e) {
+            LOGGER.log(Level.WARNING, "⚠ Error stopping StripeWebhookServer : " + e.getMessage(), e);
+        }
+
+        try {
+            InvestorStatsApiServer.stop();
+            LOGGER.info("✅ InvestorStatsApiServer stopped.");
+        } catch (Exception e) {
+            LOGGER.log(Level.WARNING, "⚠ Error stopping InvestorStatsApiServer : " + e.getMessage(), e);
+        }
+
+        super.stop();
+    }
+
+    private void initStripe() {
+        try {
+            new StripeGatewayClient();
+            LOGGER.info("✅ Stripe configured — payment available.");
+        } catch (Exception e) {
+            LOGGER.log(Level.WARNING,
+                    "⚠ Stripe not configured : " + e.getMessage()
+                            + " — Check your variables (.env / env vars).",
+                    e);
+        }
     }
 
     public static void main(String[] args) {

@@ -2,7 +2,6 @@ package com.bizhub.model.services.common.service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -101,6 +100,26 @@ public final class EnvConfig {
         return (value == null || value.isBlank()) ? defaultValue : value;
     }
 
+    /**
+     * Alias for {@link #get(String, String)} — matches EnvLoader API.
+     */
+    public static String getOrDefault(String key, String defaultValue) {
+        return get(key, defaultValue);
+    }
+
+    /**
+     * Get a required environment variable. Throws if missing.
+     */
+    public static String getRequired(String key) {
+        String value = get(key);
+        if (value == null || value.isBlank()) {
+            throw new IllegalStateException(
+                    "Variable '" + key + "' is missing.\n"
+                            + "Add it to your .env file at the project root.");
+        }
+        return value;
+    }
+
     // Auth0 Configuration
     public static String getAuth0Domain() {
         return get("AUTH0_DOMAIN");
@@ -130,5 +149,39 @@ public final class EnvConfig {
 
     public static String getCloudflareAccountId() {
         return get("CLOUDFLARE_ACC_ID");
+    }
+
+    // Stripe Configuration
+    public static String getStripeSecretKey() {
+        return getRequired("STRIPE_SECRET_KEY");
+    }
+
+    public static String getStripeCurrency() {
+        return getOrDefault("STRIPE_CURRENCY", "eur");
+    }
+
+    public static String getStripeSuccessUrl() {
+        return getOrDefault("STRIPE_SUCCESS_URL", "http://localhost/success");
+    }
+
+    public static String getStripeCancelUrl() {
+        return getOrDefault("STRIPE_CANCEL_URL", "http://localhost/cancel");
+    }
+
+    public static String getStripeWebhookSecret() {
+        return getOrDefault("STRIPE_WEBHOOK_SECRET", "");
+    }
+
+    // Twilio Configuration
+    public static String getTwilioAccountSid() {
+        return getRequired("TWILIO_ACCOUNT_SID");
+    }
+
+    public static String getTwilioAuthToken() {
+        return getRequired("TWILIO_AUTH_TOKEN");
+    }
+
+    public static String getTwilioFromNumber() {
+        return getRequired("TWILIO_FROM_NUMBER");
     }
 }

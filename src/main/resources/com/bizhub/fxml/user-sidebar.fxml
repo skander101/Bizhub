@@ -36,6 +36,7 @@
     <Button fx:id="goProfileBtn" text="My Profile" onAction="#goProfile" styleClass="nav-button" />
     <Button text="Formations" onAction="#goFormations" styleClass="nav-button" />
     <Button text="Reviews" onAction="#goReviews" styleClass="nav-button" />
+    <Button text="Marketplace" onAction="#goMarketplace" styleClass="nav-button" />
 
     <Pane VBox.vgrow="ALWAYS" />
 

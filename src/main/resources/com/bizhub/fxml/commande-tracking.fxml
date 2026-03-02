@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
+<BorderPane
+        stylesheets="@../css/theme.css,@../css/user-management.css"
+        xmlns="http://javafx.com/javafx/21"
+        xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="com.bizhub.controller.marketplace.CommandeTrackingController">
+
+    <!-- ══════════════════════ SIDEBAR ══════════════════════ -->
+    <left>
+        <fx:include source="user-sidebar.fxml"/>
+    </left>
+
+    <!-- ══════════════════════ TOPBAR ══════════════════════ -->
+    <top>
+        <VBox spacing="10" styleClass="topbar">
+            <padding><Insets top="14" right="16" bottom="14" left="16"/></padding>
+
+            <HBox alignment="CENTER_LEFT" spacing="12">
+
+                <!-- Logo -->
+                <ImageView fitHeight="32" preserveRatio="true">
+                    <image><Image url="@../images/site-images/logo.png"/></image>
+                </ImageView>
+
+                <!-- Bouton retour -->
+                <Button text="← Marketplace"
+                        onAction="#goToMarketplace"
+                        styleClass="btn-secondary"/>
+
+                <Text text="📦 Suivi de Commandes" styleClass="h1"/>
+                <Pane HBox.hgrow="ALWAYS"/>
+
+                <!-- Filtre statut -->
+                <Label text="Statut" styleClass="form-label"/>
+                <ComboBox fx:id="cbFilterStatut" prefWidth="150"/>
+
+                <!-- Recherche -->
+                <TextField fx:id="tfSearch" prefWidth="220"
+                           promptText="🔍 Produit ou #ID..."
+                           styleClass="search-field"/>
+
+                <!-- Rafraîchir -->
+                <Button text="↺" onAction="#onRefresh" styleClass="btn-secondary"
+                        style="-fx-font-size:16px; -fx-padding:6 14;"/>
+            </HBox>
+
+            <!-- KPIs -->
+            <HBox spacing="12">
+                <VBox spacing="4" styleClass="stat-card" HBox.hgrow="ALWAYS" alignment="CENTER_LEFT">
+                    <Text styleClass="stat-title" text="Total commandes"/>
+                    <Text fx:id="kpiTotal" styleClass="stat-value" text="0"/>
+                </VBox>
+                <VBox spacing="4" styleClass="stat-card" HBox.hgrow="ALWAYS" alignment="CENTER_LEFT">
+                    <Text styleClass="stat-title" text="En attente"/>
+                    <Text fx:id="kpiAttente" styleClass="stat-value" text="0"/>
+                </VBox>
+                <VBox spacing="4" styleClass="stat-card" HBox.hgrow="ALWAYS" alignment="CENTER_LEFT">
+                    <Text styleClass="stat-title" text="Confirmées"/>
+                    <Text fx:id="kpiConfirmee" styleClass="stat-value" text="0"/>
+                </VBox>
+                <VBox spacing="4" styleClass="stat-card" HBox.hgrow="ALWAYS" alignment="CENTER_LEFT">
+                    <Text styleClass="stat-title" text="Payées"/>
+                    <Text fx:id="kpiPayee" styleClass="stat-value" text="0"/>
+                </VBox>
+                <VBox spacing="4" styleClass="stat-card" HBox.hgrow="ALWAYS" alignment="CENTER_LEFT">
+                    <Text styleClass="stat-title" text="Livrées"/>
+                    <Text fx:id="kpiLivree" styleClass="stat-value" text="0"/>
+                </VBox>
+            </HBox>
+        </VBox>
+    </top>
+
+    <!-- ══════════════════════ CENTER ══════════════════════ -->
+    <center>
+        <StackPane>
+
+            <!-- Spinner chargement -->
+            <ProgressIndicator fx:id="spinner" prefWidth="48" prefHeight="48"
+                               visible="true" managed="true"/>
+
+            <!-- Message vide -->
+            <Label fx:id="lblEmpty" text="Aucune commande trouvée."
+                   styleClass="muted"
+                   style="-fx-font-size:15px; -fx-font-weight:700;"
+                   visible="false" managed="false"/>
+
+            <!-- Liste des cartes commandes (générées par le controller) -->
+            <ScrollPane fitToWidth="true"
+                        styleClass="edge-to-edge"
+                        style="-fx-background-color:transparent; -fx-background:transparent;">
+                <VBox fx:id="boxCommandes" spacing="14">
+                    <padding><Insets top="16" right="20" bottom="20" left="20"/></padding>
+                </VBox>
+            </ScrollPane>
+
+        </StackPane>
+    </center>
+
+</BorderPane>

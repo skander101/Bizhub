@@ -50,7 +50,7 @@ public class UserManagementController {
         // Ensure correct sidebar for admin vs non-admin
         if (AppSession.isAdmin()) {
             try {
-                Parent n = FXMLLoader.load(getClass().getResource("/com/bizhub/fxml/admin-sidebar.fxml"));
+                Parent n = NavigationService.loadFxmlSafe("/com/bizhub/fxml/admin-sidebar.fxml");
                 if (root != null) root.setLeft(n);
                 // highlight current page in sidebar
                 NavigationService.setActiveNav(n, NavigationService.ActiveNav.USERS);
@@ -234,8 +234,8 @@ public class UserManagementController {
 
     private void openUserForm(User u, Runnable onSaved) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/bizhub/fxml/user-form.fxml"));
-            Parent root = loader.load();
+            FXMLLoader loader = new FXMLLoader();
+            Parent root = NavigationService.loadFxmlSafe("/com/bizhub/fxml/user-form.fxml");
             UserFormController ctl = loader.getController();
             ctl.setEditing(u, onSaved);
 

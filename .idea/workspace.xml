@@ -4,43 +4,171 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ad91b0c2-ff33-468c-8b26-6a8c0ea1acbb" name="Changes" comment="Added 2 APIs: Mail Verification and 2FA with Authenticator App">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/bizhub/images/site-images/robotic-logo.png" afterDir="false" />
+    <list default="true" id="a1252e09-1d16-4d21-a8b4-2f9792ee7d60" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/MERGE_COMPLETION_CHECKLIST.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MERGE_REPORT.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QUICK_REFERENCE.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/bizhub/fxml/commande-tracking.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/bizhub/fxml/commande.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/placeholder" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/AiChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/AiChatController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/FaceRecognitionController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/users_avis/user/AdminDashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/users_avis/user/AdminDashboardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/users_avis/user/AdminSidebarController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/users_avis/user/AdminSidebarController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/users_avis/user/ForgotPasswordController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/users_avis/user/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/users_avis/user/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/users_avis/user/UserProfileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/users_avis/user/UserProfileController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Bizhub-User-Java/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/src/main/java/com/bizhub/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bizhub-User-Java/src/main/java/com/bizhub/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/src/main/java/com/bizhub/controller/marketplace/CommandeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bizhub-User-Java/src/main/java/com/bizhub/controller/marketplace/CommandeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/src/main/java/com/bizhub/controller/marketplace/ProduitServiceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bizhub-User-Java/src/main/java/com/bizhub/controller/marketplace/ProduitServiceController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/src/main/java/com/bizhub/controller/users_avis/formation/FormationDetailsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bizhub-User-Java/src/main/java/com/bizhub/controller/users_avis/formation/FormationDetailsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/src/main/java/com/bizhub/controller/users_avis/formation/FormationManagementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bizhub-User-Java/src/main/java/com/bizhub/controller/users_avis/formation/FormationManagementController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/src/main/java/com/bizhub/controller/users_avis/review/ReviewManagementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bizhub-User-Java/src/main/java/com/bizhub/controller/users_avis/review/ReviewManagementController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/src/main/java/com/bizhub/controller/users_avis/user/AdminDashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bizhub-User-Java/src/main/java/com/bizhub/controller/users_avis/user/AdminDashboardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/src/main/java/com/bizhub/controller/users_avis/user/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bizhub-User-Java/src/main/java/com/bizhub/controller/users_avis/user/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/src/main/java/com/bizhub/controller/users_avis/user/UserManagementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bizhub-User-Java/src/main/java/com/bizhub/controller/users_avis/user/UserManagementController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/src/main/java/com/bizhub/controller/users_avis/user/UserProfileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bizhub-User-Java/src/main/java/com/bizhub/controller/users_avis/user/UserProfileController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/src/main/java/com/bizhub/controller/users_avis/user/UserSidebarController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bizhub-User-Java/src/main/java/com/bizhub/controller/users_avis/user/UserSidebarController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/src/main/java/com/bizhub/model/marketplace/Commande.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bizhub-User-Java/src/main/java/com/bizhub/model/marketplace/Commande.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/src/main/java/com/bizhub/model/marketplace/CommandeJoinProduit.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bizhub-User-Java/src/main/java/com/bizhub/model/marketplace/CommandeJoinProduit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/src/main/java/com/bizhub/model/marketplace/CommandeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bizhub-User-Java/src/main/java/com/bizhub/model/marketplace/CommandeRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/src/main/java/com/bizhub/model/marketplace/ProduitService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bizhub-User-Java/src/main/java/com/bizhub/model/marketplace/ProduitService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/src/main/java/com/bizhub/model/marketplace/ProduitServiceRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bizhub-User-Java/src/main/java/com/bizhub/model/marketplace/ProduitServiceRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/src/main/java/com/bizhub/model/services/common/dao/MyDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bizhub-User-Java/src/main/java/com/bizhub/model/services/common/dao/MyDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/src/main/java/com/bizhub/model/services/common/service/NavigationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bizhub-User-Java/src/main/java/com/bizhub/model/services/common/service/NavigationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/src/main/java/com/bizhub/model/services/marketplace/CommandeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bizhub-User-Java/src/main/java/com/bizhub/model/services/marketplace/CommandeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/src/main/java/com/bizhub/model/services/marketplace/ProduitServiceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bizhub-User-Java/src/main/java/com/bizhub/model/services/marketplace/ProduitServiceService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/src/main/resources/com/bizhub/css/theme.css" beforeDir="false" afterPath="$PROJECT_DIR$/Bizhub-User-Java/src/main/resources/com/bizhub/css/theme.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/src/main/resources/com/bizhub/fxml/commande.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Bizhub-User-Java/src/main/resources/com/bizhub/fxml/commande.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/src/main/resources/com/bizhub/fxml/login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Bizhub-User-Java/src/main/resources/com/bizhub/fxml/login.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/src/main/resources/com/bizhub/fxml/produit_service.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Bizhub-User-Java/src/main/resources/com/bizhub/fxml/produit_service.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/src/main/resources/com/bizhub/fxml/user-sidebar.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Bizhub-User-Java/src/main/resources/com/bizhub/fxml/user-sidebar.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/controller/marketplace/CommandeController$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/controller/marketplace/CommandeController$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/controller/marketplace/CommandeController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/controller/marketplace/ProduitServiceController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/controller/users_avis/formation/FormationDetailsController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/controller/users_avis/formation/FormationFormController$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/controller/users_avis/formation/FormationFormController$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/controller/users_avis/formation/FormationFormController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/controller/users_avis/formation/FormationManagementController$FormationCardCell.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/controller/users_avis/formation/FormationManagementController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/controller/users_avis/review/ReviewFormController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/controller/users_avis/review/ReviewManagementController$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/controller/users_avis/review/ReviewManagementController$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/controller/users_avis/review/ReviewManagementController$ReviewCardCell.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/controller/users_avis/review/ReviewManagementController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/controller/users_avis/user/AdminDashboardController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/controller/users_avis/user/AdminSidebarController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/controller/users_avis/user/LoginController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/controller/users_avis/user/SignupController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/controller/users_avis/user/UserFormController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/controller/users_avis/user/UserManagementController$UserCardCell.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/controller/users_avis/user/UserManagementController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/controller/users_avis/user/UserProfileController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/controller/users_avis/user/UserSidebarController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/css/theme.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/css/user-management.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/fxml/admin-dashboard.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/fxml/admin-sidebar.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/fxml/commande.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/fxml/formation-details.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/fxml/formation-form.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/fxml/formations.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/fxml/loading-overlay.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/fxml/login.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/fxml/produit_service.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/fxml/review-form.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/fxml/reviews-list.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/fxml/signup.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/fxml/user-form.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/fxml/user-management.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/fxml/user-profile.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/fxml/user-sidebar.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/images/.gitkeep" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/images/avatars/2e2c3f5d-37c0-4228-b3ca-81c97a1938ff.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/images/avatars/80d7668a-949e-4966-af14-756dd9374e73.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/images/avatars/8ef86e74-d02d-4081-87dc-25d2040b8bf6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/images/avatars/ca10dcf0-e18e-439a-8b6f-a813b23f65cf.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/images/profiles/.gitkeep" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/images/site-images/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/model/marketplace/Commande.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/model/marketplace/CommandeJoinProduit.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/model/marketplace/CommandeRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/model/marketplace/ProduitService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/model/marketplace/ProduitServiceRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/model/services/common/dao/MyDatabase.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/model/services/common/service/AppSession.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/model/services/common/service/AuthService$Session.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/model/services/common/service/AuthService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/model/services/common/service/NavigationService$ActiveNav.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/model/services/common/service/NavigationService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/model/services/common/service/ReportService$DashboardStats.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/model/services/common/service/ReportService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/model/services/common/service/Services.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/model/services/common/service/ValidationService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/model/services/marketplace/CommandeService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/model/services/marketplace/ProduitServiceService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/model/services/user_avis/formation/FormationContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/model/services/user_avis/formation/FormationService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/model/services/user_avis/review/ReviewService$FormationAvg.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/model/services/user_avis/review/ReviewService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/model/services/user_avis/user/UserService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/model/users_avis/formation/Formation.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/model/users_avis/review/Review.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/com/bizhub/model/users_avis/user/User.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/classes/sql/bizhub_users_reviews_seed.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/maven-archiver/pom.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/maven-status/maven-compiler-plugin/compile/default-cli/createdFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/maven-status/maven-compiler-plugin/compile/default-cli/inputFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bizhub-User-Java/target/workshopJDBC-3a27-1.0-SNAPSHOT.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bizhub/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/users_avis/user/UserSidebarController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/users_avis/user/UserSidebarController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bizhub/model/services/common/service/AiChatWidget.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bizhub/model/services/common/service/AiDatabaseAssistantService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/model/services/common/service/AiDatabaseAssistantService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bizhub/model/services/common/service/AiNavigationBotService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/model/services/common/service/AiNavigationBotService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bizhub/model/services/common/service/EnvConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/model/services/common/service/EnvConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/bizhub/model/services/common/service/NavigationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/model/services/common/service/NavigationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/bizhub/css/theme.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/bizhub/css/theme.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/bizhub/facerecognition.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/bizhub/fxml/admin-sidebar.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/bizhub/fxml/admin-sidebar.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/bizhub/fxml/ai-chat.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/bizhub/fxml/ai-chat.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/bizhub/fxml/forgot-password.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/bizhub/fxml/login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/bizhub/fxml/login.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/bizhub/fxml/user-sidebar.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/bizhub/fxml/user-sidebar.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/formation/FormationDetailsController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/formation/FormationDetailsController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/formation/FormationFormController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/formation/FormationFormController$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/formation/FormationFormController$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/formation/FormationFormController$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/formation/FormationFormController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/formation/FormationFormController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/formation/FormationManagementController$FormationCardCell.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/formation/FormationManagementController$FormationCardCell.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/formation/FormationManagementController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/formation/FormationManagementController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/review/ReviewFormController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/review/ReviewFormController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/review/ReviewManagementController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/review/ReviewManagementController$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/review/ReviewManagementController$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/review/ReviewManagementController$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/review/ReviewManagementController$ReviewCardCell.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/review/ReviewManagementController$ReviewCardCell.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/review/ReviewManagementController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/review/ReviewManagementController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/user/AdminDashboardController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/user/AdminDashboardController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/user/AdminSidebarController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/user/AdminSidebarController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/user/LoginController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/user/LoginController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/user/SignupController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/user/SignupController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/user/TopbarProfileHelper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/user/TopbarProfileHelper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/user/UserFormController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/user/UserFormController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/user/UserManagementController$UserCardCell.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/user/UserManagementController$UserCardCell.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/user/UserManagementController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/user/UserManagementController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/user/UserProfileController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/user/UserProfileController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/user/UserSidebarController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/user/UserSidebarController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/css/theme.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/css/theme.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/fxml/admin-sidebar.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/fxml/admin-sidebar.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/fxml/login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/fxml/login.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/fxml/user-sidebar.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/fxml/user-sidebar.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/model/services/common/DB/MyDatabase.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/model/services/common/DB/MyDatabase.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/model/services/common/service/AlertHelper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/model/services/common/service/AlertHelper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/model/services/common/service/AppSession.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/model/services/common/service/AppSession.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/model/services/common/service/AuthService$Session.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/model/services/common/service/AuthService$Session.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/model/services/common/service/AuthService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/model/services/common/service/AuthService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/model/services/common/service/NavigationService$ActiveNav.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/model/services/common/service/NavigationService$ActiveNav.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/model/services/common/service/NavigationService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/model/services/common/service/NavigationService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/model/services/common/service/ReportService$DashboardStats.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/model/services/common/service/ReportService$DashboardStats.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/model/services/common/service/ReportService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/model/services/common/service/ReportService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/model/services/common/service/Services.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/model/services/common/service/Services.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/model/services/common/service/ValidationService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/model/services/common/service/ValidationService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/model/services/user_avis/formation/FormationContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/model/services/user_avis/formation/FormationContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/model/services/user_avis/formation/FormationService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/model/services/user_avis/formation/FormationService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/model/services/user_avis/review/ReviewService$FormationAvg.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/model/services/user_avis/review/ReviewService$FormationAvg.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/model/services/user_avis/review/ReviewService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/model/services/user_avis/review/ReviewService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/model/services/user_avis/user/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/model/services/user_avis/user/UserService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/model/users_avis/formation/Formation.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/model/users_avis/formation/Formation.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/model/users_avis/review/Review.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/model/users_avis/review/Review.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/model/users_avis/user/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/model/users_avis/user/User.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,21 +177,16 @@
   </component>
   <component name="CopilotPersistence">
     <persistenceIdMap>
-      <entry key="_/home/maindude/Desktop/Perso/Codes/Bizhub" value="39YoW0q2DN5OKitKrof6tD7eu32" />
+      <entry key="_/home/maindude/Desktop/Perso/Codes/Bizhub" value="3AOqwuIOlNYijxqRfOKRd0Dzlxw" />
     </persistenceIdMap>
   </component>
   <component name="CopilotUserSelectedModel">
     <selectedModels>
-      <entry key="chat-panel" value="Claude Opus 4.6" />
-      <entry key="agent-panel" value="Claude Opus 4.6" />
+      <entry key="chat-panel" value="Claude Haiku 4.5" />
+      <entry key="agent-panel" value="Claude Haiku 4.5" />
     </selectedModels>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="marketplace" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -78,58 +201,28 @@
     &quot;accountId&quot;: &quot;989748c9-73f2-454f-a829-dec6ae23d61e&quot;
   }
 }</component>
-  <component name="McpProjectServerCommands">
-    <commands />
-    <urls />
-  </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 2
 }</component>
-  <component name="ProjectId" id="39YoW0q2DN5OKitKrof6tD7eu32" />
+  <component name="ProjectId" id="3AOqwuIOlNYijxqRfOKRd0Dzlxw" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Maven.gestion_investissement [compile].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.gestion_investissement [org.openjfx:javafx-maven-plugin:0.0.8:run].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.workshopJDBC-3a27 [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.workshopJDBC-3a27 [compile].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.workshopJDBC-3a27 [org.openjfx:javafx-maven-plugin:0.0.8:run].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.workshopJDBC-3a27 [test].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;User-Java&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/maindude/Desktop/Perso/Codes/Bizhub/src/main/resources/com/bizhub/images/site-images&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Maven.workshopJDBC-3a27 [clean].executor": "Run",
+    "Maven.workshopJDBC-3a27 [compile].executor": "Run",
+    "Maven.workshopJDBC-3a27 [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true"
   }
-}</component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/main/resources/com/bizhub/images/site-images" />
-    </key>
-  </component>
-  <component name="RunManager">
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="nvPi" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="nvPi" />
-      <option name="filePath" />
-      <method v="2" />
-    </configuration>
-  </component>
+}]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -139,26 +232,13 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="ad91b0c2-ff33-468c-8b26-6a8c0ea1acbb" name="Changes" comment="" />
-      <created>1770882392850</created>
+      <changelist id="a1252e09-1d16-4d21-a8b4-2f9792ee7d60" name="Changes" comment="" />
+      <created>1772474208865</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1770882392850</updated>
+      <updated>1772474208865</updated>
     </task>
-    <task id="LOCAL-00001" summary="Added 2 APIs: Mail Verification and 2FA with Authenticator App">
-      <option name="closed" value="true" />
-      <created>1771441743160</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1771441743160</updated>
-    </task>
-    <option name="localTasksCounter" value="2" />
     <servers />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added 2 APIs: Mail Verification and 2FA with Authenticator App" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added 2 APIs: Mail Verification and 2FA with Authenticator App" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

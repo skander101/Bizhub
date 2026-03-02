@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
+<BorderPane
+        stylesheets="@../css/theme.css,@../css/user-management.css"
+        xmlns="http://javafx.com/javafx/21"
+        xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="com.bizhub.controller.marketplace.PanierController">
+
+    <left>
+        <fx:include source="user-sidebar.fxml"/>
+    </left>
+
+    <!-- ══════════════════════ TOPBAR ══════════════════════ -->
+    <top>
+        <VBox spacing="10" styleClass="topbar">
+            <padding><Insets top="14" right="16" bottom="14" left="16"/></padding>
+            <HBox alignment="CENTER_LEFT" spacing="12">
+
+                <!-- Logo -->
+                <ImageView fitHeight="32" preserveRatio="true">
+                    <image><Image url="@../images/site-images/logo.png"/></image>
+                </ImageView>
+
+                <Text text="🛒 Mon Panier" styleClass="h1"/>
+                <Pane HBox.hgrow="ALWAYS"/>
+
+                <Button text="← Retour Marketplace"
+                        onAction="#goToMarketplace"
+                        styleClass="btn-secondary"/>
+            </HBox>
+        </VBox>
+    </top>
+
+    <!-- ══════════════════════ CENTER ══════════════════════ -->
+    <center>
+        <HBox spacing="16">
+            <padding><Insets top="14" right="16" bottom="16" left="16"/></padding>
+
+            <!-- ── GAUCHE : Table articles ────────────────── -->
+            <VBox spacing="12" styleClass="card" HBox.hgrow="ALWAYS">
+
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Text text="Articles du panier" styleClass="h2"/>
+                    <Pane HBox.hgrow="ALWAYS"/>
+                    <Button fx:id="btnVider"
+                            text="🗑 Vider"
+                            onAction="#onVider"
+                            styleClass="btn-danger"/>
+                </HBox>
+
+                <TableView fx:id="tablePanier" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colNom"       text="Produit / Service" prefWidth="230"/>
+                        <TableColumn fx:id="colCategorie" text="Catégorie"         prefWidth="120"/>
+                        <TableColumn fx:id="colPrixUnit"  text="PU HT (TND)"       prefWidth="120"/>
+                        <TableColumn fx:id="colQte"       text="Qté"               prefWidth="80"/>
+                        <TableColumn fx:id="colPrixHT"    text="Total HT (TND)"    prefWidth="130"/>
+                        <TableColumn fx:id="colAction"    text=""                  prefWidth="60"/>
+                    </columns>
+                    <placeholder>
+                        <Label text="Votre panier est vide." styleClass="muted"/>
+                    </placeholder>
+                </TableView>
+
+                <!-- Modifier quantité rapide -->
+                <HBox spacing="8" alignment="CENTER_LEFT">
+                    <Label text="Modifier quantité :" styleClass="form-label"/>
+                    <TextField fx:id="tfQteEdit" promptText="Nouvelle qté" prefWidth="110"/>
+                    <Button text="✔ Appliquer" onAction="#onAppliquerQte" styleClass="btn-secondary"/>
+                    <HBox fx:id="hboxMsgQte" spacing="5" alignment="CENTER_LEFT"
+                          visible="false" managed="false">
+                        <Label fx:id="iconMsgQte" text=""/>
+                        <Label fx:id="lblMsgQte" text="" wrapText="true"/>
+                    </HBox>
+                </HBox>
+            </VBox>
+
+            <!-- ── DROITE : Résumé + Commander ───────────── -->
+            <VBox spacing="14" styleClass="card" prefWidth="320" minWidth="280">
+
+                <Text text="Récapitulatif" styleClass="h2"/>
+
+                <!-- KPIs panier -->
+                <VBox spacing="8" styleClass="stat-card">
+                    <HBox alignment="CENTER_LEFT" spacing="8">
+                        <Label text="Articles :" styleClass="form-label"/>
+                        <Pane HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="lblNbArticles" text="0" styleClass="stat-value"/>
+                    </HBox>
+
+                    <HBox alignment="CENTER_LEFT" spacing="8">
+                        <Label text="Total HT :" styleClass="form-label"/>
+                        <Pane HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="lblTotalHT" text="0.000 TND" styleClass="stat-value"/>
+                    </HBox>
+
+                    <HBox alignment="CENTER_LEFT" spacing="8">
+                        <Label text="TVA (19%) :" styleClass="form-label"/>
+                        <Pane HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="lblTVA" text="0.000 TND" styleClass="muted"/>
+                    </HBox>
+
+                    <Separator opacity="0.4"/>
+
+                    <HBox alignment="CENTER_LEFT" spacing="8">
+                        <Label text="Total TTC :"
+                               style="-fx-font-weight:900; -fx-font-size:14px;"/>
+                        <Pane HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="lblTotalTTC" text="0.000 TND"
+                               style="-fx-font-weight:900; -fx-font-size:16px; -fx-text-fill:#E8A93A;"/>
+                    </HBox>
+                </VBox>
+
+                <!-- Bouton commander -->
+                <Button fx:id="btnCommander"
+                        text="✅  Commander tout le panier"
+                        onAction="#onCommander"
+                        maxWidth="1e9"
+                        styleClass="btn-primary"
+                        style="-fx-font-size:13px; -fx-font-weight:900; -fx-padding:14 18;
+                               -fx-effect:dropshadow(gaussian,rgba(58,130,246,0.45),12,0.3,0,4);"/>
+
+                <HBox fx:id="hboxMsgCmd" spacing="5" alignment="CENTER_LEFT"
+                      visible="false" managed="false">
+                    <Label fx:id="iconMsgCmd" text=""/>
+                    <Label fx:id="lblMsgCmd" text="" wrapText="true"/>
+                </HBox>
+
+                <Label text="💡 Chaque article deviendra une commande séparée."
+                       styleClass="muted" wrapText="true"/>
+            </VBox>
+        </HBox>
+    </center>
+
+</BorderPane>

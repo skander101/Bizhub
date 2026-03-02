@@ -28,7 +28,10 @@ public class NavigationService {
         FORMATIONS,
         REVIEWS,
         PROFILE,
-        AI_CHAT
+        AI_CHAT,
+        MARKETPLACE,
+        PANIER,
+        TRACKING
     }
 
     public static void setActiveNav(Node sidebarRoot, ActiveNav activeNav) {
@@ -48,6 +51,9 @@ public class NavigationService {
                 case REVIEWS -> t.contains("reviews");
                 case PROFILE -> t.contains("profile");
                 case AI_CHAT -> false; // AI chat is an icon button, handled separately
+                case MARKETPLACE -> t.contains("marketplace");
+                case PANIER -> t.contains("panier") || t.contains("cart");
+                case TRACKING -> t.contains("tracking") || t.contains("suivi");
             };
 
             if (match) {
@@ -116,6 +122,31 @@ public class NavigationService {
 
     public void goToAiChat() {
         loadIntoStage("/com/bizhub/fxml/ai-chat.fxml", 1200, 760);
+    }
+
+    // ====== MARKETPLACE ======
+    public void goToCommande() {
+        loadIntoStage("/com/bizhub/fxml/commande.fxml", 1300, 820);
+    }
+
+    public void goToProduitService() {
+        loadIntoStage("/com/bizhub/fxml/produit_service.fxml", 1300, 820);
+    }
+
+    public void goToMarketplace() {
+        goToCommande();
+    }
+
+    public void goToPanier() {
+        loadIntoStage("/com/bizhub/fxml/panier.fxml", 1300, 820);
+    }
+
+    public void goToCommandeTracking() {
+        loadIntoStage("/com/bizhub/fxml/commande-tracking.fxml", 1300, 820);
+    }
+
+    public void goToTracking() {
+        loadIntoStage("/com/bizhub/fxml/commande-tracking.fxml", 1300, 820);
     }
 
     private void loadIntoStage(String fxmlPath, double w, double h) {
