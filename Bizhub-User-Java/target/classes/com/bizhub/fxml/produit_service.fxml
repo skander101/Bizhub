@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane stylesheets="@../css/theme.css"
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.bizhub.controller.marketplace.ProduitServiceController">
+
+
+    <!-- LEFT : Sidebar (si tu as une sidebar marketplace, sinon tu peux garder admin-sidebar) -->
+    <left>
+        <!-- Mets ici ton sidebar si tu en as un. Sinon garde admin-sidebar.fxml -->
+        <fx:include source="admin-sidebar.fxml" />
+    </left>
+
+    <!-- TOP : Topbar -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="12" styleClass="topbar">
+            <padding>
+                <Insets top="14" right="16" bottom="14" left="16"/>
+            </padding>
+
+            <Text styleClass="h1" text="Marketplace - Produits/Services"/>
+            <Pane HBox.hgrow="ALWAYS"/>
+
+            <!-- Zone recherche -->
+            <Label styleClass="subtitle" text="Recherche"/>
+            <TextField fx:id="tfSearchNom" promptText="Nom..." prefWidth="220"/>
+
+            <Label styleClass="subtitle" text="Catégorie"/>
+            <ComboBox fx:id="cbFilterCategorie" prefWidth="160"/>
+        </HBox>
+    </top>
+
+    <!-- CENTER -->
+    <center>
+        <VBox spacing="14">
+            <padding>
+                <Insets top="14" right="16" bottom="16" left="16"/>
+            </padding>
+
+            <!-- Stat cards (optionnel) -->
+            <HBox spacing="12">
+                <VBox spacing="6" styleClass="stat-card" HBox.hgrow="ALWAYS">
+                    <Text styleClass="stat-title" text="Total Produits"/>
+                    <!-- si tu veux le mettre dynamique plus tard : fx:id="totalProductsText" -->
+                    <Text styleClass="stat-value" text="-" />
+                </VBox>
+
+                <VBox spacing="6" styleClass="stat-card" HBox.hgrow="ALWAYS">
+                    <Text styleClass="stat-title" text="Disponibles"/>
+                    <Text styleClass="stat-value" text="-" />
+                </VBox>
+
+                <VBox spacing="6" styleClass="stat-card" HBox.hgrow="ALWAYS">
+                    <Text styleClass="stat-title" text="Catégories"/>
+                    <Text styleClass="stat-value" text="-" />
+                </VBox>
+            </HBox>
+
+            <!-- Cards : Form + Table -->
+            <HBox spacing="12" VBox.vgrow="ALWAYS">
+
+                <!-- FORM CARD -->
+                <VBox spacing="10" styleClass="card" prefWidth="360">
+                    <Text styleClass="h2" text="Gestion Produit/Service"/>
+
+                    <GridPane hgap="10" vgap="10">
+                        <columnConstraints>
+                            <ColumnConstraints prefWidth="110"/>
+                            <ColumnConstraints hgrow="ALWAYS"/>
+                        </columnConstraints>
+
+                        <Label text="Id Profile" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                        <TextField fx:id="tfIdProfile" promptText="ex: 1" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                        <Label text="Nom" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                        <TextField fx:id="tfNom" promptText="Nom..." GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                        <Label text="Prix" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                        <TextField fx:id="tfPrix" promptText="ex: 49.90" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                        <Label text="Quantité" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                        <TextField fx:id="tfQuantite" promptText="ex: 10" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                        <Label text="Catégorie" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                        <TextField fx:id="tfCategorie" promptText="ex: Design" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+                        <Label text="Disponible" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                        <CheckBox fx:id="cbDisponible" text="Oui" selected="true"
+                                  GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+                        <Label text="Description" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                        <TextArea fx:id="taDescription" promptText="Description..." prefRowCount="4"
+                                  GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+                    </GridPane>
+
+                    <Separator/>
+
+                    <HBox spacing="10">
+                        <Button text="Ajouter" onAction="#onAjouter" maxWidth="1e9" HBox.hgrow="ALWAYS"/>
+                        <Button text="Modifier" onAction="#onModifier" maxWidth="1e9" HBox.hgrow="ALWAYS"/>
+                    </HBox>
+
+                    <HBox spacing="10">
+                        <Button text="Supprimer" onAction="#onSupprimer" maxWidth="1e9" HBox.hgrow="ALWAYS"/>
+                        <Button text="Vider" onAction="#onVider" maxWidth="1e9" HBox.hgrow="ALWAYS"/>
+                    </HBox>
+                </VBox>
+
+                <!-- TABLE CARD -->
+                <VBox spacing="10" styleClass="card" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+                    <Text styleClass="h2" text="Liste Produits/Services"/>
+
+                    <TableView fx:id="tableProduits" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="colId" text="ID" prefWidth="70"/>
+                            <TableColumn fx:id="colNom" text="Nom" prefWidth="200"/>
+                            <TableColumn f  x:id="colCategorie" text="Catégorie" prefWidth="160"/>
+                            <TableColumn fx:id="colQuantite" text="Qté" prefWidth="80"/>
+                            <TableColumn fx:id="colPrix" text="Prix" prefWidth="100"/>
+                            <TableColumn fx:id="colDisponible" text="Dispo" prefWidth="80"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+
+            </HBox>
+        </VBox>
+    </center>
+
+</BorderPane>

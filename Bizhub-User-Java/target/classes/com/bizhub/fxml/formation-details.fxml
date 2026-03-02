@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.bizhub.controller.users_avis.formation.FormationDetailsController"
+            stylesheets="@../css/theme.css">
+
+    <top>
+        <HBox spacing="12" alignment="CENTER_LEFT" styleClass="topbar">
+            <padding>
+                <Insets top="14" right="16" bottom="14" left="16" />
+            </padding>
+
+            <Text text="Formation details" styleClass="h1" />
+            <Pane HBox.hgrow="ALWAYS" />
+            <Button text="Back" onAction="#goBack" styleClass="btn" />
+        </HBox>
+    </top>
+
+    <center>
+        <VBox spacing="14">
+            <padding>
+                <Insets top="14" right="16" bottom="16" left="16" />
+            </padding>
+
+            <VBox styleClass="card" spacing="10">
+                <Text fx:id="titleText" text="" styleClass="h2" />
+
+                <GridPane hgap="12" vgap="10">
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="20" />
+                        <ColumnConstraints percentWidth="80" />
+                    </columnConstraints>
+
+                    <Label text="Trainer ID" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                    <Label fx:id="trainerLabel" text="" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+                    <Label text="Start" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                    <Label fx:id="startLabel" text="" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+                    <Label text="End" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                    <Label fx:id="endLabel" text="" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+
+                    <Label text="Cost" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+                    <Label fx:id="costLabel" text="" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+                </GridPane>
+
+                <Text text="Description" styleClass="subtitle" />
+                <TextArea fx:id="descArea" editable="false" wrapText="true" prefRowCount="4" />
+
+                <HBox spacing="10">
+                    <Button fx:id="leaveReviewButton" text="Leave a review" onAction="#leaveReview" styleClass="btn-primary" />
+                </HBox>
+            </VBox>
+
+            <VBox styleClass="card" spacing="10" VBox.vgrow="ALWAYS">
+                <Text text="Reviews" styleClass="h2" />
+                <TableView fx:id="reviewsTable" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colReviewer" text="Reviewer" prefWidth="240" />
+                        <TableColumn fx:id="colRating" text="Rating" prefWidth="90" />
+                        <TableColumn fx:id="colComment" text="Comment" prefWidth="520" />
+                        <TableColumn fx:id="colDate" text="Date" prefWidth="160" />
+                    </columns>
+                </TableView>
+            </VBox>
+
+        </VBox>
+    </center>
+</BorderPane>
+

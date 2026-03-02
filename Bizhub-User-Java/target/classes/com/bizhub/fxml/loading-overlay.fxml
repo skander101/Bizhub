@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+           fx:id="overlayRoot" styleClass="loading-overlay" visible="false" managed="false">
+
+    <VBox alignment="CENTER" spacing="18" styleClass="loading-overlay-content">
+        <ImageView fitWidth="120" fitHeight="120" preserveRatio="true" styleClass="loading-logo">
+            <image>
+                <Image url="@../images/site-images/logo.png" />
+            </image>
+        </ImageView>
+
+        <!-- Indeterminate bar (loading animation) -->
+        <ProgressBar prefWidth="360" progress="-1" styleClass="loading-bar" />
+    </VBox>
+
+</StackPane>
+
