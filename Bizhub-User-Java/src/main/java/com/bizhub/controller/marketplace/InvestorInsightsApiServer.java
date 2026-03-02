@@ -78,6 +78,14 @@ public class InvestorInsightsApiServer {
 
     public static int getActivePort() { return activePort; }
 
+    public static void stop() {
+        if (server != null) {
+            server.stop(0);
+            server = null;
+            activePort = -1;
+        }
+    }
+
     private static String safe(String s) {
         if (s == null) return "";
         return s.replace("\"", "'").replace("\n", " ").replace("\r", " ");

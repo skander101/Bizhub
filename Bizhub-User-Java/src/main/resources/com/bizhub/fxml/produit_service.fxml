@@ -324,6 +324,86 @@
                             </yAxis>
                         </LineChart>
                     </VBox>
+                    <!-- IA Insights Investisseur -->
+                    <VBox fx:id="boxAiInsights" spacing="0" styleClass="card"
+                          style="-fx-background-color:#1a2235; -fx-background-radius:16;
+             -fx-border-color:rgba(232,169,58,0.2); -fx-border-width:1;
+             -fx-border-radius:16; -fx-padding:0;"
+                          visible="false" managed="false">
+
+                        <!-- Header -->
+                        <HBox spacing="12" alignment="CENTER_LEFT"
+                              style="-fx-padding:16 20 12 20;
+                 -fx-border-color:rgba(255,255,255,0.06);
+                 -fx-border-width:0 0 1 0;">
+                            <Label text="🤖" style="-fx-font-size:18px;"/>
+                            <Label text="Analyse IA — Insights Investisseur"
+                                   style="-fx-text-fill:#E8A93A; -fx-font-size:14px; -fx-font-weight:700;"/>
+                            <Pane HBox.hgrow="ALWAYS"/>
+                            <Button fx:id="btnAnalyzeAi" text="✨ Analyser avec IA"
+                                    onAction="#onAnalyzeAi"
+                                    style="-fx-background-color:rgba(232,169,58,0.2);
+                       -fx-border-color:rgba(232,169,58,0.5);
+                       -fx-border-radius:8; -fx-background-radius:8;
+                       -fx-text-fill:#E8A93A; -fx-font-weight:700;
+                       -fx-cursor:hand; -fx-padding:6 16;"/>
+                        </HBox>
+
+                        <!-- Loading -->
+                        <HBox fx:id="hboxAiLoading" alignment="CENTER" spacing="10"
+                              visible="false" managed="false"
+                              style="-fx-padding:20;">
+                            <ProgressIndicator prefWidth="24" prefHeight="24"
+                                               style="-fx-progress-color:#E8A93A;"/>
+                            <Label text="Analyse en cours..."
+                                   style="-fx-text-fill:#9CA3AF; -fx-font-size:12px;"/>
+                        </HBox>
+
+                        <!-- Contenu IA -->
+                        <VBox fx:id="hboxAiContent" spacing="14"
+                              visible="false" managed="false"
+                              style="-fx-padding:16 20;">
+
+                            <!-- Résumé -->
+                            <VBox spacing="6"
+                                  style="-fx-background-color:rgba(255,255,255,0.04);
+                     -fx-background-radius:10; -fx-padding:12 14;">
+                                <Label text="📊 Résumé"
+                                       style="-fx-text-fill:#E8A93A; -fx-font-weight:700; -fx-font-size:12px;"/>
+                                <Label fx:id="lblAiSummary" text="" wrapText="true"
+                                       style="-fx-text-fill:#D1D5DB; -fx-font-size:12px; -fx-line-spacing:3;"/>
+                            </VBox>
+
+                            <HBox spacing="12">
+                                <!-- Anomalies -->
+                                <VBox spacing="6" HBox.hgrow="ALWAYS"
+                                      style="-fx-background-color:rgba(239,68,68,0.08);
+                         -fx-border-color:rgba(239,68,68,0.25);
+                         -fx-border-radius:10; -fx-background-radius:10; -fx-padding:12 14;">
+                                    <Label text="⚠️ Anomalies"
+                                           style="-fx-text-fill:#EF4444; -fx-font-weight:700; -fx-font-size:12px;"/>
+                                    <Label fx:id="lblAiAnomalies" text="" wrapText="true"
+                                           style="-fx-text-fill:#FCA5A5; -fx-font-size:11px; -fx-line-spacing:4;"/>
+                                </VBox>
+
+                                <!-- Recommandations -->
+                                <VBox spacing="6" HBox.hgrow="ALWAYS"
+                                      style="-fx-background-color:rgba(16,185,129,0.08);
+                         -fx-border-color:rgba(16,185,129,0.25);
+                         -fx-border-radius:10; -fx-background-radius:10; -fx-padding:12 14;">
+                                    <Label text="💡 Recommandations"
+                                           style="-fx-text-fill:#10B981; -fx-font-weight:700; -fx-font-size:12px;"/>
+                                    <Label fx:id="lblAiRecommendations" text="" wrapText="true"
+                                           style="-fx-text-fill:#6EE7B7; -fx-font-size:11px; -fx-line-spacing:4;"/>
+                                </VBox>
+                            </HBox>
+                        </VBox>
+
+                        <!-- Erreur -->
+                        <Label fx:id="lblAiError" text="" wrapText="true"
+                               visible="false" managed="false"
+                               style="-fx-text-fill:#EF4444; -fx-font-size:11px; -fx-padding:10 20;"/>
+                    </VBox>
 
                 </VBox>
             </content>

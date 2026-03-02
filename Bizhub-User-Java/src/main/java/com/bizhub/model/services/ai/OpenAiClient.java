@@ -13,52 +13,56 @@ import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.logging.Logger;
 
+/**
+ * Client IA externe (Groq API OpenAI-compatible).
+ *
+ * Endpoint: https://api.groq.com/openai/v1/chat/completions
+ * Auth:     Bearer ${GROQ_API_KEY}
+ * Model:    ${GROQ_MODEL} (ex: llama-3.1-8b-instant)
+ */
 public class OpenAiClient {
 
     private static final Logger LOGGER = Logger.getLogger(OpenAiClient.class.getName());
 
-    // ✅ FIX 1 : bonne URL — Chat Completions API (pas /v1/responses)
-    private static final String BASE_URL = "https://api.openai.com/v1/chat/completions";
+    private static final String BASE_URL = "https://api.groq.com/openai/v1/chat/completions";
 
     private final HttpClient http = HttpClient.newBuilder()
             .connectTimeout(Duration.ofSeconds(30))
             .build();
-    private final Gson gson = new Gson();
 
+    private final Gson gson = new Gson();
     private final String apiKey;
     private final String model;
 
     public OpenAiClient() {
-        this.apiKey = Env.require("OPENAI_API_KEY");
-        // ✅ FIX 2 : modèle valide — gpt-4.1-mini n'existe pas, utiliser gpt-4o-mini
-        String envModel = Env.get("OPENAI_MODEL");
-        this.model = (envModel != null && !envModel.isBlank()) ? envModel : "gpt-4o-mini";
+        this.apiKey = Env.require("GROQ_API_KEY");
+        String envModel = Env.get("GROQ_MODEL");
+        this.model = (envModel != null && !envModel.isBlank()) ? envModel : "llama-3.1-8b-instant";
     }
 
-    /** Retourne le texte de la réponse ChatGPT */
+    /** Retourne le texte généré */
     public String generateText(String system, String user) throws Exception {
 
-        // ✅ FIX 3 : payload correct pour /v1/chat/completions → "messages" (pas "input")
         JsonArray messages = new JsonArray();
 
         JsonObject sysMsg = new JsonObject();
         sysMsg.addProperty("role", "system");
-        sysMsg.addProperty("content", system);
+        sysMsg.addProperty("content", system == null ? "" : system);
         messages.add(sysMsg);
 
         JsonObject userMsg = new JsonObject();
         userMsg.addProperty("role", "user");
-        userMsg.addProperty("content", user);
+        userMsg.addProperty("content", user == null ? "" : user);
         messages.add(userMsg);
 
         JsonObject body = new JsonObject();
         body.addProperty("model", model);
-        body.add("messages", messages);          // ← "messages" pas "input"
+        body.add("messages", messages);
         body.addProperty("temperature", 0.3);
         body.addProperty("max_tokens", 800);
 
         String json = gson.toJson(body);
-        LOGGER.info("OpenAI → " + BASE_URL + " | model=" + model);
+        LOGGER.info("IA → " + BASE_URL + " | model=" + model);
 
         HttpRequest req = HttpRequest.newBuilder()
                 .uri(URI.create(BASE_URL))
@@ -71,25 +75,26 @@ public class OpenAiClient {
         HttpResponse<String> res = http.send(req, HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
 
         if (res.statusCode() < 200 || res.statusCode() >= 300) {
-            throw new IllegalStateException("OpenAI HTTP " + res.statusCode() + ": " + res.body());
+            throw new IllegalStateException("IA HTTP " + res.statusCode() + ": " + res.body());
         }
 
-        // ✅ FIX 4 : parser la réponse Chat Completions
-        // Format : { "choices": [ { "message": { "content": "..." } } ] }
+        // { "choices": [ { "message": { "content": "..." } } ] }
         JsonObject root = gson.fromJson(res.body(), JsonObject.class);
 
-        if (root.has("choices")) {
+        if (root != null && root.has("choices")) {
             JsonArray choices = root.getAsJsonArray("choices");
-            if (!choices.isEmpty()) {
-                JsonObject choice  = choices.get(0).getAsJsonObject();
-                JsonObject message = choice.getAsJsonObject("message");
-                if (message != null && message.has("content")) {
-                    return message.get("content").getAsString();
+            if (choices != null && !choices.isEmpty()) {
+                JsonObject choice = choices.get(0).getAsJsonObject();
+                if (choice != null && choice.has("message") && choice.get("message").isJsonObject()) {
+                    JsonObject message = choice.getAsJsonObject("message");
+                    if (message.has("content")) {
+                        return message.get("content").getAsString();
+                    }
                 }
             }
         }
 
-        LOGGER.warning("OpenAI réponse inattendue: " + res.body());
+        LOGGER.warning("IA réponse inattendue: " + res.body());
         return res.body();
     }
 }

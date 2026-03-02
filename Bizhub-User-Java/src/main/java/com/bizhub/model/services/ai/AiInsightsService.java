@@ -16,7 +16,7 @@ public class AiInsightsService {
     private final OpenAiClient client = new OpenAiClient();
     private final Gson gson = new Gson();
 
-    public InvestorInsightResponse analyze(List<StatsPoint> points) throws Exception {
+    public InvestorInsightResponse analyze(List<StatsPoint> points) {
 
         String system = """
                 Tu es un analyste IA pour un dashboard investisseur B2B (marketplace BizHub).
@@ -33,22 +33,73 @@ public class AiInsightsService {
         String user = buildUserPayload(points);
         LOGGER.info("AiInsightsService.analyze() — " + (points == null ? 0 : points.size()) + " points");
 
-        String raw = client.generateText(system, user);
-        LOGGER.info("OpenAI réponse brute: " + raw.substring(0, Math.min(200, raw.length())));
+        final String raw;
+        try {
+            raw = client.generateText(system, user);
+            LOGGER.info("IA réponse brute: " + raw.substring(0, Math.min(200, raw.length())));
+        } catch (Exception e) {
+            LOGGER.warning("IA indisponible (" + e.getMessage() + ") — analyse standard activée");
+            return getFallbackResponse(points, e);
+        }
 
-        String jsonOnly = extractJsonObject(raw);
-        JsonObject obj  = gson.fromJson(jsonOnly, JsonObject.class);
+        try {
+            String jsonOnly = extractJsonObject(raw);
+            JsonObject obj = gson.fromJson(jsonOnly, JsonObject.class);
 
+            InvestorInsightResponse r = new InvestorInsightResponse();
+
+            if (obj != null && obj.has("summary"))
+                r.setSummary(obj.get("summary").getAsString());
+
+            if (obj != null && obj.has("anomalies") && obj.get("anomalies").isJsonArray())
+                r.setAnomalies(gson.fromJson(obj.get("anomalies"), List.class));
+
+            if (obj != null && obj.has("recommendations") && obj.get("recommendations").isJsonArray())
+                r.setRecommendations(gson.fromJson(obj.get("recommendations"), List.class));
+
+            if (r.getSummary() == null || r.getSummary().isBlank()) {
+                return getFallbackResponse(points, new IllegalStateException("JSON IA incomplet"));
+            }
+
+            return r;
+
+        } catch (Exception parseEx) {
+            LOGGER.warning("Erreur parsing JSON IA (" + parseEx.getMessage() + ") — fallback");
+            return getFallbackResponse(points, parseEx);
+        }
+    }
+
+    private InvestorInsightResponse getFallbackResponse(List<StatsPoint> points, Exception err) {
         InvestorInsightResponse r = new InvestorInsightResponse();
 
-        if (obj.has("summary"))
-            r.setSummary(obj.get("summary").getAsString());
+        int totalConf = 0, totalAnn = 0;
+        if (points != null) {
+            for (StatsPoint p : points) {
+                totalConf += p.getConfirmees();
+                totalAnn  += p.getAnnulees();
+            }
+        }
 
-        if (obj.has("anomalies") && obj.get("anomalies").isJsonArray())
-            r.setAnomalies(gson.fromJson(obj.get("anomalies"), List.class));
+        double tauxAnnulation = (totalConf + totalAnn) > 0 ? (100.0 * totalAnn / (totalConf + totalAnn)) : 0;
 
-        if (obj.has("recommendations") && obj.get("recommendations").isJsonArray())
-            r.setRecommendations(gson.fromJson(obj.get("recommendations"), List.class));
+        r.setSummary(String.format(
+                "Analyse standard : %d commandes confirmées vs %d annulées (taux: %.1f%%). " +
+                        "Analyse IA indisponible (service externe). Analyse standard activée.",
+                totalConf, totalAnn, tauxAnnulation
+        ));
+
+        String msg = (err == null || err.getMessage() == null) ? "Erreur inconnue" : err.getMessage();
+
+        r.setAnomalies(List.of(
+                "Service IA externe temporairement indisponible",
+                "Détail: " + (msg.length() > 120 ? msg.substring(0, 120) + "..." : msg)
+        ));
+
+        r.setRecommendations(List.of(
+                "Réessayez dans quelques instants (rate limit possible)",
+                "Vérifiez que GROQ_API_KEY est bien chargée dans l'environnement (Run Configuration)",
+                "Conservez ce fallback pour garantir la dispo en soutenance"
+        ));
 
         return r;
     }
@@ -57,7 +108,6 @@ public class AiInsightsService {
         if (points == null || points.isEmpty())
             return "Aucune donnée disponible pour la période sélectionnée.";
 
-        // ✅ Calcul des totaux pour le contexte
         int totalConf = 0, totalAnn = 0;
         BigDecimal totalMontantConf = BigDecimal.ZERO;
         BigDecimal totalMontantAnn  = BigDecimal.ZERO;
@@ -75,13 +125,16 @@ public class AiInsightsService {
 
             totalConf += conf;
             totalAnn  += ann;
-            totalMontantConf = totalMontantConf.add(mc);
-            totalMontantAnn  = totalMontantAnn.add(ma);
+            if (mc != null) totalMontantConf = totalMontantConf.add(mc);
+            if (ma != null) totalMontantAnn  = totalMontantAnn.add(ma);
 
-            // N'inclure que les jours avec activité pour ne pas surcharger
             if (conf > 0 || ann > 0) {
                 sb.append(String.format("%-12s | %-15d | %-19.2f | %-13d | %.2f%n",
-                        p.getDate(), conf, mc.doubleValue(), ann, ma.doubleValue()));
+                        p.getDate(),
+                        conf,
+                        mc == null ? 0.0 : mc.doubleValue(),
+                        ann,
+                        ma == null ? 0.0 : ma.doubleValue()));
             }
         }
 
@@ -91,18 +144,15 @@ public class AiInsightsService {
         sb.append("Total annulées   : ").append(totalAnn)
                 .append(" commandes | ").append(String.format("%.2f TND%n", totalMontantAnn.doubleValue()));
 
-        double txAnnulation = (totalConf + totalAnn) > 0
-                ? (100.0 * totalAnn / (totalConf + totalAnn)) : 0;
+        double txAnnulation = (totalConf + totalAnn) > 0 ? (100.0 * totalAnn / (totalConf + totalAnn)) : 0;
         sb.append(String.format("Taux d'annulation : %.1f%%%n", txAnnulation));
 
         sb.append("\nAnalyse cette performance, détecte les anomalies et donne des recommandations.");
-
         return sb.toString();
     }
 
     private String extractJsonObject(String s) {
         if (s == null) return "{}";
-        // Enlever les blocs markdown ```json ... ```
         s = s.replaceAll("```json\\s*", "").replaceAll("```\\s*", "").trim();
         int a = s.indexOf('{');
         int b = s.lastIndexOf('}');

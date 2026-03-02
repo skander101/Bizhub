@@ -10,7 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-
+import com.bizhub.controller.marketplace.InvestorInsightsApiServer;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,7 +47,7 @@ public class Main extends Application {
 
             // ✅ Démarrer le serveur IA Insights
             try {
-                int insightsPort = com.bizhub.controller.marketplace.InvestorInsightsApiServer.start();
+                int insightsPort = InvestorInsightsApiServer.start();
                 LOGGER.info("✅ InvestorInsightsApiServer démarré sur : http://localhost:" + insightsPort + "/api/investor/insights");
             } catch (Exception e) {
                 LOGGER.log(Level.WARNING, "⚠ Impossible de démarrer InvestorInsightsApiServer : " + e.getMessage(), e);
@@ -127,7 +127,7 @@ public class Main extends Application {
 
     @Override
     public void stop() throws Exception {
-        // ✅ stop propre : webhook + API stats
+        // ✅ stop propre : webhook + API stats + insights
         try {
             StripeWebhookServer.stop();
             LOGGER.info("✅ StripeWebhookServer stoppé.");
@@ -140,6 +140,13 @@ public class Main extends Application {
             LOGGER.info("✅ InvestorStatsApiServer stoppé.");
         } catch (Exception e) {
             LOGGER.log(Level.WARNING, "⚠ Erreur stop InvestorStatsApiServer : " + e.getMessage(), e);
+        }
+
+        try {
+            InvestorInsightsApiServer.stop();
+            LOGGER.info("✅ InvestorInsightsApiServer stoppé.");
+        } catch (Exception e) {
+            LOGGER.log(Level.WARNING, "⚠ Erreur stop InvestorInsightsApiServer : " + e.getMessage(), e);
         }
 
         super.stop();

@@ -2,27 +2,43 @@ package com.bizhub.model.services.marketplace;
 
 import com.bizhub.model.marketplace.CommandeJoinProduit;
 import com.bizhub.model.services.common.config.EnvLoader;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
-import java.io.*;
 import java.net.URI;
-import java.net.http.*;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Service IA externe (Groq OpenAI-compatible).
+ *
+ * Variables .env:
+ *  - GROQ_API_KEY
+ *  - GROQ_MODEL (ex: llama-3.1-8b-instant)
+ *  - GROQ_MAX_TOKENS (optionnel)
+ */
 public class OpenAIService {
 
     private static final Logger LOGGER = Logger.getLogger(OpenAIService.class.getName());
-    private static final String API_URL = "https://api.openai.com/v1/chat/completions";
+
+    private static final String API_URL = "https://api.groq.com/openai/v1/chat/completions";
+
     private static final String SYSTEM_ROLE =
             "Tu es l'assistant IA de BizHub, une marketplace B2B tunisienne qui met en relation des startups "
                     + "et des investisseurs. Tu réponds TOUJOURS en français, de manière concise et professionnelle.";
 
     private final String apiKey;
     private final String model;
-    private final int    maxTokens;
+    private final int maxTokens;
     private final HttpClient http;
+    private final Gson gson = new Gson();
 
     private static OpenAIService instance;
 
@@ -32,21 +48,22 @@ public class OpenAIService {
     }
 
     private OpenAIService() {
-        // ✅ Lire depuis .env
-        this.apiKey    = EnvLoader.getRequired("OPENAI_API_KEY");
-        this.model     = EnvLoader.getOrDefault("OPENAI_MODEL",      "gpt-4o-mini");
-        this.maxTokens = Integer.parseInt(EnvLoader.getOrDefault("OPENAI_MAX_TOKENS", "512"));
+        // ✅ Lire depuis .env (Groq)
+        this.apiKey = EnvLoader.getRequired("GROQ_API_KEY");
+        this.model = EnvLoader.getOrDefault("GROQ_MODEL", "llama-3.1-8b-instant");
+        this.maxTokens = Integer.parseInt(EnvLoader.getOrDefault("GROQ_MAX_TOKENS", "512"));
 
         this.http = HttpClient.newBuilder()
-                .connectTimeout(java.time.Duration.ofSeconds(15))
+                .connectTimeout(Duration.ofSeconds(15))
                 .build();
 
-        LOGGER.info("✅ OpenAIService initialisé (model=" + model + ")");
+        LOGGER.info("✅ IA service initialisé (model=" + model + ")");
     }
 
     public String resumeCommande(CommandeJoinProduit c) {
         return chat("Analyse cette commande BizHub et donne un résumé décisionnel en 2-3 phrases :\n"
-                + "Commande #" + c.getIdCommande() + " | Produit : " + safe(c.getProduitNom())
+                + "Commande #" + c.getIdCommande()
+                + " | Produit : " + safe(c.getProduitNom())
                 + " | Qté : " + c.getQuantiteCommande()
                 + " | Statut : " + safe(c.getStatut())
                 + " | Score IA : " + c.getPriorityScore() + "/500"
@@ -84,68 +101,68 @@ public class OpenAIService {
 
     public String chat(String userMessage) {
         try {
-            String body = "{\"model\":\"" + model + "\","
-                    + "\"max_tokens\":" + maxTokens + ","
-                    + "\"messages\":["
-                    + "{\"role\":\"system\",\"content\":\"" + escapeJson(SYSTEM_ROLE) + "\"},"
-                    + "{\"role\":\"user\",\"content\":\"" + escapeJson(userMessage) + "\"}"
-                    + "]}";
+            JsonArray messages = new JsonArray();
+
+            JsonObject sys = new JsonObject();
+            sys.addProperty("role", "system");
+            sys.addProperty("content", SYSTEM_ROLE);
+            messages.add(sys);
+
+            JsonObject usr = new JsonObject();
+            usr.addProperty("role", "user");
+            usr.addProperty("content", userMessage == null ? "" : userMessage);
+            messages.add(usr);
+
+            JsonObject body = new JsonObject();
+            body.addProperty("model", model);
+            body.addProperty("max_tokens", maxTokens);
+            body.add("messages", messages);
 
             HttpRequest req = HttpRequest.newBuilder()
                     .uri(URI.create(API_URL))
                     .header("Content-Type", "application/json")
                     .header("Authorization", "Bearer " + apiKey)
-                    .POST(HttpRequest.BodyPublishers.ofString(body, StandardCharsets.UTF_8))
-                    .timeout(java.time.Duration.ofSeconds(30))
+                    .POST(HttpRequest.BodyPublishers.ofString(gson.toJson(body), StandardCharsets.UTF_8))
+                    .timeout(Duration.ofSeconds(30))
                     .build();
 
-            HttpResponse<String> resp = http.send(req, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> resp = http.send(req, HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
 
             if (resp.statusCode() == 200) return extractContent(resp.body());
-            LOGGER.warning("OpenAI HTTP " + resp.statusCode());
-            return "⚠ Erreur OpenAI (" + resp.statusCode() + ")";
+
+            if (resp.statusCode() == 401) return "⚠ Clé IA invalide (401).";
+            if (resp.statusCode() == 429) return "⚠ Limite gratuite atteinte (429). Réessayez plus tard.";
+
+            LOGGER.warning("IA HTTP " + resp.statusCode() + " -> " + resp.body());
+            return "⚠ Erreur IA (" + resp.statusCode() + ")";
 
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             return "⚠ Requête interrompue.";
         } catch (Exception e) {
-            LOGGER.log(Level.WARNING, "OpenAI erreur", e);
-            return "⚠ OpenAI indisponible : " + e.getMessage();
+            LOGGER.log(Level.WARNING, "IA erreur", e);
+            return "⚠ IA indisponible : " + e.getMessage();
         }
     }
 
     private String extractContent(String json) {
         try {
-            int idx = json.indexOf("\"content\"");
-            if (idx < 0) return "Réponse vide.";
-            int colon = json.indexOf(':', idx);
-            String rest = json.substring(colon + 1).trim();
-            if (!rest.startsWith("\"")) return "Parse error.";
-            StringBuilder sb = new StringBuilder();
-            boolean esc = false;
-            for (int i = 1; i < rest.length(); i++) {
-                char ch = rest.charAt(i);
-                if (esc) {
-                    switch (ch) {
-                        case 'n' -> sb.append('\n');
-                        case 't' -> sb.append('\t');
-                        case '"' -> sb.append('"');
-                        case '\\' -> sb.append('\\');
-                        default -> sb.append(ch);
-                    }
-                    esc = false;
-                } else if (ch == '\\') { esc = true;
-                } else if (ch == '"') { break;
-                } else { sb.append(ch); }
-            }
-            return sb.toString().trim();
-        } catch (Exception e) { return "Erreur parsing."; }
-    }
+            JsonObject root = gson.fromJson(json, JsonObject.class);
+            if (root == null || !root.has("choices")) return "Réponse vide.";
 
-    private String escapeJson(String s) {
-        if (s == null) return "";
-        return s.replace("\\","\\\\").replace("\"","\\\"")
-                .replace("\n","\\n").replace("\r","\\r").replace("\t","\\t");
+            JsonArray choices = root.getAsJsonArray("choices");
+            if (choices == null || choices.isEmpty()) return "Réponse vide.";
+
+            JsonObject choice = choices.get(0).getAsJsonObject();
+            if (choice == null || !choice.has("message")) return "Réponse vide.";
+
+            JsonObject msg = choice.getAsJsonObject("message");
+            if (msg != null && msg.has("content")) return msg.get("content").getAsString().trim();
+
+            return "Réponse vide.";
+        } catch (Exception e) {
+            return "Erreur parsing.";
+        }
     }
 
     private String safe(String s) { return s == null ? "" : s.trim(); }
