@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.bizhub.controller.investissement.NegotiationController"
+            stylesheets="@../css/theme.css">
+
+    <left>
+        <fx:include fx:id="sidebar" source="sidebar.fxml"/>
+    </left>
+
+    <top>
+        <HBox spacing="12" alignment="CENTER_LEFT" styleClass="topbar">
+            <padding><Insets top="14" right="16" bottom="14" left="16"/></padding>
+            <ImageView fitHeight="40" fitWidth="40" preserveRatio="true">
+                <image><Image url="@../images/site-images/logo.png"/></image>
+            </ImageView>
+            <VBox spacing="2">
+                <Text text="Negotiation" styleClass="h1"/>
+                <Text text="AI-Powered Deal Negotiation" styleClass="subtitle"/>
+            </VBox>
+            <Pane HBox.hgrow="ALWAYS"/>
+            <Button text="Back" onAction="#handleBack" styleClass="btn"/>
+        </HBox>
+    </top>
+
+    <center>
+        <VBox spacing="0" style="-fx-background-color: #0A192F;">
+            <!-- Negotiation Header -->
+            <HBox spacing="16" alignment="CENTER_LEFT" styleClass="card"
+                  style="-fx-background-radius: 0;">
+                <padding><Insets top="12" right="16" bottom="12" left="16"/></padding>
+                <VBox spacing="4">
+                    <Label fx:id="projectTitleLabel" text="Project Title"
+                           style="-fx-text-fill: #FFFFFF; -fx-font-size: 16px; -fx-font-weight: 900;"/>
+                    <Label fx:id="partiesLabel" text="Investor ↔ Startup"
+                           style="-fx-text-fill: #E8A93A; -fx-font-size: 12px;"/>
+                </VBox>
+                <Pane HBox.hgrow="ALWAYS"/>
+                <Label fx:id="statusLabel" text="OPEN" styleClass="badge badge-gold"/>
+                <Label fx:id="negotiationInfoLabel" text=""
+                       style="-fx-text-fill: #FDB813; -fx-font-size: 12px;"/>
+            </HBox>
+
+            <!-- Chat Messages -->
+            <ScrollPane fx:id="chatScrollPane" fitToWidth="true"
+                        vbarPolicy="AS_NEEDED" hbarPolicy="NEVER"
+                        VBox.vgrow="ALWAYS"
+                        style="-fx-background-color: transparent; -fx-background: transparent;">
+                <VBox fx:id="messagesContainer" spacing="8"
+                      style="-fx-background-color: transparent;">
+                    <padding><Insets top="16" right="8" bottom="16" left="8"/></padding>
+                </VBox>
+            </ScrollPane>
+
+            <!-- AI Suggestion Box -->
+            <VBox fx:id="aiSuggestionBox" spacing="8" managed="false" visible="false"
+                  style="-fx-background-color: rgba(139,92,246,0.12); -fx-border-color: rgba(139,92,246,0.35);
+                         -fx-border-width: 1 0; -fx-padding: 12 16;">
+                <HBox spacing="8" alignment="CENTER_LEFT">
+                    <Label text="AI Suggestion" style="-fx-text-fill: #A78BFA; -fx-font-weight: 900; -fx-font-size: 12px;"/>
+                    <Pane HBox.hgrow="ALWAYS"/>
+                    <Button text="Use" onAction="#handleUseSuggestion"
+                            style="-fx-background-color: rgba(139,92,246,0.25); -fx-text-fill: #A78BFA;
+                                   -fx-background-radius: 8; -fx-font-weight: 800; -fx-font-size: 11px;
+                                   -fx-padding: 4 12; -fx-cursor: hand;"/>
+                    <Button text="Dismiss" onAction="#handleDismissSuggestion"
+                            style="-fx-background-color: transparent; -fx-text-fill: rgba(167,139,250,0.6);
+                                   -fx-font-size: 11px; -fx-cursor: hand;"/>
+                </HBox>
+                <Label fx:id="aiSuggestionText" wrapText="true"
+                       style="-fx-text-fill: #FFFFFF; -fx-font-size: 13px;"/>
+            </VBox>
+
+            <!-- Input Area -->
+            <HBox spacing="10" alignment="CENTER_LEFT"
+                  style="-fx-background-color: rgba(23,42,69,0.95); -fx-border-color: rgba(232,169,58,0.20);
+                         -fx-border-width: 1 0 0 0;">
+                <padding><Insets top="12" right="16" bottom="12" left="16"/></padding>
+
+                <TextField fx:id="amountField" promptText="Amount (EUR)" prefWidth="120"
+                           styleClass="text-field-modern" style="-fx-pref-height: 38;"/>
+
+                <TextField fx:id="messageField" promptText="Type a message..."
+                           HBox.hgrow="ALWAYS" styleClass="text-field-modern"
+                           style="-fx-pref-height: 38;" onAction="#handleSend"/>
+
+                <Button fx:id="makeOfferBtn" text="Make Offer" onAction="#handleMakeOffer"
+                        styleClass="btn" style="-fx-pref-height: 38;"/>
+
+                <Button fx:id="sendBtn" text="Send" onAction="#handleSend"
+                        styleClass="btn-primary" style="-fx-pref-height: 38;"/>
+
+                <Button fx:id="aiSuggestBtn" text="Ask AI" onAction="#handleAISuggest"
+                        style="-fx-background-color: rgba(139,92,246,0.20); -fx-text-fill: #A78BFA;
+                               -fx-font-weight: 800; -fx-background-radius: 14; -fx-padding: 8 14;
+                               -fx-border-color: rgba(139,92,246,0.35); -fx-border-radius: 14;
+                               -fx-border-width: 1; -fx-cursor: hand; -fx-pref-height: 38;"/>
+
+                <ProgressIndicator fx:id="aiSpinner" prefWidth="24" prefHeight="24"
+                                   visible="false"/>
+
+                <Button fx:id="acceptDealBtn" text="Accept Deal" onAction="#handleAcceptDeal"
+                        style="-fx-background-color: rgba(16,185,129,0.20); -fx-text-fill: #10B981;
+                               -fx-font-weight: 800; -fx-background-radius: 14; -fx-padding: 8 14;
+                               -fx-border-color: rgba(16,185,129,0.35); -fx-border-radius: 14;
+                               -fx-border-width: 1; -fx-cursor: hand; -fx-pref-height: 38;"/>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>

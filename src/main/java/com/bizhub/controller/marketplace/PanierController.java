@@ -1,5 +1,6 @@
 package com.bizhub.controller.marketplace;
 
+import com.bizhub.controller.users_avis.user.SidebarController;
 import com.bizhub.model.marketplace.PanierItem;
 import com.bizhub.model.services.common.service.AppSession;
 
@@ -28,6 +29,8 @@ import java.util.logging.Logger;
 public class PanierController implements Initializable {
 
     private static final Logger LOGGER = Logger.getLogger(PanierController.class.getName());
+
+    @FXML private SidebarController sidebarController;
 
     // ── Table ──
     @FXML private TableView<PanierItem>         tablePanier;
@@ -66,6 +69,7 @@ public class PanierController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        if (sidebarController != null) sidebarController.setActivePage("marketplace");
         setupColumns();
         tablePanier.setItems(items);
         refreshPanier();

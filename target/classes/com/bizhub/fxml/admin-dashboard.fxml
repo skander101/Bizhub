@@ -19,7 +19,7 @@
 <BorderPane stylesheets="@../css/theme.css, @../css/user-management.css">
 
     <left>
-        <fx:include source="admin-sidebar.fxml" />
+        <fx:include fx:id="sidebar" source="sidebar.fxml"/>
     </left>
 
     <top>

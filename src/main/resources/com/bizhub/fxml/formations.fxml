@@ -14,8 +14,7 @@
             stylesheets="@../css/theme.css, @../css/user-management.css">
 
     <left>
-        <!-- Admin must not use the non-admin sidebar; controller will swap to the right one at runtime. -->
-        <fx:include fx:id="sidebarInclude" source="user-sidebar.fxml" />
+        <fx:include fx:id="sidebar" source="sidebar.fxml"/>
     </left>
 
     <top>

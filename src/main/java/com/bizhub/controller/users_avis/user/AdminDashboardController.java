@@ -13,6 +13,7 @@ import com.bizhub.model.users_avis.user.User;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import com.bizhub.controller.users_avis.user.SidebarController;
 import javafx.fxml.FXML;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Label;
@@ -27,6 +28,7 @@ import javafx.stage.Stage;
 
 public class AdminDashboardController {
 
+    @FXML private SidebarController sidebarController;
     @FXML private HBox topbar;
 
     @FXML private Text totalUsersText;
@@ -50,6 +52,7 @@ public class AdminDashboardController {
 
     @FXML
     public void initialize() {
+        if (sidebarController != null) sidebarController.setActivePage("dashboard");
         // Add user profile to topbar
         if (topbar != null) {
             topbar.getChildren().add(TopbarProfileHelper.createProfileBox());

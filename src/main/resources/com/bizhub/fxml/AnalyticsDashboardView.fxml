@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.bizhub.controller.investissement.AnalyticsDashboardController"
+            stylesheets="@../css/theme.css, @../css/user-management.css">
+
+    <left>
+        <fx:include fx:id="sidebar" source="sidebar.fxml"/>
+    </left>
+
+    <top>
+        <HBox spacing="12" alignment="CENTER_LEFT" styleClass="topbar">
+            <padding><Insets top="14" right="16" bottom="14" left="16"/></padding>
+            <ImageView fitHeight="40" fitWidth="40" preserveRatio="true">
+                <image><Image url="@../images/site-images/logo.png"/></image>
+            </ImageView>
+            <VBox spacing="2">
+                <Text text="Analytics" styleClass="h1"/>
+                <Text text="Platform Analytics &amp; Market Data" styleClass="subtitle"/>
+            </VBox>
+            <Pane HBox.hgrow="ALWAYS"/>
+            <Button text="Refresh" onAction="#handleRefresh" styleClass="btn"/>
+            <Button text="Back" onAction="#handleBack" styleClass="btn"/>
+        </HBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
+                    style="-fx-background-color: transparent; -fx-background: transparent;">
+            <VBox spacing="22" fillWidth="true">
+                <padding><Insets top="22" right="26" bottom="26" left="26"/></padding>
+
+                <!-- ===== Stat Cards Row ===== -->
+                <HBox spacing="14">
+                    <!-- Projects -->
+                    <VBox HBox.hgrow="ALWAYS" spacing="6" alignment="CENTER"
+                          style="-fx-background-color: rgba(23,42,69,0.95); -fx-background-radius: 18;
+                                 -fx-border-color: rgba(59,130,246,0.35); -fx-border-radius: 18; -fx-border-width: 1.5;
+                                 -fx-padding: 18 14; -fx-effect: dropshadow(gaussian,rgba(59,130,246,0.12),12,0.1,0,4);">
+                        <Label text="PROJECTS"
+                               style="-fx-text-fill: rgba(59,130,246,0.7); -fx-font-size: 10px; -fx-font-weight: 800; -fx-letter-spacing: 1.5;"/>
+                        <Label fx:id="totalProjectsLabel" text="..."
+                               style="-fx-text-fill: #3B82F6; -fx-font-size: 30px; -fx-font-weight: 900;"/>
+                    </VBox>
+                    <!-- Investments -->
+                    <VBox HBox.hgrow="ALWAYS" spacing="6" alignment="CENTER"
+                          style="-fx-background-color: rgba(23,42,69,0.95); -fx-background-radius: 18;
+                                 -fx-border-color: rgba(16,185,129,0.35); -fx-border-radius: 18; -fx-border-width: 1.5;
+                                 -fx-padding: 18 14; -fx-effect: dropshadow(gaussian,rgba(16,185,129,0.12),12,0.1,0,4);">
+                        <Label text="INVESTMENTS"
+                               style="-fx-text-fill: rgba(16,185,129,0.7); -fx-font-size: 10px; -fx-font-weight: 800; -fx-letter-spacing: 1.5;"/>
+                        <Label fx:id="totalInvestmentsLabel" text="..."
+                               style="-fx-text-fill: #10B981; -fx-font-size: 30px; -fx-font-weight: 900;"/>
+                    </VBox>
+                    <!-- Total Volume -->
+                    <VBox HBox.hgrow="ALWAYS" spacing="6" alignment="CENTER"
+                          style="-fx-background-color: rgba(23,42,69,0.95); -fx-background-radius: 18;
+                                 -fx-border-color: rgba(255,184,77,0.4); -fx-border-radius: 18; -fx-border-width: 1.5;
+                                 -fx-padding: 18 14; -fx-effect: dropshadow(gaussian,rgba(255,184,77,0.12),12,0.1,0,4);">
+                        <Label text="TOTAL VOLUME"
+                               style="-fx-text-fill: rgba(255,184,77,0.7); -fx-font-size: 10px; -fx-font-weight: 800; -fx-letter-spacing: 1.5;"/>
+                        <Label fx:id="totalVolumeLabel" text="..."
+                               style="-fx-text-fill: #FFB84D; -fx-font-size: 22px; -fx-font-weight: 900;"/>
+                    </VBox>
+                    <!-- Investors -->
+                    <VBox HBox.hgrow="ALWAYS" spacing="6" alignment="CENTER"
+                          style="-fx-background-color: rgba(23,42,69,0.95); -fx-background-radius: 18;
+                                 -fx-border-color: rgba(139,92,246,0.35); -fx-border-radius: 18; -fx-border-width: 1.5;
+                                 -fx-padding: 18 14; -fx-effect: dropshadow(gaussian,rgba(139,92,246,0.12),12,0.1,0,4);">
+                        <Label text="INVESTORS"
+                               style="-fx-text-fill: rgba(139,92,246,0.7); -fx-font-size: 10px; -fx-font-weight: 800; -fx-letter-spacing: 1.5;"/>
+                        <Label fx:id="totalInvestorsLabel" text="..."
+                               style="-fx-text-fill: #8B5CF6; -fx-font-size: 30px; -fx-font-weight: 900;"/>
+                    </VBox>
+                    <!-- Deals -->
+                    <VBox HBox.hgrow="ALWAYS" spacing="6" alignment="CENTER"
+                          style="-fx-background-color: rgba(23,42,69,0.95); -fx-background-radius: 18;
+                                 -fx-border-color: rgba(236,72,153,0.35); -fx-border-radius: 18; -fx-border-width: 1.5;
+                                 -fx-padding: 18 14; -fx-effect: dropshadow(gaussian,rgba(236,72,153,0.12),12,0.1,0,4);">
+                        <Label text="DEALS"
+                               style="-fx-text-fill: rgba(236,72,153,0.7); -fx-font-size: 10px; -fx-font-weight: 800; -fx-letter-spacing: 1.5;"/>
+                        <Label fx:id="activeDealsLabel" text="..."
+                               style="-fx-text-fill: #EC4899; -fx-font-size: 30px; -fx-font-weight: 900;"/>
+                    </VBox>
+                    <!-- Negotiations -->
+                    <VBox HBox.hgrow="ALWAYS" spacing="6" alignment="CENTER"
+                          style="-fx-background-color: rgba(23,42,69,0.95); -fx-background-radius: 18;
+                                 -fx-border-color: rgba(245,158,11,0.35); -fx-border-radius: 18; -fx-border-width: 1.5;
+                                 -fx-padding: 18 14; -fx-effect: dropshadow(gaussian,rgba(245,158,11,0.12),12,0.1,0,4);">
+                        <Label text="NEGOTIATIONS"
+                               style="-fx-text-fill: rgba(245,158,11,0.7); -fx-font-size: 10px; -fx-font-weight: 800; -fx-letter-spacing: 1.5;"/>
+                        <Label fx:id="activeNegotiationsLabel" text="..."
+                               style="-fx-text-fill: #F59E0B; -fx-font-size: 30px; -fx-font-weight: 900;"/>
+                    </VBox>
+                </HBox>
+
+                <!-- ===== Charts Row 1: Pie + Line ===== -->
+                <HBox spacing="16">
+                    <VBox HBox.hgrow="ALWAYS" spacing="10"
+                          style="-fx-background-color: rgba(23,42,69,0.95); -fx-background-radius: 18;
+                                 -fx-border-color: rgba(232,169,58,0.15); -fx-border-radius: 18; -fx-border-width: 1;
+                                 -fx-padding: 18; -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.15),10,0.08,0,4);">
+                        <Label text="Investments by Sector"
+                               style="-fx-text-fill: #FFB84D; -fx-font-size: 15px; -fx-font-weight: 900;"/>
+                        <PieChart fx:id="sectorPieChart" prefHeight="300" animated="true"
+                                  legendVisible="true" labelsVisible="true"
+                                  style="-fx-pie-label-fill: white;"/>
+                    </VBox>
+                    <VBox HBox.hgrow="ALWAYS" spacing="10"
+                          style="-fx-background-color: rgba(23,42,69,0.95); -fx-background-radius: 18;
+                                 -fx-border-color: rgba(232,169,58,0.15); -fx-border-radius: 18; -fx-border-width: 1;
+                                 -fx-padding: 18; -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.15),10,0.08,0,4);">
+                        <Label text="Monthly Investment Volume"
+                               style="-fx-text-fill: #FFB84D; -fx-font-size: 15px; -fx-font-weight: 900;"/>
+                        <LineChart fx:id="volumeLineChart" prefHeight="300" animated="true"
+                                   createSymbols="true" legendVisible="false">
+                            <xAxis><CategoryAxis label="Month" style="-fx-tick-label-fill: #E8A93A;"/></xAxis>
+                            <yAxis><NumberAxis label="Amount (TND)" style="-fx-tick-label-fill: #E8A93A;"/></yAxis>
+                        </LineChart>
+                    </VBox>
+                </HBox>
+
+                <!-- ===== Charts Row 2: Bar + Status Pie ===== -->
+                <HBox spacing="16">
+                    <VBox HBox.hgrow="ALWAYS" spacing="10"
+                          style="-fx-background-color: rgba(23,42,69,0.95); -fx-background-radius: 18;
+                                 -fx-border-color: rgba(232,169,58,0.15); -fx-border-radius: 18; -fx-border-width: 1;
+                                 -fx-padding: 18; -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.15),10,0.08,0,4);">
+                        <Label text="Projects: Budget vs Invested"
+                               style="-fx-text-fill: #FFB84D; -fx-font-size: 15px; -fx-font-weight: 900;"/>
+                        <BarChart fx:id="projectBarChart" prefHeight="300" animated="true"
+                                  barGap="2" categoryGap="20" legendVisible="true">
+                            <xAxis><CategoryAxis style="-fx-tick-label-fill: #E8A93A;"/></xAxis>
+                            <yAxis><NumberAxis style="-fx-tick-label-fill: #E8A93A;"/></yAxis>
+                        </BarChart>
+                    </VBox>
+                    <VBox HBox.hgrow="ALWAYS" spacing="10"
+                          style="-fx-background-color: rgba(23,42,69,0.95); -fx-background-radius: 18;
+                                 -fx-border-color: rgba(232,169,58,0.15); -fx-border-radius: 18; -fx-border-width: 1;
+                                 -fx-padding: 18; -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.15),10,0.08,0,4);">
+                        <Label text="Projects by Status"
+                               style="-fx-text-fill: #FFB84D; -fx-font-size: 15px; -fx-font-weight: 900;"/>
+                        <PieChart fx:id="statusPieChart" prefHeight="300" animated="true"
+                                  legendVisible="true" labelsVisible="true"
+                                  style="-fx-pie-label-fill: white;"/>
+                    </VBox>
+                </HBox>
+
+                <!-- ===== Crypto + News Row ===== -->
+                <HBox spacing="16">
+                    <VBox HBox.hgrow="ALWAYS" spacing="12"
+                          style="-fx-background-color: rgba(23,42,69,0.95); -fx-background-radius: 18;
+                                 -fx-border-color: rgba(232,169,58,0.15); -fx-border-radius: 18; -fx-border-width: 1;
+                                 -fx-padding: 18; -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.15),10,0.08,0,4);">
+                        <Label text="Live Crypto Prices"
+                               style="-fx-text-fill: #FFB84D; -fx-font-size: 15px; -fx-font-weight: 900;"/>
+                        <VBox fx:id="cryptoContainer" spacing="8">
+                            <Label text="Loading..." style="-fx-text-fill: rgba(232,169,58,0.5);"/>
+                        </VBox>
+                    </VBox>
+                    <VBox fx:id="newsContainer" HBox.hgrow="ALWAYS" spacing="12"
+                          style="-fx-background-color: rgba(23,42,69,0.95); -fx-background-radius: 18;
+                                 -fx-border-color: rgba(232,169,58,0.15); -fx-border-radius: 18; -fx-border-width: 1;
+                                 -fx-padding: 18; -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.15),10,0.08,0,4);">
+                        <Label text="Market News"
+                               style="-fx-text-fill: #FFB84D; -fx-font-size: 15px; -fx-font-weight: 900;"/>
+                        <Label text="Loading..." style="-fx-text-fill: rgba(232,169,58,0.5);"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>

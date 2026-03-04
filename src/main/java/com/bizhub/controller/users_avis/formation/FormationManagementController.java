@@ -20,6 +20,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.geometry.Insets;
 import com.bizhub.controller.users_avis.user.TopbarProfileHelper;
+import com.bizhub.controller.users_avis.user.SidebarController;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -27,6 +28,8 @@ import java.util.List;
 import java.util.Locale;
 
 public class FormationManagementController {
+
+    @FXML private SidebarController sidebarController;
 
     @FXML private TextField searchField;
     @FXML private ListView<Formation> formationsList;
@@ -43,25 +46,12 @@ public class FormationManagementController {
 
     @FXML
     public void initialize() {
+        if (sidebarController != null) sidebarController.setActivePage("formations");
         // Add user profile to topbar
         if (topbar != null) {
             topbar.getChildren().add(TopbarProfileHelper.createProfileBox());
         }
 
-        // Swap sidebar for admins (prevents routing into user mode)
-        if (AppSession.isAdmin()) {
-            try {
-                Parent n = FXMLLoader.load(getClass().getResource("/com/bizhub/fxml/admin-sidebar.fxml"));
-                if (root != null) root.setLeft(n);
-                NavigationService.setActiveNav(n, NavigationService.ActiveNav.FORMATIONS);
-            } catch (Exception ignored) {
-                // If it fails, app still works; buttons are guarded by role checks.
-            }
-        } else {
-            if (root != null && root.getLeft() != null) {
-                NavigationService.setActiveNav(root.getLeft(), NavigationService.ActiveNav.FORMATIONS);
-            }
-        }
 
         boolean admin = AppSession.isAdmin();
         if (addButton != null) addButton.setDisable(!admin);

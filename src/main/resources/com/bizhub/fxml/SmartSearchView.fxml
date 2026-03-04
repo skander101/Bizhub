@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.bizhub.controller.investissement.SmartSearchController"
+            stylesheets="@../css/theme.css, @../css/user-management.css">
+
+    <left>
+        <fx:include fx:id="sidebar" source="sidebar.fxml"/>
+    </left>
+
+    <top>
+        <HBox spacing="12" alignment="CENTER_LEFT" styleClass="topbar">
+            <padding><Insets top="14" right="16" bottom="14" left="16"/></padding>
+            <ImageView fitHeight="40" fitWidth="40" preserveRatio="true">
+                <image><Image url="@../images/site-images/logo.png"/></image>
+            </ImageView>
+            <VBox spacing="2">
+                <Text text="AI Smart Search" styleClass="h1"/>
+                <Text text="Find projects using natural language" styleClass="subtitle"/>
+            </VBox>
+            <Pane HBox.hgrow="ALWAYS"/>
+            <Button text="Back" onAction="#handleBack" styleClass="btn"/>
+        </HBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
+                    style="-fx-background-color: transparent; -fx-background: transparent;">
+            <VBox spacing="16" fillWidth="true">
+                <padding><Insets top="20" right="24" bottom="24" left="24"/></padding>
+
+                <!-- Search Card -->
+                <VBox styleClass="card" spacing="12"
+                      style="-fx-border-color: rgba(139,92,246,0.35);">
+                    <Label text="Ask AI to find projects"
+                           style="-fx-text-fill: #A78BFA; -fx-font-size: 14px; -fx-font-weight: 900;"/>
+                    <Label text="Type naturally: 'green tech under 50,000', 'funded projects in healthcare', 'high budget startups'"
+                           style="-fx-text-fill: rgba(232,169,58,0.6); -fx-font-size: 12px;" wrapText="true"/>
+
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <TextField fx:id="searchField" promptText="Describe what you're looking for..."
+                                   HBox.hgrow="ALWAYS" styleClass="text-field-modern"
+                                   style="-fx-pref-height: 42;" onAction="#handleSearch"/>
+                        <Button text="Search with AI" onAction="#handleSearch"
+                                style="-fx-background-color: rgba(139,92,246,0.25); -fx-text-fill: #A78BFA;
+                                       -fx-font-weight: 800; -fx-background-radius: 14; -fx-padding: 10 18;
+                                       -fx-border-color: rgba(139,92,246,0.40); -fx-border-radius: 14;
+                                       -fx-border-width: 1; -fx-cursor: hand; -fx-pref-height: 42;"/>
+                        <ProgressIndicator fx:id="searchSpinner" prefWidth="28" prefHeight="28"
+                                           visible="false"/>
+                    </HBox>
+                </VBox>
+
+                <!-- Status & Count -->
+                <HBox spacing="12" alignment="CENTER_LEFT">
+                    <Label fx:id="statusLabel" text="Enter a query to search"
+                           style="-fx-text-fill: #E8A93A; -fx-font-size: 12px;"/>
+                    <Pane HBox.hgrow="ALWAYS"/>
+                    <Label fx:id="resultCountLabel" text=""
+                           style="-fx-text-fill: #FDB813; -fx-font-weight: 800; -fx-font-size: 12px;"/>
+                </HBox>
+
+                <!-- Results -->
+                <VBox fx:id="resultsContainer" spacing="12">
+                    <Label text="Results will appear here"
+                           style="-fx-text-fill: rgba(232,169,58,0.4); -fx-font-size: 13px; -fx-padding: 30;"/>
+                </VBox>
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>

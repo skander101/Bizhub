@@ -1,5 +1,6 @@
 package com.bizhub.controller;
 
+import com.bizhub.controller.users_avis.user.SidebarController;
 import com.bizhub.controller.users_avis.user.TopbarProfileHelper;
 import com.bizhub.model.services.common.service.AiDatabaseAssistantService;
 import com.bizhub.model.services.common.service.AiNavigationBotService;
@@ -30,6 +31,8 @@ import javafx.util.Duration;
  */
 public class AiChatController {
 
+    @FXML private SidebarController sidebarController;
+
     @FXML private VBox messagesContainer;
     @FXML private ScrollPane scrollPane;
     @FXML private TextField inputField;
@@ -47,6 +50,7 @@ public class AiChatController {
 
     @FXML
     public void initialize() {
+        if (sidebarController != null) sidebarController.setActivePage("ai-chat");
         botService = new AiNavigationBotService();
         dbService = new AiDatabaseAssistantService();
 
@@ -55,19 +59,6 @@ public class AiChatController {
             topbar.getChildren().add(TopbarProfileHelper.createProfileBox());
         }
 
-        // Handle admin sidebar swap
-        if (AppSession.isAdmin()) {
-            try {
-                Parent n = FXMLLoader.load(getClass().getResource("/com/bizhub/fxml/admin-sidebar.fxml"));
-                if (root != null) root.setLeft(n);
-                NavigationService.setActiveNav(n, NavigationService.ActiveNav.AI_CHAT);
-            } catch (Exception ignored) {
-            }
-        } else {
-            if (root != null && root.getLeft() != null) {
-                NavigationService.setActiveNav(root.getLeft(), NavigationService.ActiveNav.AI_CHAT);
-            }
-        }
 
         // Handle Enter key in input field
         inputField.setOnAction(e -> onSendMessage());

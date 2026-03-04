@@ -1,5 +1,6 @@
 package com.bizhub.controller.users_avis.review;
 
+import com.bizhub.controller.users_avis.user.SidebarController;
 import com.bizhub.model.services.common.service.*;
 import com.bizhub.model.users_avis.formation.Formation;
 import com.bizhub.model.users_avis.review.Review;
@@ -31,6 +32,8 @@ import java.util.Set;
 
 public class ReviewManagementController {
 
+    @FXML private SidebarController sidebarController;
+
     @FXML private TextField searchField;
     @FXML private ComboBox<String> ratingFilter;
     @FXML private ComboBox<Formation> formationFilter;
@@ -52,22 +55,13 @@ public class ReviewManagementController {
 
     @FXML
     public void initialize() {
+        if (sidebarController != null) sidebarController.setActivePage("reviews");
         // Add user profile to topbar
         if (topbar != null) {
             topbar.getChildren().add(TopbarProfileHelper.createProfileBox());
         }
 
-        if (AppSession.isAdmin()) {
-            try {
-                Parent n = FXMLLoader.load(getClass().getResource("/com/bizhub/fxml/admin-sidebar.fxml"));
-                if (root != null) root.setLeft(n);
-                NavigationService.setActiveNav(n, NavigationService.ActiveNav.REVIEWS);
-            } catch (Exception ignored) {
-            }
-        } else {
-            if (root != null && root.getLeft() != null) {
-                NavigationService.setActiveNav(root.getLeft(), NavigationService.ActiveNav.REVIEWS);
-            }
+        if (!AppSession.isAdmin()) {
             // Update title for non-admin users
             if (titleText != null) titleText.setText("My Reviews");
             if (subtitleText != null) subtitleText.setText("Reviews you've posted");

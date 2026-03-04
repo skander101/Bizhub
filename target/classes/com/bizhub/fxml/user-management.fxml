@@ -14,8 +14,7 @@
             stylesheets="@../css/theme.css, @../css/user-management.css">
 
     <left>
-        <!-- Controller will swap this include to admin-sidebar.fxml when needed -->
-        <fx:include fx:id="sidebarInclude" source="user-sidebar.fxml" />
+        <fx:include fx:id="sidebar" source="sidebar.fxml"/>
     </left>
 
     <top>

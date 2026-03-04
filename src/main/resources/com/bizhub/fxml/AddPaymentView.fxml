@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.bizhub.controller.investissement.AddPaymentController"
+            stylesheets="@../css/theme.css">
+
+    <!-- SIDEBAR -->
+    <left>
+        <fx:include fx:id="sidebar" source="sidebar.fxml"/>
+    </left>
+
+    <!-- TOP BAR -->
+    <top>
+        <HBox spacing="12" alignment="CENTER_LEFT" styleClass="topbar">
+            <padding>
+                <Insets top="14" right="16" bottom="14" left="16" />
+            </padding>
+
+            <ImageView fitHeight="40" fitWidth="40" preserveRatio="true">
+                <image>
+                    <Image url="@../images/site-images/logo.png" />
+                </image>
+            </ImageView>
+
+            <VBox spacing="2">
+                <Text text="Investissements" styleClass="h1" />
+                <Text text="Premier Paiement" styleClass="subtitle" />
+            </VBox>
+
+            <Pane HBox.hgrow="ALWAYS" />
+
+            <Button text="Retour" onAction="#handleBack" styleClass="btn" />
+        </HBox>
+    </top>
+
+    <!-- MAIN CONTENT -->
+    <center>
+        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
+            <content>
+                <VBox spacing="16">
+                    <padding>
+                        <Insets top="14" right="16" bottom="16" left="16" />
+                    </padding>
+
+                    <!-- BANDEAU BLEU -->
+                    <HBox spacing="15" alignment="CENTER"
+                          style="-fx-background-color: #3498db; -fx-background-radius: 8; -fx-padding: 15;">
+                        <VBox alignment="CENTER_LEFT" spacing="5">
+                            <Label text="Investissement créé :" style="-fx-text-fill: white; -fx-font-size: 12px;"/>
+                            <Label fx:id="investmentInfoLabel" text="Projet: ..."
+                                   style="-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;"/>
+                        </VBox>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <VBox alignment="CENTER_RIGHT" spacing="5">
+                            <Label text="Montant Total" style="-fx-text-fill: white; -fx-font-size: 12px;"/>
+                            <Label fx:id="totalAmountLabel" text="0.00 TND"
+                                   style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;"/>
+                        </VBox>
+                    </HBox>
+
+                    <!-- CARD -->
+                    <VBox spacing="20" styleClass="card">
+                        <padding>
+                            <Insets top="30" right="40" bottom="30" left="40"/>
+                        </padding>
+
+                        <Label text="Informations du Paiement"
+                               style="-fx-text-fill: #2c3e50; -fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+                        <!-- Montant -->
+                        <VBox spacing="8">
+                            <HBox spacing="10" alignment="CENTER_LEFT">
+                                <Label text="Montant du Paiement *" styleClass="label-title"/>
+                                <Label text="(Ce paiement sera déduit du montant total)"
+                                       style="-fx-text-fill: #7f8c8d; -fx-font-size: 11px;"/>
+                            </HBox>
+                            <HBox spacing="10" alignment="CENTER_LEFT">
+                                <TextField fx:id="paymentAmountField" promptText="Ex: 10000"
+                                           prefWidth="730" styleClass="text-field-modern"/>
+                                <Label text="TND" styleClass="hint"/>
+                            </HBox>
+                            <Label fx:id="paymentAmountErrorLabel" textFill="red" visible="false"
+                                   styleClass="error-label"/>
+                            <Label fx:id="remainingAmountLabel"
+                                   text="Montant restant après ce paiement: 0.00 TND"
+                                   style="-fx-text-fill: #16a085; -fx-font-size: 13px; -fx-font-weight: bold;"/>
+                        </VBox>
+
+                        <!-- Méthode -->
+                        <VBox spacing="8">
+                            <Label text="Méthode de Paiement *" styleClass="label-title"/>
+                            <ComboBox fx:id="paymentMethodComboBox" promptText="Sélectionnez une méthode"
+                                      prefWidth="800" styleClass="text-field-modern"/>
+                            <Label fx:id="paymentMethodErrorLabel" textFill="red" visible="false"
+                                   styleClass="error-label"/>
+                        </VBox>
+
+                        <!-- Référence -->
+                        <VBox spacing="8">
+                            <Label text="Référence de Transaction *" styleClass="label-title"/>
+                            <TextField fx:id="transactionRefField"
+                                       promptText="Ex: TXN-2024-001 ou Numéro de chèque"
+                                       prefWidth="800" styleClass="text-field-modern"/>
+                            <Label fx:id="transactionRefErrorLabel" textFill="red" visible="false"
+                                   styleClass="error-label"/>
+                        </VBox>
+
+                        <!-- Notes -->
+                        <VBox spacing="8">
+                            <Label text="Notes / Remarques (Optionnel)" styleClass="label-title"/>
+                            <TextArea fx:id="notesArea" promptText="Ajoutez des remarques sur ce paiement..."
+                                      prefRowCount="3" prefWidth="800"
+                                      styleClass="text-field-modern" wrapText="true"/>
+                        </VBox>
+
+                    </VBox>
+
+                    <!-- Message -->
+                    <Label fx:id="messageLabel" visible="false" styleClass="hint"/>
+
+                    <!-- BUTTONS -->
+                    <HBox spacing="12" alignment="CENTER_LEFT">
+                        <Button text="Enregistrer le Paiement" fx:id="submitButton"
+                                onAction="#handleSubmit" styleClass="btn-primary"/>
+                        <Button text="Voir les Investissements" fx:id="viewInvestmentsButton"
+                                onAction="#handleViewInvestments" visible="false" styleClass="btn"/>
+                    </HBox>
+
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+
+</BorderPane>
+

@@ -270,6 +270,167 @@
     -fx-border-width: 0 0 0 4;
 }
 
+/* ── Investment accordion dropdown ─────────────────────────────────────── */
+
+.nav-accordion {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+/* Remove the default Accordion border */
+.nav-accordion > .titled-pane {
+    -fx-background-color: transparent;
+}
+
+/* The header bar of the TitledPane — looks like a nav-button */
+.nav-titled-pane > .title {
+    -fx-background-color: transparent;
+    -fx-background-radius: 18;
+    -fx-padding: 14 20;
+    -fx-cursor: hand;
+}
+
+.nav-titled-pane > .title > .text {
+    -fx-fill: #FFB84D;
+    -fx-font-size: 16px;
+    -fx-font-weight: 800;
+}
+
+/* Arrow indicator — tint gold */
+.nav-titled-pane > .title > .arrow-button > .arrow {
+    -fx-background-color: #FFB84D;
+}
+
+.nav-titled-pane > .title:hover {
+    -fx-background-color: rgba(255, 184, 77, 0.18);
+}
+
+.nav-titled-pane > .title:pressed {
+    -fx-background-color: rgba(255, 184, 77, 0.30);
+}
+
+/* Expanded header gets the active left-border treatment */
+.nav-titled-pane:expanded > .title {
+    -fx-background-color: rgba(255, 184, 77, 0.20);
+    -fx-border-color: #FFB84D;
+    -fx-border-width: 0 0 0 4;
+    -fx-background-radius: 0 18 0 0;
+}
+
+/* Content area — transparent, no extra padding */
+.nav-titled-pane > .content {
+    -fx-background-color: rgba(10, 25, 47, 0.50);
+    -fx-background-radius: 0 0 14 14;
+    -fx-border-color: rgba(255, 184, 77, 0.12);
+    -fx-border-width: 0 0 1 4;
+    -fx-border-radius: 0 0 14 14;
+    -fx-padding: 0;
+}
+
+/* Sub-menu container */
+.nav-submenu {
+    -fx-background-color: transparent;
+}
+
+/* Individual sub-menu buttons */
+.nav-sub-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: rgba(255, 184, 77, 0.80);
+    -fx-font-size: 13px;
+    -fx-font-weight: 700;
+    -fx-padding: 10 16;
+    -fx-background-radius: 10;
+    -fx-alignment: CENTER_LEFT;
+    -fx-cursor: hand;
+}
+
+.nav-sub-button:hover {
+    -fx-background-color: rgba(255, 184, 77, 0.14);
+    -fx-text-fill: #FFD54F;
+}
+
+.nav-sub-button:pressed {
+    -fx-background-color: rgba(255, 184, 77, 0.26);
+}
+
+/* ── Sidebar isolation — beats user-management.css generic .button rule ── *
+ * Any .button inside .sidebar inherits nav-button look, not the generic    *
+ * bordered look from user-management.css.                                   */
+.sidebar .button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #FFB84D;
+    -fx-font-weight: 800;
+    -fx-font-size: 16px;
+    -fx-padding: 16 20;
+    -fx-background-radius: 18;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-alignment: CENTER_LEFT;
+    -fx-cursor: hand;
+}
+
+.sidebar .button:hover {
+    -fx-background-color: rgba(255, 184, 77, 0.18);
+    -fx-text-fill: #FFD54F;
+    -fx-border-color: transparent;
+}
+
+.sidebar .button:pressed {
+    -fx-background-color: rgba(255, 184, 77, 0.30);
+    -fx-border-color: transparent;
+}
+
+/* Active page highlight — applied programmatically by sidebar controllers */
+.sidebar .button.active {
+    -fx-background-color: rgba(255, 184, 77, 0.25);
+    -fx-text-fill: #FFD54F;
+    -fx-border-color: #FFB84D;
+    -fx-border-width: 0 0 0 4;
+    -fx-background-radius: 0 18 18 0;
+}
+
+/* Sub-buttons inside accordion get slightly smaller isolation treatment */
+.sidebar .nav-submenu .button {
+    -fx-font-size: 13px;
+    -fx-padding: 10 16;
+    -fx-background-radius: 10;
+    -fx-text-fill: rgba(255, 184, 77, 0.80);
+}
+
+.sidebar .nav-submenu .button:hover {
+    -fx-background-color: rgba(255, 184, 77, 0.14);
+    -fx-text-fill: #FFD54F;
+}
+
+.sidebar .nav-submenu .button.active {
+    -fx-background-color: rgba(255, 184, 77, 0.22);
+    -fx-text-fill: #FFD54F;
+    -fx-border-color: rgba(255, 184, 77, 0.60);
+    -fx-border-width: 0 0 0 3;
+    -fx-background-radius: 0 10 10 0;
+}
+
+/* Sidebar VBox itself — fixed width, full-height dark panel */
+.sidebar {
+    -fx-background-color: #0D2137;
+    -fx-min-width: 220px;
+    -fx-pref-width: 220px;
+    -fx-max-width: 220px;
+    -fx-border-color: rgba(255, 184, 77, 0.15);
+    -fx-border-width: 0 1 0 0;
+}
+
+.brand-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: 900;
+    -fx-fill: #FFB84D;
+}
+
+.brand-subtitle {
+    -fx-font-size: 11px;
+    -fx-fill: rgba(255, 184, 77, 0.55);
+}
+
 /* Icon button (AI chat) active state */
 .icon-button.active {
     -fx-background-color: rgba(255, 184, 77, 0.25);

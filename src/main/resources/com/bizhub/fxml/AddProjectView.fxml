@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.bizhub.controller.investissement.AddProjectController"
+            stylesheets="@../css/theme.css, @../css/user-management.css">
+
+    <!-- SIDEBAR -->
+    <left>
+        <fx:include fx:id="sidebar" source="sidebar.fxml"/>
+    </left>
+
+    <!-- TOP BAR -->
+    <top>
+        <HBox spacing="12" alignment="CENTER_LEFT" styleClass="topbar">
+            <padding>
+                <Insets top="14" right="16" bottom="14" left="16" />
+            </padding>
+
+            <ImageView fitHeight="40" fitWidth="40" preserveRatio="true">
+                <image>
+                    <Image url="@../images/site-images/logo.png" />
+                </image>
+            </ImageView>
+
+            <VBox spacing="2">
+                <Text text="Projets" styleClass="h1" />
+                <Text text="Créer un nouveau projet d'investissement" styleClass="subtitle" />
+            </VBox>
+
+            <Pane HBox.hgrow="ALWAYS" />
+
+            <Button text="Retour" onAction="#handleCancel" styleClass="btn" />
+        </HBox>
+    </top>
+
+    <!-- MAIN CONTENT -->
+    <center>
+        <ScrollPane fitToWidth="true"
+                    hbarPolicy="NEVER"
+                    vbarPolicy="AS_NEEDED"
+                    style="-fx-background-color: transparent;
+                           -fx-background: transparent;
+                           -fx-border-color: transparent;">
+            <content>
+                <VBox spacing="16">
+                    <padding>
+                        <Insets top="14" right="16" bottom="16" left="16" />
+                    </padding>
+
+                    <!-- CARD -->
+                    <VBox spacing="20" styleClass="card">
+                        <padding>
+                            <Insets top="30" right="40" bottom="30" left="40"/>
+                        </padding>
+
+                        <!-- TITRE DU PROJET -->
+                        <VBox spacing="8">
+                            <Label text="Titre du projet *" styleClass="label-title"/>
+                            <TextField fx:id="titleField" promptText="Ex: Application Mobile Innovante"
+                                       prefWidth="720" styleClass="text-field-modern"/>
+                            <Label fx:id="titleErrorLabel" textFill="red" visible="false"
+                                   styleClass="error-label"/>
+                        </VBox>
+
+                        <!-- DESCRIPTION -->
+                        <VBox spacing="8">
+                            <Label text="Description" styleClass="label-title"/>
+                            <TextArea fx:id="descriptionArea"
+                                      promptText="Décrivez votre projet en détail..."
+                                      prefWidth="720" prefRowCount="4"
+                                      styleClass="text-field-modern" wrapText="true"/>
+                        </VBox>
+
+                        <!-- BUDGET REQUIS -->
+                        <VBox spacing="8">
+                            <Label text="Budget requis *" styleClass="label-title"/>
+                            <HBox spacing="10" alignment="CENTER_LEFT">
+                                <TextField fx:id="requiredBudgetField" promptText="Ex: 50000"
+                                           prefWidth="650" styleClass="text-field-modern"/>
+                                <Label text="TND" styleClass="hint"/>
+                            </HBox>
+                            <Label fx:id="budgetErrorLabel" textFill="red" visible="false"
+                                   styleClass="error-label"/>
+                        </VBox>
+
+                        <!-- STATUT -->
+                        <VBox spacing="8">
+                            <Label text="Statut initial *" styleClass="label-title"/>
+                            <ComboBox fx:id="statusComboBox" promptText="Sélectionnez un statut"
+                                      prefWidth="720" styleClass="text-field-modern"/>
+                            <Label fx:id="statusErrorLabel" textFill="red" visible="false"
+                                   styleClass="error-label"/>
+                        </VBox>
+
+                        <!-- ID STARTUP -->
+                        <VBox spacing="8">
+                            <Label text="ID de la startup *" styleClass="label-title"/>
+                            <TextField fx:id="startupIdField" promptText="Ex: 1"
+                                       prefWidth="720" styleClass="text-field-modern"/>
+                            <Label fx:id="startupErrorLabel" textFill="red" visible="false"
+                                   styleClass="error-label"/>
+                        </VBox>
+
+                    </VBox>
+
+                    <!-- BUTTONS -->
+                    <HBox spacing="12" alignment="CENTER_LEFT">
+                        <Button text="Annuler" onAction="#handleCancel" styleClass="btn"/>
+                        <Button text="Créer le projet" fx:id="submitButton"
+                                onAction="#handleSubmit" styleClass="btn-primary"/>
+                    </HBox>
+
+                    <Label fx:id="messageLabel" visible="false" styleClass="hint"/>
+
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+
+</BorderPane>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.bizhub.controller.investissement.NegotiationListController"
+            stylesheets="@../css/theme.css, @../css/user-management.css">
+
+    <left>
+        <fx:include fx:id="sidebar" source="sidebar.fxml"/>
+    </left>
+
+    <top>
+        <HBox spacing="12" alignment="CENTER_LEFT" styleClass="topbar">
+            <padding><Insets top="14" right="16" bottom="14" left="16"/></padding>
+            <ImageView fitHeight="40" fitWidth="40" preserveRatio="true">
+                <image><Image url="@../images/site-images/logo.png"/></image>
+            </ImageView>
+            <VBox spacing="2">
+                <Text text="Negotiations" styleClass="h1"/>
+                <Text text="Your active and past negotiations" styleClass="subtitle"/>
+            </VBox>
+            <Pane HBox.hgrow="ALWAYS"/>
+            <Button text="Refresh" onAction="#handleRefresh" styleClass="btn"/>
+            <Button text="Back" onAction="#handleBack" styleClass="btn"/>
+        </HBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
+                    style="-fx-background-color: transparent; -fx-background: transparent;">
+            <VBox spacing="16" fillWidth="true">
+                <padding><Insets top="20" right="24" bottom="24" left="24"/></padding>
+
+                <!-- Summary -->
+                <HBox spacing="16" alignment="CENTER_LEFT" styleClass="card">
+                    <VBox spacing="4">
+                        <Text text="Your Negotiations" styleClass="h2"/>
+                        <Label fx:id="summaryLabel" text="Loading..." styleClass="subtitle"/>
+                    </VBox>
+                    <Pane HBox.hgrow="ALWAYS"/>
+                    <Label text="Start a negotiation from the Projects page"
+                           style="-fx-text-fill: rgba(232,169,58,0.5); -fx-font-size: 11px;"/>
+                </HBox>
+
+                <!-- Negotiations List -->
+                <VBox fx:id="negotiationsContainer" spacing="12">
+                    <Label fx:id="emptyLabel" text="Loading negotiations..."
+                           visible="false" wrapText="true"
+                           style="-fx-text-fill: #E8A93A; -fx-font-size: 14px; -fx-padding: 40;"/>
+                </VBox>
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>

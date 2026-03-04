@@ -1,5 +1,6 @@
 package com.bizhub.controller.marketplace;
 
+import com.bizhub.controller.users_avis.user.SidebarController;
 import com.bizhub.model.marketplace.CommandeJoinProduit;
 import com.bizhub.model.marketplace.CommandeRepository;
 import com.bizhub.model.marketplace.ProduitService;
@@ -61,6 +62,9 @@ import java.time.LocalDate;
 public class ProduitServiceController {
 
     private static final Logger LOGGER = Logger.getLogger(ProduitServiceController.class.getName());
+
+    // ── Sidebar ───────────────────────────────────────────────
+    @FXML private SidebarController sidebarController;
 
     // ── Statuts ───────────────────────────────────────────────
     private static final String STATUT_ATTENTE   = "en_attente";
@@ -212,6 +216,7 @@ public class ProduitServiceController {
     // =====================================================
     @FXML
     public void initialize() {
+        if (sidebarController != null) sidebarController.setActivePage("marketplace");
 
         // ── Table produits ────────────────────────────────────
         if (colId        != null) colId.setCellValueFactory(new PropertyValueFactory<>("idProduit"));

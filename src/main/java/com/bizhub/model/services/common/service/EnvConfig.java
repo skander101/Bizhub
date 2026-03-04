@@ -215,4 +215,79 @@ public final class EnvConfig {
     public static String getTwilioFromNumber() {
         return getRequired("TWILIO_FROM_NUMBER");
     }
+
+    // GROQ (AI — shared by AiChat + marketplace AI services)
+    public static String getGroqApiKey() {
+        return getOrDefault("GROQ_API_KEY", "");
+    }
+
+    public static String getGroqModel() {
+        return getOrDefault("GROQ_MODEL", "llama-3.1-8b-instant");
+    }
+
+    public static int getGroqMaxTokens() {
+        return Integer.parseInt(getOrDefault("GROQ_MAX_TOKENS", "512"));
+    }
+
+    // Face++ (facial recognition / verification)
+    public static String getFacePlusPlusApiKey() {
+        return getOrDefault("FACEPP_API_KEY", "");
+    }
+
+    public static String getFacePlusPlusApiSecret() {
+        return getOrDefault("FACEPP_API_SECRET", "");
+    }
+
+    // ── Investment module keys ─────────────────────────────────────────────
+    // These are read via ApiConfig (which uses EnvLoader), but typed getters
+    // are provided here as a single reference for the full .env key map.
+
+    /** Stripe secret key for the Investment module (separate test account). */
+    public static String getStripeSecretKeyInvest() {
+        return getOrDefault("STRIPE_SECRET_KEY_Invest", "");
+    }
+
+    /** OpenRouter AI key (negotiation copilot, pitch analysis, smart search). */
+    public static String getOpenRouterApiKey() {
+        return getOrDefault("OPENROUTER_API_KEY", "");
+    }
+
+    /** Yousign API key (digital contract signatures). */
+    public static String getYousignApiKey() {
+        return getOrDefault("YOUSIGN_API_KEY", "");
+    }
+
+    /**
+     * Override email for Yousign signers and outgoing deal emails (testing only).
+     * Returns null if not set.
+     */
+    public static String getEmailOverride() {
+        String v = getOrDefault("EMAIL_OVERRIDE", "");
+        return (v == null || v.isBlank()) ? null : v;
+    }
+
+    /** GNews API key (business news feed for investment analytics). */
+    public static String getGnewsApiKey() {
+        return getOrDefault("GNEWS_API_KEY", "");
+    }
+
+    /** NewsAPI key (optional secondary news source). */
+    public static String getNewsApiKey() {
+        return getOrDefault("NEWSAPI_API_KEY", "");
+    }
+
+    /** Alpha Vantage key (market/stock data). */
+    public static String getAlphaVantageKey() {
+        return getOrDefault("ALPHA_VANTAGE_KEY", "");
+    }
+
+    /** Gmail SMTP username (deal confirmation emails). */
+    public static String getSmtpUsername() {
+        return getOrDefault("SMTP_USERNAME", "");
+    }
+
+    /** Gmail SMTP app password. */
+    public static String getSmtpAppPassword() {
+        return getOrDefault("SMTP_APP_PASSWORD", "");
+    }
 }

@@ -15,7 +15,7 @@
 
     <!-- ══════════════════════ SIDEBAR ══════════════════════ -->
     <left>
-        <fx:include source="user-sidebar.fxml"/>
+        <fx:include fx:id="sidebar" source="sidebar.fxml"/>
     </left>
 
     <!-- ══════════════════════ TOPBAR ══════════════════════ -->

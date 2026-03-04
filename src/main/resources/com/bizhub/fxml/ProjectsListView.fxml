@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.bizhub.controller.investissement.ProjectsListController"
+            stylesheets="@../css/theme.css, @../css/user-management.css">
+
+    <!-- SIDEBAR -->
+    <left>
+        <fx:include fx:id="sidebar" source="sidebar.fxml"/>
+    </left>
+
+    <!-- TOP BAR -->
+    <top>
+        <HBox spacing="12" alignment="CENTER_LEFT" styleClass="topbar">
+            <padding>
+                <Insets top="14" right="16" bottom="14" left="16"/>
+            </padding>
+
+            <ImageView fitHeight="40" fitWidth="40" preserveRatio="true">
+                <image>
+                    <Image url="@../images/site-images/logo.png"/>
+                </image>
+            </ImageView>
+
+            <VBox spacing="2">
+                <Text text="Projets" styleClass="h1"/>
+                <Text text="Liste des projets d'investissement" styleClass="subtitle"/>
+            </VBox>
+
+            <Pane HBox.hgrow="ALWAYS"/>
+
+            <Button text="Retour"
+                    onAction="#handleBack"
+                    styleClass="btn"/>
+        </HBox>
+    </top>
+
+    <!-- MAIN CONTENT -->
+    <center>
+        <ScrollPane fx:id="scrollPane"
+                    fitToWidth="true"
+                    hbarPolicy="NEVER"
+                    vbarPolicy="AS_NEEDED"
+                    maxWidth="Infinity"
+                    maxHeight="Infinity"
+                    prefWidth="Infinity"
+                    prefHeight="Infinity"
+                    style="-fx-background-color: transparent;
+                           -fx-background: transparent;
+                           -fx-border-color: transparent;">
+            <content>
+                <VBox spacing="16" fillWidth="true">
+                    <padding>
+                        <Insets top="14" right="16" bottom="16" left="16"/>
+                    </padding>
+
+            <!-- HEADER CARD -->
+            <HBox spacing="20"
+                  alignment="CENTER_LEFT"
+                  styleClass="card">
+                <VBox spacing="5">
+                    <Text text="Gestion des Projets"
+                          styleClass="h2"/>
+                    <Label fx:id="summaryLabel"
+                           text="Chargement..."
+                           styleClass="subtitle"/>
+                </VBox>
+
+                <Pane HBox.hgrow="ALWAYS"/>
+
+                <Button text="➕ Nouveau Projet"
+                        onAction="#handleNewProject"
+                        styleClass="btn-primary"/>
+
+                <Button text="🤖 Recommandations IA"
+                        onAction="#handleAIRecommendations"
+                        styleClass="btn"/>
+
+                <Button text="🔄 Actualiser"
+                        onAction="#handleRefresh"
+                        styleClass="btn"/>
+            </HBox>
+
+            <!-- FILTER BAR -->
+            <HBox spacing="15"
+                  alignment="CENTER_LEFT"
+                  styleClass="card">
+
+                <TextField fx:id="searchField"
+                           promptText="🔍 Rechercher par titre, description..."
+                           prefWidth="400"
+                           styleClass="text-field-modern"/>
+
+                <ComboBox fx:id="statusFilterComboBox"
+                          promptText="Filtrer par statut"
+                          prefWidth="250"
+                          styleClass="text-field-modern"/>
+
+                <Button text="Réinitialiser"
+                        onAction="#handleResetFilters"
+                        styleClass="btn"/>
+            </HBox>
+
+                    <VBox fx:id="projectsContainer"
+                          spacing="20"
+                          fillWidth="true"
+                          style="-fx-background-color: transparent;">
+
+                        <padding>
+                            <Insets top="5" right="5" bottom="5" left="5"/>
+                        </padding>
+
+                        <Label fx:id="emptyLabel"
+                               text="Aucun projet trouvé"
+                               visible="false"
+                               styleClass="subtitle"
+                               style="-fx-padding: 40;
+                                      -fx-text-fill: #7f8c8d;"/>
+                    </VBox>
+
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+
+</BorderPane>

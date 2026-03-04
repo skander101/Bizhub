@@ -1,5 +1,6 @@
 package com.bizhub.controller.marketplace;
 
+import com.bizhub.controller.users_avis.user.SidebarController;
 import com.bizhub.model.marketplace.Commande;
 import com.bizhub.model.marketplace.CommandeJoinProduit;
 import com.bizhub.model.marketplace.CommandeRepository;
@@ -55,6 +56,7 @@ public class CommandeController {
     private static final String BORDER_DEF = "";
 
     // ── FXML Layout ──────────────────────────────────────
+    @FXML private SidebarController sidebarController;
     @FXML private VBox boxAdd;
     @FXML private VBox boxManage;
     @FXML private Text titleForm;
@@ -147,6 +149,7 @@ public class CommandeController {
 
     @FXML
     public void initialize() {
+        if (sidebarController != null) sidebarController.setActivePage("marketplace");
 
         // Table bindings
         if (colIdCommande != null) colIdCommande.setCellValueFactory(new PropertyValueFactory<>("idCommande"));

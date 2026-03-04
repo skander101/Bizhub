@@ -35,7 +35,8 @@ public class NavigationService {
         AI_CHAT,
         MARKETPLACE,
         PANIER,
-        TRACKING
+        TRACKING,
+        INVESTISSEMENTS
     }
 
     public static void setActiveNav(Node sidebarRoot, ActiveNav activeNav) {
@@ -58,6 +59,7 @@ public class NavigationService {
                 case MARKETPLACE -> t.contains("marketplace");
                 case PANIER -> t.contains("panier") || t.contains("cart");
                 case TRACKING -> t.contains("tracking") || t.contains("suivi");
+                case INVESTISSEMENTS -> t.contains("investissement");
             };
 
             if (match) {
@@ -151,6 +153,49 @@ public class NavigationService {
 
     public void goToTracking() {
         loadIntoStage("/com/bizhub/fxml/commande-tracking.fxml", 1300, 820);
+    }
+
+    // ====== INVESTISSEMENTS ======
+    public void goToInvestissements() {
+        loadIntoStage("/com/bizhub/fxml/InvestmentsListView.fxml", 1300, 820);
+    }
+
+    public void goToAddInvestissement() {
+        loadIntoStage("/com/bizhub/fxml/AddInvestistmentView.fxml", 1200, 760);
+    }
+
+    public void goToAddPayment(int investmentId) {
+        loadIntoStage("/com/bizhub/fxml/AddPaymentView.fxml", 1200, 760);
+    }
+
+    public void goToProjects() {
+        loadIntoStage("/com/bizhub/fxml/ProjectsListView.fxml", 1400, 900);
+    }
+
+    public void goToAddProject() {
+        loadIntoStage("/com/bizhub/fxml/AddProjectView.fxml", 1000, 700);
+    }
+
+    public void goToNegotiations() {
+        loadIntoStage("/com/bizhub/fxml/NegotiationListView.fxml", 1300, 820);
+    }
+
+    public void goToPortfolioAdvisor() {
+        loadIntoStage("/com/bizhub/fxml/PortfolioAdvisorView.fxml", 1300, 820);
+    }
+
+    public void goToAnalyticsDashboard() {
+        loadIntoStage("/com/bizhub/fxml/AnalyticsDashboardView.fxml", 1400, 900);
+    }
+
+    public void goToSmartSearch() {
+        loadIntoStage("/com/bizhub/fxml/SmartSearchView.fxml", 1200, 760);
+    }
+
+    /** Generic loader for any investment FXML not covered by a dedicated method. */
+    public void loadInvestFxml(String fxmlPath, String title) {
+        loadIntoStage(fxmlPath, 1300, 820);
+        if (title != null && !title.isBlank()) stage.setTitle(title);
     }
 
     private void loadIntoStage(String fxmlPath, double w, double h) {

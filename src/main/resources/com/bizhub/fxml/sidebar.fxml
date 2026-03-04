@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.bizhub.controller.users_avis.user.SidebarController"
+      spacing="12"
+      styleClass="sidebar">
+
+    <padding>
+        <Insets top="16" right="12" bottom="16" left="12" />
+    </padding>
+
+    <!-- Logo and Brand -->
+    <HBox spacing="12" alignment="CENTER_LEFT" styleClass="logo-container">
+        <ImageView fitWidth="42" fitHeight="42" preserveRatio="true" styleClass="logo-image">
+            <image>
+                <Image url="@../images/site-images/logo.png" />
+            </image>
+        </ImageView>
+        <VBox spacing="2">
+            <Text text="BizHub" styleClass="brand-title" />
+            <Text fx:id="subtitleText" text="Dashboard" styleClass="brand-subtitle" />
+        </VBox>
+    </HBox>
+
+    <Separator opacity="0.25" />
+
+    <!-- ── Admin-only buttons (hidden for regular users) ── -->
+    <Button fx:id="goDashboardBtn" text="Dashboard" onAction="#goDashboard" styleClass="nav-button" maxWidth="Infinity" visible="false" managed="false" />
+    <Button fx:id="goUsersBtn" text="Users" onAction="#goUsers" styleClass="nav-button" maxWidth="Infinity" visible="false" managed="false" />
+
+    <!-- ── Shared buttons (visible for everyone) ── -->
+    <Button fx:id="goProfileBtn" text="My Profile" onAction="#goProfile" styleClass="nav-button" maxWidth="Infinity" visible="false" managed="false" />
+    <Button fx:id="goFormationsBtn" text="Formations" onAction="#goFormations" styleClass="nav-button" maxWidth="Infinity" />
+    <Button fx:id="goReviewsBtn" text="Reviews" onAction="#goReviews" styleClass="nav-button" maxWidth="Infinity" />
+    <Button fx:id="goMarketplaceBtn" text="Marketplace" onAction="#goToMarketplaceHome" styleClass="nav-button" maxWidth="Infinity" visible="false" managed="false" />
+
+    <!-- ── Investments dropdown (visible only for investisseur / admin) ── -->
+    <Accordion fx:id="investAccordion" styleClass="nav-accordion" visible="false" managed="false">
+        <panes>
+            <TitledPane fx:id="investPane" text="💼 Investments" styleClass="nav-titled-pane" animated="true">
+                <VBox spacing="2" styleClass="nav-submenu">
+                    <padding><Insets top="4" right="4" bottom="4" left="12"/></padding>
+                    <Button text="📋 Investments List"   onAction="#goInvestissements"      styleClass="nav-sub-button" maxWidth="Infinity" />
+                    <Button text="➕ Add Investment"     onAction="#goAddInvestissement"     styleClass="nav-sub-button" maxWidth="Infinity" />
+                    <Button text="📁 Projects"           onAction="#goProjects"              styleClass="nav-sub-button" maxWidth="Infinity" />
+                    <Button text="➕ Add Project"        onAction="#goAddProject"            styleClass="nav-sub-button" maxWidth="Infinity" />
+                    <Button text="🤝 Negotiations"       onAction="#goNegotiations"          styleClass="nav-sub-button" maxWidth="Infinity" />
+                    <Button text="🔮 Portfolio Advisor"  onAction="#goPortfolioAdvisor"      styleClass="nav-sub-button" maxWidth="Infinity" />
+                    <Button text="📊 Analytics"          onAction="#goAnalyticsDashboard"    styleClass="nav-sub-button" maxWidth="Infinity" />
+                    <Button text="🔍 Smart Search"       onAction="#goSmartSearch"           styleClass="nav-sub-button" maxWidth="Infinity" />
+                    <Button text="🤖 AI Demo"            onAction="#goAiDemo"                styleClass="nav-sub-button" maxWidth="Infinity" />
+                </VBox>
+            </TitledPane>
+        </panes>
+    </Accordion>
+
+    <Pane VBox.vgrow="ALWAYS" />
+
+    <HBox spacing="10" alignment="CENTER">
+        <Button fx:id="aiChatBtn" onAction="#goAiChat" styleClass="icon-button" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-padding: 8;">
+            <graphic>
+                <ImageView fitWidth="32" fitHeight="32" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/site-images/robotic-logo.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+            <tooltip>
+                <Tooltip text="AI Assistant" />
+            </tooltip>
+        </Button>
+        <Button text="Logout" onAction="#logout" styleClass="danger-button" HBox.hgrow="ALWAYS" />
+    </HBox>
+
+</VBox>
+

@@ -1,5 +1,6 @@
 package com.bizhub.controller.marketplace;
 
+import com.bizhub.controller.users_avis.user.SidebarController;
 import com.bizhub.model.marketplace.CommandeJoinProduit;
 import com.bizhub.model.services.common.service.AppSession;
 import com.bizhub.model.services.common.service.NavigationService;
@@ -31,6 +32,8 @@ public class CommandeTrackingController {
     private static final Logger LOGGER = Logger.getLogger(CommandeTrackingController.class.getName());
     private static final DateTimeFormatter FMT = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
+    @FXML private SidebarController sidebarController;
+
     // Liste & filtres
     @FXML private VBox              boxCommandes;
     @FXML private ProgressIndicator spinner;
@@ -54,6 +57,7 @@ public class CommandeTrackingController {
     // =========================================================================
     @FXML
     public void initialize() {
+        if (sidebarController != null) sidebarController.setActivePage("marketplace");
 
         if (cbFilterStatut != null) {
             cbFilterStatut.getItems().addAll("Tous","en_attente","confirmee","livree","annule");

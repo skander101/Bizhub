@@ -32,6 +32,7 @@ public class UserManagementController {
 
     private static final int PAGE_SIZE = 20;
 
+    @FXML private SidebarController sidebarController;
     @FXML private BorderPane root;
     @FXML private HBox topbar;
 
@@ -53,26 +54,12 @@ public class UserManagementController {
 
     @FXML
     public void initialize() {
+        if (sidebarController != null) sidebarController.setActivePage("users");
         // Add user profile to topbar
         if (topbar != null) {
             topbar.getChildren().add(TopbarProfileHelper.createProfileBox());
         }
 
-        // Ensure correct sidebar for admin vs non-admin
-        if (AppSession.isAdmin()) {
-            try {
-                Parent n = FXMLLoader.load(getClass().getResource("/com/bizhub/fxml/admin-sidebar.fxml"));
-                if (root != null) root.setLeft(n);
-                // highlight current page in sidebar
-                NavigationService.setActiveNav(n, NavigationService.ActiveNav.USERS);
-            } catch (Exception ignored) {
-            }
-        } else {
-            // highlight for non-admin sidebar if present
-            if (root != null && root.getLeft() != null) {
-                NavigationService.setActiveNav(root.getLeft(), NavigationService.ActiveNav.USERS);
-            }
-        }
 
         usersList.setCellFactory(lv -> {
             UserCardCell cell = new UserCardCell(selectedUserIds);

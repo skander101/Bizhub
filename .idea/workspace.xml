@@ -5,27 +5,79 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a1252e09-1d16-4d21-a8b4-2f9792ee7d60" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/ENVCONFIG_FIX_SUMMARY.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MARKETPLACE_FXML_REPLACEMENT.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MARKETPLACE_MERGE_CHECKLIST.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MARKETPLACE_MERGE_REPORT.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MERGE_INDEX.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/marketplace/InvestorInsightsApiServer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/model/marketplace/InvestorInsightResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/model/services/ai/AiInsightsService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/model/services/ai/OpenAiClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/model/services/common/config/Env.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/investissement/AddInvestmentController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/investissement/AddPaymentController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/investissement/InvestmentsListController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/users_avis/user/SidebarController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/model/investissement/Deal.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/model/investissement/InvestissementUser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/model/investissement/Investment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/model/investissement/Negotiation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/model/investissement/NegotiationMessage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/model/investissement/Payment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/model/investissement/Project.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/model/investissement/ProjectItem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/model/services/common/DB/NonClosingConnectionWrapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/model/services/common/config/ApiConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/model/services/investissement/IInvestmentService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/model/services/investissement/IPaymentService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/model/services/investissement/InvestmentServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/model/services/investissement/PaymentServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/bizhub/fxml/AddInvestistmentView.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/bizhub/fxml/AddPaymentView.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/bizhub/fxml/InvestmentsListView.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/bizhub/fxml/sidebar.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bizhub/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/AiChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/AiChatController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/marketplace/CommandeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/marketplace/CommandeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/marketplace/CommandeTrackingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/marketplace/CommandeTrackingController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/marketplace/PanierController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/marketplace/PanierController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/marketplace/ProduitServiceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/marketplace/ProduitServiceController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/users_avis/user/UserSidebarController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/users_avis/user/UserSidebarController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/users_avis/formation/FormationManagementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/users_avis/formation/FormationManagementController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/users_avis/review/ReviewManagementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/users_avis/review/ReviewManagementController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/users_avis/user/AdminDashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/users_avis/user/AdminDashboardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/users_avis/user/AdminSidebarController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/users_avis/user/UserManagementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/users_avis/user/UserManagementController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/users_avis/user/UserProfileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/users_avis/user/UserProfileController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bizhub/controller/users_avis/user/UserSidebarController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bizhub/model/services/common/DB/MyDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/model/services/common/DB/MyDatabase.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/bizhub/model/services/common/service/EnvConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/model/services/common/service/EnvConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/bizhub/model/services/common/service/NavigationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bizhub/model/services/common/service/NavigationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/bizhub/css/theme.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/bizhub/css/theme.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/bizhub/fxml/admin-dashboard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/bizhub/fxml/admin-dashboard.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/bizhub/fxml/admin-sidebar.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/bizhub/fxml/ai-chat.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/bizhub/fxml/ai-chat.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/bizhub/fxml/commande-tracking.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/bizhub/fxml/commande-tracking.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/bizhub/fxml/commande.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/bizhub/fxml/commande.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/bizhub/fxml/formations.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/bizhub/fxml/formations.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/bizhub/fxml/panier.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/bizhub/fxml/panier.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/bizhub/fxml/produit_service.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/bizhub/fxml/produit_service.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/bizhub/fxml/user-sidebar.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/bizhub/fxml/user-sidebar.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/bizhub/fxml/reviews-list.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/bizhub/fxml/reviews-list.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/bizhub/fxml/user-management.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/bizhub/fxml/user-management.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/bizhub/fxml/user-profile.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/bizhub/fxml/user-profile.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/bizhub/fxml/user-sidebar.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/formation/FormationManagementController$FormationCardCell.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/formation/FormationManagementController$FormationCardCell.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/formation/FormationManagementController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/formation/FormationManagementController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/review/ReviewManagementController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/review/ReviewManagementController$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/review/ReviewManagementController$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/review/ReviewManagementController$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/review/ReviewManagementController$ReviewCardCell.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/review/ReviewManagementController$ReviewCardCell.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/review/ReviewManagementController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/review/ReviewManagementController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/user/AdminDashboardController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/user/AdminDashboardController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/user/AdminSidebarController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/user/AdminSidebarController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/user/UserManagementController$UserCardCell.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/user/UserManagementController$UserCardCell.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/user/UserManagementController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/user/UserManagementController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/user/UserProfileController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/user/UserProfileController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/user/UserSidebarController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/controller/users_avis/user/UserSidebarController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/css/theme.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/css/theme.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/fxml/admin-dashboard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/fxml/admin-dashboard.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/fxml/admin-sidebar.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/fxml/admin-sidebar.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/fxml/formations.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/fxml/formations.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/fxml/reviews-list.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/fxml/reviews-list.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/fxml/user-management.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/fxml/user-management.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/fxml/user-profile.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/fxml/user-profile.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/fxml/user-sidebar.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/fxml/user-sidebar.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/model/services/common/DB/MyDatabase.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/model/services/common/DB/MyDatabase.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/model/services/common/service/NavigationService$ActiveNav.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/model/services/common/service/NavigationService$ActiveNav.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/bizhub/model/services/common/service/NavigationService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bizhub/model/services/common/service/NavigationService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
@@ -43,8 +95,8 @@
   </component>
   <component name="CopilotUserSelectedModel">
     <selectedModels>
-      <entry key="chat-panel" value="Claude Haiku 4.5" />
-      <entry key="agent-panel" value="Claude Haiku 4.5" />
+      <entry key="chat-panel" value="Claude Opus 4.6" />
+      <entry key="agent-panel" value="Claude Opus 4.6" />
     </selectedModels>
   </component>
   <component name="Git.Settings">
@@ -75,20 +127,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Maven.workshopJDBC-3a27 [clean].executor": "Run",
-    "Maven.workshopJDBC-3a27 [compile].executor": "Run",
-    "Maven.workshopJDBC-3a27 [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.MCP Project settings loaded": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Maven.workshopJDBC-3a27 [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.workshopJDBC-3a27 [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.workshopJDBC-3a27 [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.workshopJDBC-3a27 [org.openjfx:javafx-maven-plugin:0.0.8:run].executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>

@@ -96,28 +96,18 @@ public class UserProfileController {
 
     @FXML private Button generateAiBtn;
     @FXML private ProgressIndicator aiProgress;
+    @FXML private SidebarController sidebarController;
 
     private User me;
 
     @FXML
     public void initialize() {
+        if (sidebarController != null) sidebarController.setActivePage("profile");
         // Add user profile to topbar
         if (topbar != null) {
             topbar.getChildren().add(TopbarProfileHelper.createProfileBox());
         }
 
-        if (AppSession.isAdmin()) {
-            try {
-                Parent n = FXMLLoader.load(getClass().getResource("/com/bizhub/fxml/admin-sidebar.fxml"));
-                if (root != null) root.setLeft(n);
-                NavigationService.setActiveNav(n, NavigationService.ActiveNav.PROFILE);
-            } catch (Exception ignored) {
-            }
-        } else {
-            if (root != null && root.getLeft() != null) {
-                NavigationService.setActiveNav(root.getLeft(), NavigationService.ActiveNav.PROFILE);
-            }
-        }
 
         me = AppSession.getCurrentUser();
         if (me == null) return;

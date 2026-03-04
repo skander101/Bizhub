@@ -11,7 +11,7 @@
         fx:controller="com.bizhub.controller.marketplace.ProduitServiceController">
     <!-- LEFT : Sidebar -->
     <left>
-        <fx:include source="user-sidebar.fxml"/>
+        <fx:include fx:id="sidebar" source="sidebar.fxml"/>
     </left>
     <!-- TOP : Topbar -->
     <top>
