@@ -705,15 +705,15 @@ public class ShowPostsController {
             };
 
             btnFactCheck.setOnAction(e -> runAI.accept(() ->
-                    geminiService.factCheck(post.getTitle(), post.getContent())));
+                    geminiService.factCheck(post.getTitle(), post.getContent(), post.getMediaUrl())));
             btnSummarize.setOnAction(e -> runAI.accept(() ->
-                    geminiService.summarize(post.getTitle(), post.getContent())));
+                    geminiService.summarize(post.getTitle(), post.getContent(), post.getMediaUrl())));
             btnTopics.setOnAction(e -> runAI.accept(() ->
-                    geminiService.suggestTopics(post.getTitle(), post.getContent())));
+                    geminiService.suggestTopics(post.getTitle(), post.getContent(), post.getMediaUrl())));
             btnAsk.setOnAction(e -> {
                 String q = questionField.getText().trim();
                 if (!q.isEmpty()) runAI.accept(() ->
-                        geminiService.askAboutPost(post.getTitle(), post.getContent(), q));
+                        geminiService.askAboutPost(post.getTitle(), post.getContent(), post.getMediaUrl(), q));
             });
             questionField.setOnAction(e -> btnAsk.fire());
 
