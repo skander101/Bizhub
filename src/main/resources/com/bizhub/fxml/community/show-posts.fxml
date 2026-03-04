@@ -21,7 +21,7 @@
         <HBox fx:id="topbar" spacing="12" alignment="CENTER_LEFT" styleClass="topbar">
             <padding><Insets top="14" right="16" bottom="14" left="16"/></padding>
             <ImageView fitHeight="40" fitWidth="40" pickOnBounds="true" preserveRatio="true">
-                <image><Image url="@../../images/site-images/logo.png"/></image>
+                <image><Image url="@../images/site-images/logo.png"/></image>
             </ImageView>
             <VBox spacing="2">
                 <Text text="Community" styleClass="h1"/>
@@ -44,14 +44,29 @@
                 <VBox spacing="14" HBox.hgrow="ALWAYS">
 
                     <!-- Action bar -->
-                    <HBox spacing="10" alignment="CENTER_LEFT" styleClass="card"
-                          style="-fx-padding:10 14;">
-                        <Button fx:id="newPostBtn" text="✏  Write a Post"
-                                onAction="#onShowAddForm" styleClass="btn-primary"/>
-                        <Pane HBox.hgrow="ALWAYS"/>
-                        <Label text="Sort by:" style="-fx-text-fill:#FFB84D;"/>
-                        <ComboBox fx:id="sortCombo" prefWidth="140"/>
-                    </HBox>
+                    <VBox spacing="8" styleClass="card" style="-fx-padding:12 14;">
+
+                        <!-- Row 1: Write post + Search -->
+                        <HBox spacing="10" alignment="CENTER_LEFT">
+                            <Button fx:id="newPostBtn" text="✏  Write a Post"
+                                    onAction="#onShowAddForm" styleClass="btn-primary"/>
+                            <Pane HBox.hgrow="ALWAYS"/>
+                            <TextField fx:id="searchField" promptText="🔍  Search posts..."
+                                       prefWidth="220"
+                                       style="-fx-background-color:#1A3352;-fx-text-fill:white;-fx-prompt-text-fill:#607A93;-fx-background-radius:8;-fx-border-radius:8;-fx-border-color:#2A4A6F;-fx-padding:6 10;"/>
+                        </HBox>
+
+                        <!-- Row 2: Filters -->
+                        <HBox spacing="10" alignment="CENTER_LEFT">
+                            <Label text="Sort:" style="-fx-text-fill:#FFB84D;-fx-font-size:12px;"/>
+                            <ComboBox fx:id="sortCombo" prefWidth="150"/>
+                            <Label text="Category:" style="-fx-text-fill:#FFB84D;-fx-font-size:12px;"/>
+                            <ComboBox fx:id="filterCategoryCombo" prefWidth="130"/>
+                            <Pane HBox.hgrow="ALWAYS"/>
+                            <Button text="✕ Clear" onAction="#onClearFilters"
+                                    style="-fx-background-color:transparent;-fx-text-fill:#607A93;-fx-font-size:12px;-fx-cursor:hand;-fx-border-color:#2A4A6F;-fx-border-radius:6;-fx-background-radius:6;-fx-padding:4 10;"/>
+                        </HBox>
+                    </VBox>
 
                     <!-- Posts feed (each post is a card rendered in cell factory) -->
                     <ListView fx:id="postsList" VBox.vgrow="ALWAYS" styleClass="cards-list"/>

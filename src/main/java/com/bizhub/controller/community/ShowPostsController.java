@@ -19,6 +19,7 @@ import java.io.File;
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ShowPostsController {
 
@@ -31,6 +32,11 @@ public class ShowPostsController {
     // Feed
     @FXML private ListView<Post> postsList;
     @FXML private ComboBox<String> sortCombo;
+    @FXML private TextField searchField;
+    @FXML private ComboBox<String> filterCategoryCombo;
+
+    // All posts cache for filtering
+    private List<Post> allPosts = new java.util.ArrayList<>();
 
     // Inline post form
     @FXML private VBox formPanel;
@@ -82,18 +88,33 @@ public class ShowPostsController {
 
     @FXML
     public void initialize() {
-        // Setup combos
+        // Post form category combo
         categoryCombo.getItems().addAll("General", "Business", "Tech", "Investment", "Events", "Other");
         categoryCombo.setValue("General");
 
-        sortCombo.getItems().addAll("Newest First", "Oldest First");
+        // Sort options
+        sortCombo.getItems().addAll(
+                "Newest First",
+                "Oldest First",
+                "Title A → Z",
+                "Title Z → A",
+                "Most Commented"
+        );
         sortCombo.setValue("Newest First");
-        sortCombo.setOnAction(e -> refreshPosts());
+        sortCombo.setOnAction(e -> applyFilters());
 
-        // Posts list cell factory — social card style
+        // Filter by category
+        filterCategoryCombo.getItems().addAll(
+                "All Categories", "General", "Business", "Tech", "Investment", "Events", "Other"
+        );
+        filterCategoryCombo.setValue("All Categories");
+        filterCategoryCombo.setOnAction(e -> applyFilters());
+
+        // Live search — filters as user types
+        searchField.textProperty().addListener((obs, oldVal, newVal) -> applyFilters());
+
+        // Cell factories
         postsList.setCellFactory(lv -> new PostCard());
-
-        // Comments list cell factory
         commentsList.setCellFactory(lv -> new CommentCard());
 
         refreshPosts();
@@ -316,14 +337,75 @@ public class ShowPostsController {
 
     public void refreshPosts() {
         try {
-            List<Post> posts = postService.findAll();
-            if ("Oldest First".equals(sortCombo.getValue())) {
-                java.util.Collections.reverse(posts);
-            }
-            postsList.setItems(FXCollections.observableArrayList(posts));
+            allPosts = postService.findAll();
+            applyFilters();
         } catch (SQLException e) {
             showInlineError("Error loading posts: " + e.getMessage());
         }
+    }
+
+    /** Applies search text + category filter + sort to allPosts and updates the ListView */
+    private void applyFilters() {
+        String search = searchField != null && searchField.getText() != null
+                ? searchField.getText().trim().toLowerCase() : "";
+        String category = filterCategoryCombo != null
+                ? filterCategoryCombo.getValue() : "All Categories";
+        String sort = sortCombo != null ? sortCombo.getValue() : "Newest First";
+
+        List<Post> filtered = allPosts.stream()
+                .filter(p -> {
+                    // Search filter — checks title, content and author
+                    if (!search.isEmpty()) {
+                        boolean matchTitle   = p.getTitle()   != null && p.getTitle().toLowerCase().contains(search);
+                        boolean matchContent = p.getContent() != null && p.getContent().toLowerCase().contains(search);
+                        boolean matchAuthor  = p.getAuthorName() != null && p.getAuthorName().toLowerCase().contains(search);
+                        if (!matchTitle && !matchContent && !matchAuthor) return false;
+                    }
+                    // Category filter
+                    if (category != null && !"All Categories".equals(category)) {
+                        if (!category.equals(p.getCategory())) return false;
+                    }
+                    return true;
+                })
+                .collect(java.util.stream.Collectors.toList());
+
+        // Sort
+        if ("Oldest First".equals(sort)) {
+            filtered.sort(java.util.Comparator.comparing(
+                    Post::getCreatedAt, java.util.Comparator.nullsLast(java.util.Comparator.naturalOrder())));
+        } else if ("Title A → Z".equals(sort)) {
+            filtered.sort(java.util.Comparator.comparing(
+                    p -> p.getTitle() != null ? p.getTitle().toLowerCase() : ""));
+        } else if ("Title Z → A".equals(sort)) {
+            filtered.sort((a, b) -> {
+                String ta = a.getTitle() != null ? a.getTitle().toLowerCase() : "";
+                String tb = b.getTitle() != null ? b.getTitle().toLowerCase() : "";
+                return tb.compareTo(ta);
+            });
+        } else if ("Most Commented".equals(sort)) {
+            // Sort by comment count — fetch counts
+            filtered.sort((a, b) -> {
+                try {
+                    int ca = commentService.findByPostId(a.getPostId()).size();
+                    int cb = commentService.findByPostId(b.getPostId()).size();
+                    return Integer.compare(cb, ca);
+                } catch (SQLException ex) { return 0; }
+            });
+        } else {
+            // Default: Newest First
+            filtered.sort(java.util.Comparator.comparing(
+                    Post::getCreatedAt, java.util.Comparator.nullsLast(java.util.Comparator.reverseOrder())));
+        }
+
+        postsList.setItems(FXCollections.observableArrayList(filtered));
+    }
+
+    @FXML
+    public void onClearFilters() {
+        searchField.clear();
+        filterCategoryCombo.setValue("All Categories");
+        sortCombo.setValue("Newest First");
+        applyFilters();
     }
 
     // ==================== DELETE CONFIRMATION OVERLAY ====================
