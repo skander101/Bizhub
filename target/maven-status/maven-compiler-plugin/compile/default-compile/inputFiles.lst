@@ -10,8 +10,10 @@
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/investissement/DealService.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/investissement/AI/RecommendationEngine.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/investissement/InvestmentServiceImpl.java
+/home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/controller/users_avis/user/ForgotPasswordController.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/common/config/ApiConfig.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/marketplace/payment/TestStripe.java
+/home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/controller/users_avis/user/UserSidebarController.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/controller/users_avis/user/SignupController.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/investissement/AI/StartupEnrichmentService.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/common/service/CloudflareAiService.java
@@ -25,6 +27,7 @@
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/controller/investissement/NegotiationController.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/investissement/EmailService.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/common/service/InfobipService.java
+/home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/controller/users_avis/user/AdminSidebarController.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/investissement/AI/DueDiligenceAgent.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/controller/users_avis/formation/FormationManagementController.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/user_avis/review/ReviewService.java
@@ -42,6 +45,7 @@
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/ai/AiInsightsService.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/controller/marketplace/StripeWebhookServer.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/controller/investissement/AddInvestmentController.java
+/home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/community/post/Post.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/controller/investissement/ProjectsListController.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/common/service/AppSession.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/users_avis/review/Review.java
@@ -54,6 +58,7 @@
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/marketplace/ProduitService.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/controller/investissement/SmartSearchController.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/controller/investissement/NegotiationListController.java
+/home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/community/comment/Comment.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/marketplace/ProduitServiceRepository.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/investissement/AlphaVantageService.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/marketplace/CommandeService.java
@@ -76,12 +81,16 @@
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/users_avis/user/User.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/investissement/ChartDataService.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/controller/users_avis/formation/FormationDetailsController.java
+/home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/community/geo/GeoLocationService.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/common/DB/MyDatabase.java
+/home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/community/comment/CommentService.java
+/home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/community/ai/GeminiService.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/common/ui/toastUtil.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/common/config/EnvLoader.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/common/service/Services.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/investissement/AI/DueDiligenceReportPDF.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/marketplace/Commande.java
+/home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/controller/community/ShowPostsController.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/controller/investissement/AddPaymentController.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/marketplace/InvestorStatsService.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/controller/investissement/AddProjectController.java
@@ -91,6 +100,7 @@
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/common/service/AiNavigationBotService.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/investissement/AI/AIIntegrationService.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/common/service/ReportService.java
+/home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/community/reaction/ReactionService.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/common/service/FaceDetectionResult.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/controller/marketplace/PanierController.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/marketplace/CommandePriorityEngine.java
@@ -112,6 +122,7 @@
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/common/service/TotpService.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/marketplace/payment/PaymentProvider.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/investissement/Investment.java
+/home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/community/post/PostService.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/controller/users_avis/review/ReviewManagementController.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/investissement/IPaymentService.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/users_avis/formation/Formation.java
@@ -120,6 +131,7 @@
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/investissement/YousignService.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/investissement/AI/ContractReviewService.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/investissement/Payment.java
+/home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/community/reaction/Reaction.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/investissement/ExchangeRateService.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/marketplace/CommandeJoinProduit.java
 /home/maindude/Desktop/Perso/Codes/Bizhub/src/main/java/com/bizhub/model/services/common/service/Auth0Service.java

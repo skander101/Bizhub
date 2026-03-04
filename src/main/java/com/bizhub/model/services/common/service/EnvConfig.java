@@ -229,6 +229,11 @@ public final class EnvConfig {
         return Integer.parseInt(getOrDefault("GROQ_MAX_TOKENS", "512"));
     }
 
+    /** GROQ API key for community posts AI features. */
+    public static String getGroqApiKeyPost() {
+        return getOrDefault("GROQ_API_KEY_POST", "");
+    }
+
     // Face++ (facial recognition / verification)
     public static String getFacePlusPlusApiKey() {
         return getOrDefault("FACEPP_API_KEY", "");

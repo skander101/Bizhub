@@ -14,6 +14,7 @@ com/bizhub/model/services/investissement/AI/StartupEnrichmentService$1.class
 com/bizhub/model/services/marketplace/CommandeService.class
 com/bizhub/controller/investissement/SmartSearchController$ScoredProject.class
 com/bizhub/controller/investissement/NegotiationController.class
+com/bizhub/model/services/community/geo/GeoLocationService.class
 com/bizhub/model/services/common/service/AlertHelper.class
 com/bizhub/model/services/investissement/AI/ContractReviewService$1.class
 com/bizhub/controller/investissement/ProjectsListController$1.class
@@ -23,6 +24,7 @@ com/bizhub/controller/users_avis/formation/FormationDetailsController$ReviewCard
 com/bizhub/model/services/investissement/AI/PortfolioAdvisorService$PortfolioHolding.class
 com/bizhub/model/services/common/service/AiNavigationBotService.class
 com/bizhub/controller/marketplace/ProduitServiceController.class
+com/bizhub/model/services/community/post/PostService.class
 com/bizhub/model/services/investissement/ExchangeRateService.class
 com/bizhub/model/marketplace/CommandeJoinProduit.class
 com/bizhub/controller/investissement/InvestmentsListController.class
@@ -47,6 +49,7 @@ com/bizhub/model/services/marketplace/payment/PaymentService.class
 com/bizhub/service/WebcamService$1.class
 com/bizhub/model/services/investissement/AI/OpenRouterService$5.class
 com/bizhub/model/services/investissement/AI/AIIntegrationService$InvestmentStatus.class
+com/bizhub/model/services/community/reaction/ReactionService.class
 com/bizhub/model/services/investissement/PortfolioAnalyticsService$PortfolioHealth.class
 com/bizhub/model/services/marketplace/payment/PaymentProvider.class
 com/bizhub/controller/marketplace/CommandeController$2.class
@@ -70,6 +73,7 @@ com/bizhub/model/services/common/service/FacePlusPlusService$2.class
 com/bizhub/controller/investissement/SmartSearchController.class
 com/bizhub/controller/marketplace/ProduitServiceController$7.class
 com/bizhub/model/services/marketplace/TwilioSmsService.class
+com/bizhub/controller/users_avis/user/ForgotPasswordController.class
 com/bizhub/controller/users_avis/user/AdminDashboardController.class
 com/bizhub/model/services/marketplace/ProduitServiceService.class
 com/bizhub/model/services/investissement/RssNewsService$Sentiment.class
@@ -79,6 +83,7 @@ com/bizhub/model/services/investissement/CoinGeckoService$1.class
 com/bizhub/model/services/investissement/RssNewsService$NewsSnapshot.class
 com/bizhub/model/services/common/DB/NonClosingConnectionWrapper.class
 com/bizhub/model/services/common/service/AiDatabaseAssistantService.class
+com/bizhub/controller/users_avis/user/UserSidebarController.class
 com/bizhub/model/services/investissement/ExchangeRateService$FxRates.class
 com/bizhub/model/services/marketplace/CommandePriorityEngine$PriorityLevel.class
 com/bizhub/model/services/investissement/AI/ChatbotAssistant.class
@@ -96,6 +101,8 @@ com/bizhub/model/services/investissement/ContractPDFService.class
 com/bizhub/model/services/investissement/AI/OpenRouterService$Message.class
 com/bizhub/model/services/marketplace/FactureService.class
 com/bizhub/controller/users_avis/user/LoginController$1.class
+com/bizhub/model/community/post/Post.class
+com/bizhub/model/services/community/ai/GeminiService.class
 com/bizhub/model/services/investissement/AI/PortfolioAdvisorService$1.class
 com/bizhub/controller/users_avis/user/TopbarProfileHelper.class
 com/bizhub/model/services/user_avis/user/UserService.class
@@ -115,6 +122,7 @@ com/bizhub/model/services/investissement/AI/AIIntegrationService.class
 com/bizhub/model/services/investissement/CoinGeckoService.class
 com/bizhub/model/services/user_avis/formation/FormationService.class
 com/bizhub/model/users_avis/formation/Formation.class
+com/bizhub/model/services/community/geo/GeoLocationService$LocationResult.class
 com/bizhub/model/services/common/service/FacePlusPlusService.class
 com/bizhub/model/services/investissement/StripePaymentService$2.class
 com/bizhub/controller/marketplace/CommandeTrackingController$3.class
@@ -134,6 +142,7 @@ com/bizhub/model/investissement/Negotiation.class
 com/bizhub/model/marketplace/InvestorInsightResponse.class
 com/bizhub/controller/investissement/AddProjectController.class
 com/bizhub/model/services/investissement/AI/FraudDetectionSystem.class
+com/bizhub/controller/community/ShowPostsController.class
 com/bizhub/model/services/investissement/AI/ContractReviewService.class
 com/bizhub/model/services/investissement/AI/DueDiligenceReportPDF.class
 com/bizhub/model/users_avis/review/Review.class
@@ -144,6 +153,7 @@ com/bizhub/model/services/investissement/AI/PortfolioAdvisorService$PortfolioSna
 com/bizhub/model/services/common/service/AiNavigationBotService$BotResponse.class
 com/bizhub/model/users_avis/user/User.class
 com/bizhub/model/investissement/Deal.class
+com/bizhub/model/community/comment/Comment.class
 com/bizhub/controller/marketplace/PanierController.class
 com/bizhub/model/services/investissement/YousignService$1.class
 com/bizhub/model/services/investissement/AI/OpenRouterService$2.class
@@ -159,9 +169,11 @@ com/bizhub/controller/marketplace/CommandeTrackingController.class
 com/bizhub/controller/users_avis/review/ReviewFormController.class
 com/bizhub/controller/AiChatController.class
 com/bizhub/model/services/investissement/CoinGeckoService$CryptoPrice.class
+com/bizhub/model/services/community/comment/CommentService.class
 com/bizhub/model/services/common/service/InfobipService$TotpSetupResult.class
 com/bizhub/model/services/investissement/IInvestmentService.class
 com/bizhub/model/services/investissement/AI/ContractReviewService$ClauseReview.class
+com/bizhub/model/community/reaction/Reaction.class
 com/bizhub/model/services/investissement/AI/FraudDetectionSystem$FraudAnalysisResult.class
 com/bizhub/controller/investissement/AddInvestmentController$InvestorItem.class
 com/bizhub/model/services/common/service/FacePlusPlusService$1.class
@@ -181,6 +193,8 @@ com/bizhub/controller/investissement/NegotiationController$1.class
 com/bizhub/controller/users_avis/review/ReviewManagementController$ReviewCardCell.class
 com/bizhub/model/services/common/service/CloudflareAiService.class
 com/bizhub/model/services/investissement/AI/PortfolioAdvisorService.class
+com/bizhub/controller/users_avis/user/AdminSidebarController.class
+com/bizhub/controller/community/ShowPostsController$CommentCard.class
 com/bizhub/model/services/common/service/FaceDetectionResult.class
 com/bizhub/controller/investissement/DealPipelineController$2.class
 com/bizhub/model/services/investissement/AI/OpenRouterService$3.class
@@ -237,6 +251,7 @@ com/bizhub/model/services/investissement/InvestmentServiceImpl.class
 com/bizhub/model/services/investissement/GNewsService$1.class
 com/bizhub/model/services/investissement/AlphaVantageService$2.class
 com/bizhub/controller/investissement/DealPipelineController$5.class
+com/bizhub/controller/community/ShowPostsController$PostCard.class
 com/bizhub/model/services/investissement/AI/RecommendationEngine$InvestorProfile.class
 com/bizhub/model/services/common/config/Env.class
 com/bizhub/model/investissement/ProjectItem.class

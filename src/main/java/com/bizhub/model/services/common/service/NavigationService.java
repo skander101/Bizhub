@@ -126,6 +126,10 @@ public class NavigationService {
         loadIntoStage("/com/bizhub/fxml/formation-details.fxml", 1200, 760);
     }
 
+    public void goToCommunity() {
+        loadIntoStage("/com/bizhub/fxml/community/show-posts.fxml", 1200, 760);
+    }
+
     public void goToAiChat() {
         loadIntoStage("/com/bizhub/fxml/ai-chat.fxml", 1200, 760);
     }

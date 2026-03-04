@@ -16,6 +16,7 @@ public class SidebarController {
     @FXML private Button goUsersBtn;
     @FXML private Button goProfileBtn;
     @FXML private Button goMarketplaceBtn;
+    @FXML private Button goCommunityBtn;
     @FXML private Button goFormationsBtn;
     @FXML private Button goReviewsBtn;
     @FXML private Accordion investAccordion;
@@ -36,7 +37,7 @@ public class SidebarController {
             goReviewsBtn.setText("Reviews (Moderation)");
         }
         show(investAccordion, admin || isInvestor);
-        topButtons = new Button[]{ goDashboardBtn, goUsersBtn, goProfileBtn, goFormationsBtn, goReviewsBtn, goMarketplaceBtn };
+        topButtons = new Button[]{ goDashboardBtn, goUsersBtn, goProfileBtn, goFormationsBtn, goReviewsBtn, goCommunityBtn, goMarketplaceBtn };
     }
     public void setActivePage(String pageId) {
         if (topButtons == null) return;
@@ -60,6 +61,7 @@ public class SidebarController {
                 case "formations"  -> markActive(goFormationsBtn);
                 case "reviews"     -> markActive(goReviewsBtn);
                 case "marketplace" -> markActive(goMarketplaceBtn);
+                case "community"   -> markActive(goCommunityBtn);
             }
         }
     }
@@ -68,6 +70,7 @@ public class SidebarController {
     @FXML public void goProfile()      { nav().goToProfile(); }
     @FXML public void goFormations()   { nav().goToFormations(); }
     @FXML public void goReviews()      { nav().goToReviews(); }
+    @FXML public void goCommunity()    { nav().goToCommunity(); }
     @FXML public void goAiChat()       { nav().goToAiChat(); }
     @FXML public void goToMarketplaceHome() {
         User me = AppSession.getCurrentUser();

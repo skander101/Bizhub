@@ -40,6 +40,7 @@
     <Button fx:id="goProfileBtn" text="My Profile" onAction="#goProfile" styleClass="nav-button" maxWidth="Infinity" visible="false" managed="false" />
     <Button fx:id="goFormationsBtn" text="Formations" onAction="#goFormations" styleClass="nav-button" maxWidth="Infinity" />
     <Button fx:id="goReviewsBtn" text="Reviews" onAction="#goReviews" styleClass="nav-button" maxWidth="Infinity" />
+    <Button fx:id="goCommunityBtn" text="Community" onAction="#goCommunity" styleClass="nav-button" maxWidth="Infinity" />
     <Button fx:id="goMarketplaceBtn" text="Marketplace" onAction="#goToMarketplaceHome" styleClass="nav-button" maxWidth="Infinity" visible="false" managed="false" />
 
     <!-- ── Investments dropdown (visible only for investisseur / admin) ── -->

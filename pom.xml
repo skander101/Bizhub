@@ -289,8 +289,10 @@
                     <jvmArgs>
                         <!-- Prevent Modena stylesheet from logging casting warnings on some Linux builds -->
                         <jvmArg>-Djavafx.userAgentStylesheetUrl=none</jvmArg>
-                        <jvmArg>-Xmx512m</jvmArg>
-                        <jvmArg>-Xms128m</jvmArg>
+                        <jvmArg>-Xmx2g</jvmArg>
+                        <jvmArg>-Xms256m</jvmArg>
+                        <jvmArg>-XX:+UseG1GC</jvmArg>
+                        <jvmArg>-XX:MaxMetaspaceSize=256m</jvmArg>
                     </jvmArgs>
                 </configuration>
             </plugin>
