@@ -12,9 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
-import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -396,67 +394,24 @@ public class ShowPostsController {
 
     // ==================== REFRESH ====================
 
-    /** Opens a floating map popup showing the location on OpenStreetMap */
+
+    /** Opens location in the system browser on OpenStreetMap — no WebView glitches */
     private void showMapPopup(String locationName, double lat, double lon, javafx.scene.Node anchor) {
-        // Use coordinates if available, otherwise search by name
-        double mapLat = lat != 0 ? lat : 36.8;
-        double mapLon = lon != 0 ? lon : 10.18;
-        int zoom = lat != 0 ? 13 : 5;
-
-        WebView webView = new WebView();
-        webView.setPrefSize(420, 300);
-
-        String html =
-                "<!DOCTYPE html><html><head>" +
-                        "<link rel='stylesheet' href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css'/>" +
-                        "<script src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'></script>" +
-                        "<style>body{margin:0;padding:0;}#map{width:420px;height:300px;}</style>" +
-                        "</head><body><div id='map'></div><script>" +
-                        "var map = L.map('map').setView([" + mapLat + "," + mapLon + "]," + zoom + ");" +
-                        "L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{" +
-                        "  attribution:'© OpenStreetMap'}).addTo(map);" +
-                        (lat != 0 ?
-                                "L.marker([" + mapLat + "," + mapLon + "]).addTo(map)" +
-                                        "  .bindPopup('" + locationName.replace("'", "\\'") + "').openPopup();" : "") +
-                        "</script></body></html>";
-
-        webView.getEngine().loadContent(html);
-
-        // Popup container
-        javafx.scene.layout.VBox container = new javafx.scene.layout.VBox();
-        container.setStyle(
-                "-fx-background-color:#0F2035;" +
-                        "-fx-border-color:#FFB84D;" +
-                        "-fx-border-width:2;" +
-                        "-fx-border-radius:10;" +
-                        "-fx-background-radius:10;" +
-                        "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 20, 0, 0, 4);"
-        );
-
-        // Header bar
-        Label header = new Label("📍  " + locationName);
-        header.setStyle("-fx-text-fill:#FFB84D;-fx-font-weight:bold;-fx-font-size:13px;-fx-padding:8 12 4 12;");
-        Button closeBtn = new Button("✕");
-        closeBtn.setStyle("-fx-background-color:transparent;-fx-text-fill:#607A93;-fx-cursor:hand;-fx-font-size:13px;");
-
-        javafx.scene.layout.HBox topBar = new javafx.scene.layout.HBox();
-        topBar.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
-        javafx.scene.layout.HBox.setHgrow(header, Priority.ALWAYS);
-        topBar.getChildren().addAll(header, closeBtn);
-
-        container.getChildren().addAll(topBar, webView);
-
-        Popup popup = new Popup();
-        popup.getContent().add(container);
-        popup.setAutoHide(true);
-
-        closeBtn.setOnAction(e -> popup.hide());
-
-        // Position near the anchor label
-        javafx.geometry.Bounds bounds = anchor.localToScreen(anchor.getBoundsInLocal());
-        popup.show(anchor.getScene().getWindow(),
-                bounds.getMinX(),
-                bounds.getMaxY() + 4);
+        try {
+            String url;
+            if (lat != 0 && lon != 0) {
+                long commas = locationName.chars().filter(c -> c == ',').count();
+                int zoom = commas == 0 ? 5 : commas == 1 ? 10 : 13;
+                url = "https://www.openstreetmap.org/?mlat=" + lat +
+                        "&mlon=" + lon + "#map=" + zoom + "/" + lat + "/" + lon;
+            } else {
+                url = "https://www.openstreetmap.org/search?query=" +
+                        java.net.URLEncoder.encode(locationName, "UTF-8");
+            }
+            java.awt.Desktop.getDesktop().browse(new java.net.URI(url));
+        } catch (Exception e) {
+            System.err.println("Could not open map: " + e.getMessage());
+        }
     }
 
     public void refreshPosts() {
