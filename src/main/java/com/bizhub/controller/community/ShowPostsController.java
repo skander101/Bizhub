@@ -11,9 +11,6 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -391,10 +388,14 @@ public class ShowPostsController {
     // ==================== CELL FACTORIES ====================
 
     /** Social-media style post card */
+    // No active players needed - video removed due to JavaFX module conflict
+
     private class PostCard extends ListCell<Post> {
+
         @Override
         protected void updateItem(Post post, boolean empty) {
             super.updateItem(post, empty);
+
             if (empty || post == null) { setGraphic(null); setText(null); return; }
 
             // Avatar circle with first letter of author
@@ -483,29 +484,10 @@ public class ShowPostsController {
                         }
                     } catch (Exception ignored) {}
                 } else if ("video".equals(post.getMediaType())) {
-                    try {
-                        File vidFile = new File(post.getMediaUrl());
-                        if (vidFile.exists()) {
-                            Media media = new Media(vidFile.toURI().toString());
-                            MediaPlayer player = new MediaPlayer(media);
-                            MediaView mediaView = new MediaView(player);
-                            mediaView.setFitWidth(400);
-                            mediaView.setPreserveRatio(true);
-
-                            Button playBtn = new Button("▶ Play Video");
-                            playBtn.setStyle("-fx-background-color:#FFB84D;-fx-text-fill:#0F2035;-fx-font-weight:bold;-fx-background-radius:6;-fx-cursor:hand;-fx-padding:5 14;");
-                            playBtn.setOnAction(ev -> {
-                                if (player.getStatus() == MediaPlayer.Status.PLAYING) {
-                                    player.pause();
-                                    playBtn.setText("▶ Play Video");
-                                } else {
-                                    player.play();
-                                    playBtn.setText("⏸ Pause");
-                                }
-                            });
-                            card.getChildren().addAll(mediaView, playBtn);
-                        }
-                    } catch (Exception ignored) {}
+                    // Show a placeholder label — video playback requires full modular JavaFX setup
+                    Label videoLabel = new Label("🎬 Video attached (open file to play)");
+                    videoLabel.setStyle("-fx-text-fill:#FFB84D;-fx-font-size:12px;-fx-background-color:#1A3352;-fx-padding:8 12;-fx-background-radius:6;");
+                    card.getChildren().add(videoLabel);
                 }
             }
 
